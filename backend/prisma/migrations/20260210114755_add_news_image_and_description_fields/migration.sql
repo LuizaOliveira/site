@@ -1,0 +1,11 @@
+/*
+  Warnings:
+
+  - Added the required column `description` to the `Post` table without a default value. This is not possible if the table is not empty.
+  - Added the required column `newsImage` to the `Post` table without a default value. This is not possible if the table is not empty.
+
+*/
+-- AlterTable
+ALTER TABLE `post` ADD COLUMN `description` VARCHAR(191) NOT NULL DEFAULT '',
+    ADD COLUMN `newsImage` VARCHAR(191) NOT NULL DEFAULT '';
+

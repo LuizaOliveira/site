@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `post` ADD COLUMN `pageCount` INTEGER NOT NULL DEFAULT 1;

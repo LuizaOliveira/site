@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --primary: #01165A;
+  --secondary-blue: #0F2464;
+  --secondary: #E86100;
+  --text-color: #6A80B0;
+  --text-darkgray: #313164;
+  --ligth-gray: #A9B5CE
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary-blue: var(--secondary-blue);
+  --color-secondary: var(--secondary);
+  --color-text-custom: var(--text-color);
+  --color-text-darkgray: var(--text-darkgray);
+  --color-ligth-gray: var(--ligth-gray);
+  --color-brand: #01165A;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-red-hat-text: var(--font-red-hat-text);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+@font-face {
+  font-family: 'CabinetGrotesk';
+  src: url('/fonts/CabinetGrotesk-Extrabold.woff2') format('woff2'), url('/fonts/CabinetGrotesk-Extrabold.woff') format('woff');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'CabinetGrotesk';
+  src: url('/fonts/CabinetGrotesk-Bold.woff2') format('woff2'), url('/fonts/CabinetGrotesk-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'CabinetGrotesk-Bold';
+  src: url('/fonts/CabinetGrotesk-Bold.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+}
+
+/* Classes customizadas para as cores */
+.text-primary { color: #11213F; }
+.bg-primary { background-color: #11213F; }
+.border-primary { border-color: #11213F; }
+
+.text-secondary-blue { color: #0F2464; }
+.bg-secondary-blue { background-color: #0F2464; } 
+.border-secondary-blue { border-color: #0F2464; }
+
+.text-secondary { color: #E86100; }
+.bg-secondary { background-color: #E86100; }
+.border-secondary { border-color: #E86100; }
+
+.text-custom { color: #6A80B0; }
+.bg-custom { background-color: #6A80B0; }
+
+.text-darkgray { color: #313164; }
+.bg-darkgray { background-color: #313164; }
+.border-darkgray { border-color: #313164; }
+
+.light-gray { color: #A9B5CE; }
+.bg-light-gray { background-color: #A9B5CE; }
+.border-light-gray { border-color: #A9B5CE; }
+
+/* Custom Font Classes */
+.font-cabinet {
+  font-family: 'CabinetGrotesk', sans-serif;
+}
+
+/* ===== RESET react-pdf ===== */
+.react-pdf__Page {
+  margin: 0 !important;
+}
+
+.react-pdf__Page__canvas {
+  display: block;
+}
+
+/* Hide scrollbar but keep scroll functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Staggered Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-stagger {
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
+}
