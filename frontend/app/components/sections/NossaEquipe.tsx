@@ -20,7 +20,7 @@ export function NossaEquipe() {
   const cardsContainerRef = useRef<HTMLDivElement>(null);
 
   const fundadoresESocios = advogados.slice(0, 4);
-  
+
   useEffect(() => {
     if (!sectionRef.current) return;
 
@@ -101,7 +101,7 @@ export function NossaEquipe() {
 
     return () => ctx.revert();
   }, []);
-  
+
   const loremIpsum =
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy.";
 
@@ -110,9 +110,9 @@ export function NossaEquipe() {
 
       <div className="container mx-auto px-4">
         {/* GRID PRINCIPAL */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-10 items-stretch">
           {/* ===== IMAGEM (2/3) ===== */}
-          <div ref={imageRef} className="relative lg:col-span-2 h-120 rounded-3xl overflow-hidden shadow-lg">
+          <div ref={imageRef} className="relative lg:col-span-2 h-56 lg:h-120 rounded-3xl overflow-hidden shadow-lg">
             <Image
               src="/office-work.svg" // troque pela sua imagem
               alt="Equipe de advogados"
@@ -123,18 +123,18 @@ export function NossaEquipe() {
           </div>
 
           {/* ===== CARD (1/3) ===== */}
-          <div ref={cardInfoRef} className="lg:col-span-1 h-120 rounded-[36px] bg-linear-to-br from-[#0B1A3A] via-[#10285C] to-[#061534] p-10 flex flex-col justify-between shadow-xl">
+          <div ref={cardInfoRef} className="lg:col-span-1  lg:h-120 rounded-[36px] bg-linear-to-br from-[#0B1A3A] via-[#10285C] to-[#061534] p-6 lg:p-10 flex flex-col justify-between shadow-xl">
             {/* Parte superior */}
             <div>
-              <div className="inline-block border border-orange-500 px-4 py-1 rounded-lg mb-6">
-                <span className="text-orange-400 text-sm">Nossa equipe</span>
+              <div className="inline-block border border-orange-500 px-2 lg:px-4 py-0.5 lg:py-1 rounded-lg mb-6">
+                <span className="text-orange-400 text-xs lg:text-sm">Nossa equipe</span>
               </div>
 
-              <h2 className="text-white text-3xl font-semibold mb-6 leading-snug">
+              <h2 className="text-white text-xl  lg:text-3xl font-semibold mb-6 leading-snug">
                 Conheça nossos profissionais
               </h2>
 
-              <p className="text-gray-300 leading-relaxed text-sm">
+              <p className="text-gray-300 leading-relaxed text-xs lg:text-sm mb-10 lg:mb-0">
                 Nossa equipe é formada por profissionais experientes em
                 diferentes áreas, os quais trabalham de forma integrada e
                 utilizam habilidades técnicas coordenadas ligadas a casos
@@ -144,7 +144,7 @@ export function NossaEquipe() {
 
             {/* Botão */}
             <div>
-              <button className="bg-orange-500 hover:bg-orange-600 transition text-white px-6 py-3 rounded-full font-medium">
+              <button className="bg-orange-500 hover:bg-orange-600 transition text-xs lg:text-sm text-white px-3 lg:px-6 py-3 rounded-full font-medium">
                 Marque uma consulta
               </button>
             </div>
@@ -154,8 +154,8 @@ export function NossaEquipe() {
 
       <div className="mt-12 md:mt-16 container mx-auto px-4 md:px-0">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 md:mb-12 gap-4">
-          <h2 className="text-primary text-3xl md:text-3xl font-bold">
-            Advogados, Fundadores{" "}
+          <h2 className="text-primary text-2xl lg:text-3xl md:text-3xl font-bold">
+            Advogados, Fundadores
             <span className="text-secondary">
               <br /> e Sócios
             </span>
@@ -165,7 +165,7 @@ export function NossaEquipe() {
               href="/equipe"
               className="rounded-full bg-secondary px-4 py-2 md:py-0 flex items-center justify-center font-bold text-sm md:text-base text-white hover:bg-orange-600 transition-colors duration-300"
             >
-              Ver toda equipe
+              Ver mais
             </Link>
             <Link
               href="/equipe"
@@ -180,17 +180,17 @@ export function NossaEquipe() {
         </div>
 
         <div className="">
-                      <div ref={cardsContainerRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 my-8">
-              {fundadoresESocios.map((advogado) => (
-                <div key={advogado.id} className="flex justify-center adv-card-item">
-                  <AdvCard
-                    imgSrc={advogado.imagem}
-                    nome={advogado.nome}
-                    titulo={advogado.titulo}
-                  />
-                </div>
-              ))}
-            </div>
+          <div ref={cardsContainerRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 my-8">
+            {fundadoresESocios.map((advogado) => (
+              <div key={advogado.id} className="flex justify-center adv-card-item">
+                <AdvCard
+                  imgSrc={advogado.imagem}
+                  nome={advogado.nome}
+                  titulo={advogado.titulo}
+                />
+              </div>
+            ))}
+          </div>
           {/* <div className="flex gap-8 items-center justify-center">
             <AdvCard
               imgSrc="Clodonil.svg"

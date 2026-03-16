@@ -134,13 +134,13 @@ export function SobreNos() {
             clipPath: "polygon(40px 0%, 100% 0%, 100% 100%, 0% 100%, 0% 40px)",
           }}
         >
-          <div ref={essenceImageRef} className="relative md:col-span-1">
+          <div ref={essenceImageRef} className="relative md:col-span-1 ">
             <div className="relative w-96 h-125 rounded-2xl overflow-hidden shadow-lg">
               <Image
                 src="/smilily-woman.png"
                 alt="Conheça nossa história"
                 fill
-                className="object-cover"
+                className="object-cover "
               />
 
               <div
