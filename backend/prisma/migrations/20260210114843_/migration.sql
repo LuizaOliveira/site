@@ -1,3 +1,3 @@
 -- AlterTable
-ALTER TABLE `post` ALTER COLUMN `description` DROP DEFAULT,
+ALTER TABLE `Post` ALTER COLUMN `description` DROP DEFAULT,
     ALTER COLUMN `newsImage` DROP DEFAULT;

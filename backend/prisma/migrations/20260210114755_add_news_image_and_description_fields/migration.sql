@@ -6,6 +6,6 @@
 
 */
 -- AlterTable
-ALTER TABLE `post` ADD COLUMN `description` VARCHAR(191) NOT NULL DEFAULT '',
+ALTER TABLE `Post` ADD COLUMN `description` VARCHAR(191) NOT NULL DEFAULT '',
     ADD COLUMN `newsImage` VARCHAR(191) NOT NULL DEFAULT '';
 
