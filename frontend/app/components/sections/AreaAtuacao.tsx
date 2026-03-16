@@ -69,7 +69,7 @@ export function AreaAtuacao() {
 
   return (
     <section id="area-atuacao" ref={sectionRef} className="bg-white px-4 md:px-12 py-10">
-      {/* Container Azul Principal */}
+      
       <div className="bg-[#071B42] rounded-3xl p-6 md:p-10 shadow-xl mx-0 md:mx-12 relative">
         <div className="container mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 mt-4 md:mt-8 gap-8">
@@ -82,7 +82,7 @@ export function AreaAtuacao() {
             </div>
           </div>
 
-          {/* Grid de Cards - Ajustado para 1, 2 ou 4 colunas */}
+          
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-14 mt-10 mb-14' ref={cardsGridRef}>
             {[1, 2, 3, 4].map((i) => (
               <div key={i} className="p-5 bg-linear-to-br from-[#0F234A] via-[#0F234A] to-[#0b214d] shadow-xl animatable-card transition-all duration-300 rounded-xl">
@@ -95,18 +95,18 @@ export function AreaAtuacao() {
           </div>
         </div>
 
-        {/* Rabinho do balão - Escondido em mobile para evitar quebra de layout */}
+        
         <div
           className="hidden md:block absolute -bottom-10 left-35 w-16 h-10 bg-[#071B42]"
           style={{ clipPath: "path('M0 0 Q8 0 12 6 L28 24 Q32 28 36 24 L52 6 Q56 0 64 0 Z')" }}
         />
       </div>
 
-      {/* Seção de Números/Estatísticas */}
+      
       <div className="mx-4 md:mx-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mt-12 md:mt-20 gap-8 md:gap-0">
           
-          {/* ITEM 1 */}
+          
           <div className="flex flex-col items-center gap-3 px-4 md:px-8 border-b md:border-b-0 md:border-r border-[#F0F0F0] pb-6 md:pb-0 last:border-0">
             <div className="bg-[#F5F5F5] w-full max-w-50 py-3 px-5 shadow-md rounded-lg">
               <p className="text-center text-[#E86000] font-bold text-2xl md:text-3xl">+29 mil</p>
@@ -116,7 +116,7 @@ export function AreaAtuacao() {
             </div>
           </div>
 
-          {/* ITEM 2 */}
+          
           <div className="flex flex-col items-center gap-3 px-4 md:px-8 border-b md:border-b-0 md:border-r border-[#F0F0F0] pb-6 md:pb-0 last:border-0">
             <div className="bg-[#F5F5F5] w-full max-w-50 py-3 px-5 shadow-md rounded-lg">
               <p className="text-center text-[#E86000] font-bold text-2xl md:text-3xl">+8 mil</p>
@@ -126,7 +126,7 @@ export function AreaAtuacao() {
             </div>
           </div>
 
-          {/* ITEM 3 */}
+          
           <div className="flex flex-col items-center gap-3 px-4 md:px-8 border-b md:border-b-0 md:border-r border-[#F0F0F0] pb-6 md:pb-0 last:border-0">
             <div className="bg-[#F5F5F5] w-full max-w-50 py-3 px-5 shadow-md rounded-lg">
               <p className="text-center text-[#E86000] font-bold text-2xl md:text-3xl">99%</p>
@@ -136,7 +136,7 @@ export function AreaAtuacao() {
             </div>
           </div>
 
-          {/* ITEM 4 */}
+          
           <div className="flex flex-col items-center gap-3 px-4 md:px-8">
             <div className="bg-[#F5F5F5] w-full max-w-50 py-3 px-5 shadow-md rounded-lg">
               <p className="text-center text-[#E86000] font-bold text-2xl md:text-3xl">+8 anos</p>
