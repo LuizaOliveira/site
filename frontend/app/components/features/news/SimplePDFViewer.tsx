@@ -30,6 +30,7 @@ export function SimplePDFViewer({ pdfUrl }: PDFViewerProps) {
   const [pageWidth, setPageWidth] = useState(320);
   const containerRef = React.useRef<HTMLDivElement>(null);
   const isIOS = typeof window !== "undefined" && /iPhone/i.test(window.navigator.userAgent);
+  const isAndroid = typeof window !== 'undefined' && /Android/i.test(window.navigator.userAgent);
 
   // Callback quando o PDF é carregado
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
@@ -52,8 +53,18 @@ export function SimplePDFViewer({ pdfUrl }: PDFViewerProps) {
     if (!document.fullscreenElement) {
       containerRef.current?.requestFullscreen();
     } else {
+      setZoom(zoomBeforeFullscreen || 0.99);
       document.exitFullscreen();
     }
+  };
+
+  const handleOpenPdfForDevice = () => {
+    if (isAndroid) {
+      window.open(pdfUrl, '_blank', 'noopener,noreferrer');
+      return;
+    }
+
+    toggleFullscreen();
   };
 
 
@@ -76,32 +87,6 @@ export function SimplePDFViewer({ pdfUrl }: PDFViewerProps) {
         window.URL.revokeObjectURL(url);
       });
   };
-
-  // ...existing code...
-
-  // Gerenciar zoom para fullscreen preservando zoom do usuário
-  // useEffect(() => {
-  //   const width = window.innerWidth;
-  //   if (isFullscreen) {
-  //     // Salvar zoom atual antes de mudar para fullscreen
-  //     if (zoomBeforeFullscreen === null) {
-  //       setZoomBeforeFullscreen(zoom);
-  //     }
-      
-  //     // Definir zoom automático para fullscreen
-  //     if (width < 640) { // sm em fullscreen
-  //       setZoom(0.9);
-  //     } else {
-  //       setZoom(0.5); // outros em fullscreen
-  //     }
-  //   } else {
-  //     // Restaurar zoom anterior quando sair do fullscreen
-  //     if (zoomBeforeFullscreen !== null) {
-  //       setZoom(zoomBeforeFullscreen);
-  //       setZoomBeforeFullscreen(null);
-  //     }
-  //   }
-  // }, [isFullscreen, zoomBeforeFullscreen]);
 
   // Listener para mudanças de fullscreen e ajuste de tamanho
   useEffect(() => {
@@ -192,7 +177,7 @@ export function SimplePDFViewer({ pdfUrl }: PDFViewerProps) {
             </button>)}
 
           <button
-            onClick={isIOS ? handleDownload : toggleFullscreen}
+            onClick={isIOS ? handleDownload : handleOpenPdfForDevice}
             className="p-1 hover:bg-gray-200 rounded"
             title={isFullscreen ? "Sair da tela cheia (Esc)" : "Tela cheia (F)"}
           >
@@ -233,9 +218,6 @@ export function SimplePDFViewer({ pdfUrl }: PDFViewerProps) {
               renderAnnotationLayer={true}
             />
           </Document>
-          <div className="absolute  bottom-8 right-3 bg-[#E86000] w-10 h-10 rounded-full flex justify-center items-center">
-            <Icon icon="mdi:chevron-right" className="w-6 h-6 text-primary" />
-          </div>
         </div>
         </div>
       </div>
