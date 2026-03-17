@@ -75,7 +75,7 @@ export function AreaAtuacao() {
           <div className="grid grid-cols-1 lg:grid-cols-12 mt-4 md:mt-8 gap-8">
             <div className="lg:col-span-8">
               <div ref={titleRef}>
-                <SectionTitle subtitle='Aqui o servidor público tem voz' title='Nossa' dark>
+                <SectionTitle subtitle='Aqui o servidor público tem voz' title='Nossa' dark centerOnMobile>
                   área de Atuação
                 </SectionTitle>
               </div>
