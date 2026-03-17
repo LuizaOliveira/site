@@ -6,7 +6,7 @@ import { AdvCard } from "../ui/AdvCard";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 import { advogados } from "../../data/advogados";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -17,9 +17,23 @@ export function NossaEquipe() {
   const titleRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const cardInfoRef = useRef<HTMLDivElement>(null);
-  const cardsContainerRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const fundadoresESocios = advogados.slice(0, 4);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const scrollToIndex = useCallback((index: number) => {
+    if (!scrollRef.current) return;
+
+    const containerWidth = scrollRef.current.offsetWidth;
+
+    scrollRef.current.scrollTo({
+      left: containerWidth * index,
+      behavior: 'smooth'
+    });
+
+    setActiveIndex(index);
+  }, []);
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -77,7 +91,7 @@ export function NossaEquipe() {
       );
 
       // Animar cards dos advogados
-      const advCards = cardsContainerRef.current?.querySelectorAll('.adv-card-item');
+      const advCards = document.querySelectorAll('.adv-card-item');
       if (advCards && advCards.length > 0) {
         gsap.set(advCards, {
           opacity: 0,
@@ -91,7 +105,7 @@ export function NossaEquipe() {
           ease: 'power2.out',
           stagger: 0.08,
           scrollTrigger: {
-            trigger: cardsContainerRef.current,
+            trigger: '.adv-cards-container',
             start: 'top 80%',
             toggleActions: 'play none none reverse'
           }
@@ -106,13 +120,29 @@ export function NossaEquipe() {
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy.";
 
   return (
-    <section id="equipe" ref={sectionRef} className="py-8 md:py-16 bg-white">
-
+    <>
+      <style jsx>{`
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
+      
+      <section id="equipe" ref={sectionRef} className="py-8 md:py-16 bg-white">
       <div className="container mx-auto px-4">
+      <h2 className="text-primary text-2xl lg:text-3xl md:text-3xl sm:font-light lg:font-bold mb-4">
+        Nosso Corpo 
+        <span className="text-secondary">
+           {" "}jurídico
+        </span>
+      </h2>
         {/* GRID PRINCIPAL */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-10 items-stretch">
           {/* ===== IMAGEM (2/3) ===== */}
-          <div ref={imageRef} className="relative lg:col-span-2 h-56 lg:h-120 rounded-3xl overflow-hidden shadow-lg">
+          <div ref={imageRef} className="relative lg:col-span-2 h-56 md:h-72 lg:h-120 rounded-3xl overflow-hidden shadow-lg">
             <Image
               src="/office-work.svg" // troque pela sua imagem
               alt="Equipe de advogados"
@@ -120,6 +150,24 @@ export function NossaEquipe() {
               priority
               className="object-cover"
             />
+            
+            {/* Logo no topo esquerdo */}
+            <div className="absolute top-4 left-4 bg-white bg-opacity-95 rounded-lg p-2 shadow-md">
+              {/* <div className="w-12 h-12 lg:w-16 lg:h-16 bg-blue-600 rounded-md flex items-center justify-center">
+                <Icon icon="mdi:check" className="text-white w-8 h-8 lg:w-10 lg:h-10" />
+              </div>
+              <p className="text-xs text-gray-600 mt-1 text-center">24.09 × 25</p> */}
+            </div>
+
+            {/* Card com texto ilustrativo na base */}
+            <div className="absolute bottom-4 left-4 right-4 lg:bottom-6 lg:left-6 lg:right-6 flex gap-3 lg:gap-4">
+              <div className="bg-white bg-opacity-90 rounded-3xl px-4 lg:px-6 py-3 lg:py-4 shadow-lg">
+                <p className="text-gray-700 text-sm lg:text-base font-medium">Texto Ilustrativo</p>
+              </div>
+              <div className="bg-white bg-opacity-90 rounded-3xl px-4 lg:px-6 py-3 lg:py-4 shadow-lg">
+                <p className="text-gray-700 text-sm lg:text-base font-medium">Texto Ilustrativo</p>
+              </div>
+            </div>
           </div>
 
           {/* ===== CARD (1/3) ===== */}
@@ -154,13 +202,13 @@ export function NossaEquipe() {
 
       <div className="mt-12 md:mt-16 container mx-auto px-4 md:px-0">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 md:mb-12 gap-4">
-          <h2 className="text-primary text-2xl lg:text-3xl md:text-3xl font-bold">
-            Advogados, Fundadores
+          <h2 className="text-primary text-2xl lg:text-3xl md:text-3xl sm:font-light lg:font-bold">
+            Advogados, Fundadores 
             <span className="text-secondary">
               <br /> e Sócios
             </span>
           </h2>
-          <div className="flex gap-3">
+          {/* <div className="flex gap-3 ">
             <Link
               href="/equipe"
               className="rounded-full bg-secondary px-4 py-2 md:py-0 flex items-center justify-center font-bold text-sm md:text-base text-white hover:bg-orange-600 transition-colors duration-300"
@@ -176,11 +224,12 @@ export function NossaEquipe() {
                 className="text-white w-5 h-5"
               />
             </Link>
-          </div>
+          </div> */}
         </div>
 
         <div className="">
-          <div ref={cardsContainerRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 my-8">
+          {/* Grid para desktop */}
+          <div className="hidden lg:grid grid-cols-4 gap-8 my-8 adv-cards-container">
             {fundadoresESocios.map((advogado) => (
               <div key={advogado.id} className="flex justify-center adv-card-item">
                 <AdvCard
@@ -191,85 +240,48 @@ export function NossaEquipe() {
               </div>
             ))}
           </div>
-          {/* <div className="flex gap-8 items-center justify-center">
-            <AdvCard
-              imgSrc="Clodonil.svg"
-              nome="Clodonil Monteiro"
-              titulo="Advogado fundador"
-            />
-            <AdvCard
-              imgSrc="Edjane.svg"
-              nome="Edjane Lucena"
-              titulo="Advogado fundadora"
-            />
-            <AdvCard
-              imgSrc="laura.svg"
-              nome="Laura Maria"
-              titulo="Advogado fundadora"
-            />
-            <AdvCard
-              imgSrc="DIEGO.svg"
-              nome="Diego Medeiros"
-              titulo="Advogado fundador"
-            />
-          </div> */}
+
+          {/* Scroll horizontal no mobile e tablet */}
+          <div className="lg:hidden relative">
+            <div 
+              ref={scrollRef}
+              className="flex overflow-x-auto overflow-y-visible scroll-smooth snap-x snap-mandatory hide-scrollbar"
+            >
+              {fundadoresESocios.map((advogado) => (
+                <div 
+                  key={advogado.id} 
+                  className="shrink-0 w-full md:w-1/2 snap-start px-2 md:px-3 adv-card-item"
+                >
+                  <div className="flex justify-center">
+                    <AdvCard
+                      imgSrc={advogado.imagem}
+                      nome={advogado.nome}
+                      titulo={advogado.titulo}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Indicadores de página */}
+            <div className="flex justify-center items-center gap-2 mt-6 pb-4">
+              {fundadoresESocios.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => scrollToIndex(index)}
+                  className={`h-2 rounded-full transition-all ${
+                    activeIndex === index 
+                      ? 'bg-orange-500 w-6' 
+                      : 'bg-gray-300 w-2 hover:bg-gray-400'
+                  }`}
+                  aria-label={`Ir para card ${index + 1}`}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
-
-    // <section id="equipe" className="py-8 md:py-16 bg-white">
-    //   <div className="container mx-auto px-4 md:px-0">
-    //     <div>
-    //       <SectionTitle title="Nosso" subtitle="Nossa equipe">Time De Advogados</SectionTitle>
-    //     </div>
-
-    //     <div className="grid grid-cols-1 lg:grid-cols-12 mt-8 gap-6 lg:gap-0 mb-16 md:mb-24">
-    //       <div className="lg:col-span-6">
-    //         <div
-    //           className="rounded-xl relative"
-    //           style={{
-    //             clipPath:
-    //               "polygon(40px 0%, 100% 0%, 100% 100%, 0% 100%, 0% 40px)",
-    //           }}
-    //         >
-    //           <Image
-    //             src="/equipe.png"
-    //             alt="Tablet com notificações para servidores públicos"
-    //             width={1000}
-    //             height={1000}
-    //             className="rounded-xl w-full h-auto"
-    //           />
-    //           <div className="bg-secondary text-white text-sm md:text-xl font-bold px-4 md:px-6 py-2 absolute bottom-4 right-4 md:bottom-8 md:right-8 rounded-lg">
-    //             Experiencia e Inovação <br /> em equipe
-    //           </div>
-    //         </div>
-    //       </div>
-    //       <div className="lg:col-span-6 p-0 lg:p-10">
-    //         <p className="text-[#6A80B0] text-justify leading-relaxed md:leading-loose text-base md:text-lg">Contamos com um corpo jurídico formado por advogados especializados e experientes, que atuam de maneira estratégica e coordenada na condução de demandas relacionadas aos direitos de Servidores Públicos. Nosso trabalho é pautado pelo rigor técnico, atualização constante e compromisso com resultados sólidos e eficazes</p>
-    //       </div>
-    //     </div>
-
-    //     <div className="w-full h-px bg-linear-to-r from-transparent via-gray-200 to-transparent mb-12 md:mb-20"></div>
-
-    //     <div className="mt-12 md:mt-16">
-    //       <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 md:mb-12 gap-4">
-    //         <h2 className="text-primary text-3xl md:text-5xl font-bold">
-    //           Advogados fundadores <span className="text-secondary"><br /> e Sócios</span>
-    //         </h2>
-    //         <div className="flex gap-3">
-    //           <div className="rounded-full bg-secondary px-4 py-2 md:py-0 flex items-center justify-center font-bold text-sm md:text-base">Ver toda equipe</div>
-    //           <div className="rounded-full bg-primary w-10 h-10 flex items-center justify-center"> {">"} </div>
-    //         </div>
-    //       </div>
-
-    //       <div className="space-y-6 md:space-y-0">
-    //         <AdvCard imgSrc="clodonilBG.png" nome="Clodonil Monteiro" titulo="Fundador" texto={loremIpsum} />
-    //         <AdvCard imgSrc="edjaneBG.png" nome="Edjane Lucena" titulo="Fundadora" texto={loremIpsum} />
-    //         <AdvCard imgSrc="lauraBG.png" nome="Laura Maria" titulo="Sócia" texto={loremIpsum} />
-    //         <AdvCard imgSrc="diegoBG.png" nome="Diego Medeiros" titulo="Sócio" texto={loremIpsum} />
-    //       </div>
-    //     </div>
-    //   </div>
-    // </section>
+    </>
   );
 }
