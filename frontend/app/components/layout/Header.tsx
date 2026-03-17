@@ -80,7 +80,7 @@ export function Header() {
               className="h-8 sm:h-14 md:h-10 w-auto transition-transform hover:scale-105 duration-300 lg:hidden"
             />
             <Image
-              src={isOnConsultingHero ? "/logo-test.svg" : "/logo.svg"}
+              src={isOnConsultingHero ? "/dark-logo.svg" : "/logo.svg"}
               alt="Clodonil Monteiro Advocacia"
               width={160}
               height={35}

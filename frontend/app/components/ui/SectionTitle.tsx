@@ -5,13 +5,14 @@ interface SectionTitleProps {
   className?: string;
   dark?: boolean;
   center?: boolean;
+  centerOnMobile?: boolean;
   news?: boolean;
 }
 
-export function SectionTitle({ children, title, subtitle, className = '', dark = false, center = false, news = false }: SectionTitleProps) {
+export function SectionTitle({ children, title, subtitle, className = '', dark = false, center = false, centerOnMobile = false, news = false }: SectionTitleProps) {
   return (
-    <div className={`${ center ? 'text-center' : ''} mb-12 lg:mb-16 ${className}`}>
-      <div className={`flex items-center gap-2 mb-4 ${center ? 'justify-center' : ''}`}>
+    <div className={`${center ? 'text-center' : centerOnMobile ? 'text-center lg:text-left' : ''} mb-12 lg:mb-16 ${className}`}>
+      <div className={`flex items-center gap-2 mb-4 ${center ? 'justify-center' : centerOnMobile ? 'justify-center lg:justify-start' : ''}`}>
         <span className="w-4 h-1 bg-[#E86000] rounded-full"></span>
         <span className={`font-normal text-lg ${dark ? 'text-white' : 'text-darkgray'}`}>{subtitle}</span>
       </div>
