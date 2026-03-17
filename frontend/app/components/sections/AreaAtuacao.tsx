@@ -83,7 +83,11 @@ export function AreaAtuacao() {
 
             <div>
               <div ref={titleRef} className="lg:hidden block">
-               <div className="inline-block border border-[#C0C8D9] px-2 lg:px-4 py-0.5 lg:py-1 rounded-lg mb-6">
+               <div className="inline-block border border-[#C0C8D9
+               
+               
+               
+               ] px-2 lg:px-4 py-0.5 lg:py-1 rounded-lg mb-6">
                 <span className="text-[#C0C8D9] text-xs lg:text-sm">Área de Atuação</span>
              </div>
                 <h2 className="text-white text-2xl lg:text-3xl md:text-3xl sm:font-light lg:font-bold mb-4">
