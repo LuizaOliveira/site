@@ -6,12 +6,12 @@ export function Footer() {
     <footer className="bg-[#0F2747] text-white pt-16 pb-10 font-sans">
       <div className="max-w-7xl mx-auto px-6">
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="grid  grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-12">
 
           {/* COLUNA 1 - LOGO + CONTATO */}
-          <div className="space-y-6">
+          <div className="space-y-6 col-span-1 lg:col-span-1">
             <Image
-              src="/logo-test.svg"
+              src="/logo.svg"
               alt="Clodonil Monteiro Advocacia"
               width={200}
               height={60}
