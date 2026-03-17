@@ -118,9 +118,9 @@ export function SobreNos() {
   return (
     <section
       id="sobre-nos"
-      className="py-10 sm:py-16 lg:py-20 bg-white border-0 "
+      className="pb-10 md:py-16 lg:py-20 bg-white border-0 "
     >
-      <div className="container mx-auto px-4 mt-20 ">
+      <div className="container mx-auto px-4 mt-0 md:mt-20 ">
         {/* Título da seção */}
         {/* <AnimatedSection animation="fadeUp"> */}
         {/* <SectionTitle title='Nossa' subtitle='Aqui o servidor público tem voz' center dark>Área De Atuação</SectionTitle> */}
@@ -134,8 +134,8 @@ export function SobreNos() {
             clipPath: "polygon(40px 0%, 100% 0%, 100% 100%, 0% 100%, 0% 40px)",
           }}
         >
-          <div ref={essenceImageRef} className="relative md:col-span-1 ">
-            <div className="relative w-96 h-125 rounded-2xl overflow-hidden shadow-lg">
+          <div ref={essenceImageRef} className="relative hidden md:block md:col-span-1 lg:col-span-1 xl:col-span-1">
+            <div className="relative w-full h-125 min-w-20 min-h-36 max-w-96 max-h-125 rounded-2xl overflow-hidden shadow-lg">
               <Image
                 src="/smilily-woman.png"
                 alt="Conheça nossa história"
@@ -175,9 +175,9 @@ export function SobreNos() {
             <div className="items-center justify-center my-5">
               <h3
                 ref={essenceTitleRef}
-                className="text-xl sm:text-2xl lg:text-4xl font-extrabold text-[#2D3134]"
+                className="text-3xl md:text-3xl lg:text-4xl font-extrabold"
               >
-                Nossa Essência
+                <span className="text-[#E86000]">Nossa</span> <span className="text-[#0B1B3B]">Essência</span>
               </h3>
               <p
                 ref={essenceDescriptionRef}
@@ -195,7 +195,7 @@ export function SobreNos() {
 
             {/* Lista de serviços */}
             <ul className="space-y-3 sm:space-y-4">
-              <li ref={essenceItem1Ref} className=" items-center gap-10 flex">
+              <li ref={essenceItem1Ref} className=" items-center gap-8 flex">
                 <div className="bg-[#FFFCF9] p-2 rounded-lg justify-center items-center ">
                   <Icon
                     icon="streamline:target-solid"
@@ -206,7 +206,7 @@ export function SobreNos() {
                   <span className=" text-sm sm:text-base lg:text-md  md:text-sm leading-relaxed pr-5 text-justify font-semibold text-[#2D3134]">
                     Valores que nos Guiam
                   </span>
-                  <p className=" w-4/5 text-sm sm:text-base lg:text-md  md:text-sm leading-relaxed pr-5 text-justify font-normal text-[#676A6C]">
+                  <p className=" w-full md:w-4/5 text-sm sm:text-base lg:text-md  md:text-sm leading-relaxed pr-5 text-justify font-normal text-[#676A6C]">
                     Ética, transparência e compromisso orientam cada decisão,
                     garantindo segurança e confiança em todas as etapas do
                     atendimento.
@@ -225,7 +225,7 @@ export function SobreNos() {
                   <span className=" text-sm sm:text-base lg:text-md  md:text-sm leading-relaxed pr-5 text-justify font-semibold text-[#2D3134]">
                     Essência Colaborativa
                   </span>
-                  <p className=" w-4/5 text-sm sm:text-base lg:text-md  md:text-sm leading-relaxed pr-5 text-justify font-normal text-[#676A6C]">
+                  <p className=" w-full md:w-4/5text-sm sm:text-base lg:text-md  md:text-sm leading-relaxed pr-5 text-justify font-normal text-[#676A6C]">
                     Adotamos uma abordagem estratégica, buscando soluções
                     jurídicas eficazes e personalizadas para cada cliente, com
                     foco em resultados concretos.
@@ -236,7 +236,7 @@ export function SobreNos() {
           </div>
         </div>
 
-        <div
+        {/* <div
           ref={card2Ref}
           className="bg-secondary-blue grid md:grid-cols-3 gap-6 md:gap-8 lg:gap-12 mb-8 lg:mb-12 px-3 sm:px-6 lg:px-5 py-4 lg:py-5 rounded-lg lg:hidden xl:hidden"
           style={{
@@ -286,7 +286,7 @@ export function SobreNos() {
               pacificadas pelos tribunais.
             </p>
           </div>
-        </div>
+        </div> */}
 
 
       </div>
