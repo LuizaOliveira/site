@@ -72,7 +72,7 @@ export function Header() {
           {/* Logo */}
           <div className="flex items-center cursor-pointer" onClick={() => scrollToSection('hero')}>
             <Image
-              src="/logo.svg"
+              src="/dark-logo.svg"
               alt="Clodonil Monteiro Advocacia"
               width={170}
               height={50}
@@ -80,7 +80,7 @@ export function Header() {
               className="h-8 sm:h-14 md:h-10 w-auto transition-transform hover:scale-105 duration-300 lg:hidden"
             />
             <Image
-              src={isOnConsultingHero ? "/dark-logo.svg" : "/logo.svg"}
+              src={isOnConsultingHero ? "/logo.svg" : "/dark-logo.svg"}
               alt="Clodonil Monteiro Advocacia"
               width={160}
               height={35}
@@ -123,41 +123,44 @@ export function Header() {
             </button>
           </div>
 
-          {/* Mobile menu button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/20"
-            aria-label="Menu"
-          >
-            <div className="flex flex-col justify-center items-center w-6 h-6">
-              <span className={`block w-6 h-0.5 transition-all duration-300 transform ${
-                isOnConsultingHero ? 'bg-gray-700 lg:bg-white' : 'bg-gray-700'
-              } ${
-                isMenuOpen ? 'rotate-45 translate-y-0.5' : '-translate-y-1'
-              }`}></span>
-              <span className={`block w-6 h-0.5 transition-all duration-300 ${
-                isOnConsultingHero ? 'bg-gray-700 lg:bg-white' : 'bg-gray-700'
-              } ${
-                isMenuOpen ? 'opacity-0' : 'opacity-100'
-              }`}></span>
-              <span className={`block w-6 h-0.5 transition-all duration-300 transform ${
-                isOnConsultingHero ? 'bg-gray-700 lg:bg-white' : 'bg-gray-700'
-              } ${
-                isMenuOpen ? '-rotate-45 -translate-y-0.5' : 'translate-y-1'
-              }`}></span>
-            </div>
-          </button>
+          {/* Mobile Icons */}
+          <div className="lg:hidden flex items-center gap-3">
+            {/* Mobile Search Icon */}
+            <button className="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-all duration-300">
+              <Icon icon="mdi:magnify" className="w-5 h-5 text-gray-700" />
+            </button>
+
+            {/* Mobile menu button - Grid/Dots */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="p-2 rounded-full bg-[#E86100] hover:bg-secondary transition-all duration-300 focus:outline-none"
+              aria-label="Menu"
+            >
+              <Icon 
+                icon={isMenuOpen ? "mdi:close" : "mdi:dots-grid"} 
+                className="w-6 h-6 text-primary" 
+              />
+            </button>
+          </div>
         </div>
+
+        {/* Mobile Overlay */}
+        {isMenuOpen && (
+          <div
+            className="lg:hidden fixed inset-0 top-14 bg-black/50 z-30 transition-opacity duration-300"
+            onClick={() => setIsMenuOpen(false)}
+          />
+        )}
 
         {/* Mobile Navigation */}
         <div
           className={`lg:hidden transition-all duration-300 ease-in-out ${
             isMenuOpen 
-              ? 'fixed left-0 right-0 top-14 z-40 max-h-96 opacity-100 overflow-y-auto' 
-              : 'overflow-hidden max-h-0 opacity-0 pointer-events-none'
+              ? 'fixed left-0 right-0 top-14 z-40 w-screen h-screen bg-red opacity-100 border border-b-gray-200 overflow-y-auto' 
+              : 'overflow-hidden max-h-0 opacity-0 pointer-events-none '
           }`}
         >
-          <nav className={`flex flex-col space-y-1 py-4 border-t transition-colors duration-300 bg-white ${
+          <nav className={`flex flex-col space-y-1 py-4 pb-[5vh] border-t rounded-b-2xl transition-colors duration-300 bg-gray-50 ${
             isOnConsultingHero ? 'border-gray-200 lg:border-white/20' : 'border-gray-200'
           }`}>
             {menuItems.map((item, index) => (
@@ -167,7 +170,7 @@ export function Header() {
                 className={`text-left py-3 px-4 rounded-lg transition-all duration-300 transform hover:translate-x-2 ${
                   isOnConsultingHero 
                     ? 'text-gray-700 hover:text-secondary hover:bg-gray-50 lg:text-white lg:hover:bg-white/10' 
-                    : 'text-gray-700 hover:text-secondary hover:bg-gray-50'
+                    : 'text-gray-700 hover:text-secondary hover:bg-gray-50 border-b-g'
                 }`}
                 style={{
                   animationDelay: `${index * 50}ms`,
@@ -177,16 +180,6 @@ export function Header() {
                 {item.label}
               </button>
             ))}
-            
-            {/* Mobile Search */}
-            <button className={`text-left py-3 px-4 rounded-lg transition-all duration-300 transform hover:translate-x-2 flex items-center gap-3 ${
-              isOnConsultingHero 
-                ? 'text-gray-700 hover:text-secondary hover:bg-gray-50 lg:text-white lg:hover:bg-white/10' 
-                : 'text-gray-700 hover:text-secondary hover:bg-gray-50'
-            }`}>
-              <Icon icon="mdi:magnify" className="w-5 h-5" />
-              Buscar
-            </button>
             
             {/* Mobile Button */}
             <button className="mt-4 mx-4 bg-[#E86100] hover:bg-secondary text-white text-sm font-bold px-6 py-3 rounded-full w-auto transition-all duration-300 hover:shadow-lg">

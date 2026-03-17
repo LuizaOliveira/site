@@ -69,20 +69,35 @@ export function AreaAtuacao() {
 
   return (
     <section id="area-atuacao" ref={sectionRef} className="bg-white px-4 md:px-12 py-10">
-      
+
       <div className="bg-[#071B42] rounded-3xl p-6 md:p-10 shadow-xl mx-0 md:mx-12 relative">
         <div className="container mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 mt-4 md:mt-8 gap-8">
-            <div className="lg:col-span-8">
-              <div ref={titleRef}>
+            <div className="lg:col-span-8 lg:block hidden">
+              <div ref={titleRef} >
                 <SectionTitle subtitle='Aqui o servidor público tem voz' title='Nossa' dark centerOnMobile>
                   área de Atuação
                 </SectionTitle>
               </div>
             </div>
+
+            <div>
+              <div ref={titleRef} className="lg:hidden block">
+               <div className="inline-block border border-[#C0C8D9] px-2 lg:px-4 py-0.5 lg:py-1 rounded-lg mb-6">
+                <span className="text-[#C0C8D9] text-xs lg:text-sm">Área de Atuação</span>
+             </div>
+                <h2 className="text-white text-2xl lg:text-3xl md:text-3xl sm:font-light lg:font-bold mb-4">
+                  Soluções Jurídicas
+                  <span className="text-secondary">
+                    <br/>Especializadas
+                  </span>
+                </h2>
+
+              </div>
+            </div>
           </div>
 
-          
+
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-14 mt-10 mb-14' ref={cardsGridRef}>
             {[1, 2, 3, 4].map((i) => (
               <div key={i} className="p-5 bg-linear-to-br from-[#0F234A] via-[#0F234A] to-[#0b214d] shadow-xl animatable-card transition-all duration-300 rounded-xl">
@@ -95,18 +110,18 @@ export function AreaAtuacao() {
           </div>
         </div>
 
-        
+
         <div
           className="hidden md:block absolute -bottom-10 left-35 w-16 h-10 bg-[#071B42]"
           style={{ clipPath: "path('M0 0 Q8 0 12 6 L28 24 Q32 28 36 24 L52 6 Q56 0 64 0 Z')" }}
         />
       </div>
 
-      
+
       <div className="mx-4 md:mx-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mt-12 md:mt-20 gap-8 md:gap-0">
-          
-          
+
+
           <div className="flex flex-col items-center gap-3 px-4 md:px-8 border-b md:border-b-0 md:border-r border-[#F0F0F0] pb-6 md:pb-0 last:border-0">
             <div className="bg-[#F5F5F5] w-full max-w-50 py-3 px-5 shadow-md rounded-lg">
               <p className="text-center text-[#E86000] font-bold text-2xl md:text-3xl">+29 mil</p>
@@ -116,7 +131,7 @@ export function AreaAtuacao() {
             </div>
           </div>
 
-          
+
           <div className="flex flex-col items-center gap-3 px-4 md:px-8 border-b md:border-b-0 md:border-r border-[#F0F0F0] pb-6 md:pb-0 last:border-0">
             <div className="bg-[#F5F5F5] w-full max-w-50 py-3 px-5 shadow-md rounded-lg">
               <p className="text-center text-[#E86000] font-bold text-2xl md:text-3xl">+8 mil</p>
@@ -126,7 +141,7 @@ export function AreaAtuacao() {
             </div>
           </div>
 
-          
+
           <div className="flex flex-col items-center gap-3 px-4 md:px-8 border-b md:border-b-0 md:border-r border-[#F0F0F0] pb-6 md:pb-0 last:border-0">
             <div className="bg-[#F5F5F5] w-full max-w-50 py-3 px-5 shadow-md rounded-lg">
               <p className="text-center text-[#E86000] font-bold text-2xl md:text-3xl">99%</p>
@@ -136,7 +151,7 @@ export function AreaAtuacao() {
             </div>
           </div>
 
-          
+
           <div className="flex flex-col items-center gap-3 px-4 md:px-8">
             <div className="bg-[#F5F5F5] w-full max-w-50 py-3 px-5 shadow-md rounded-lg">
               <p className="text-center text-[#E86000] font-bold text-2xl md:text-3xl">+8 anos</p>
