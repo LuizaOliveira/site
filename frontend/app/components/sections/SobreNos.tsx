@@ -118,9 +118,9 @@ export function SobreNos() {
   return (
     <section
       id="sobre-nos"
-      className="pb-10 md:py-16 lg:py-20 bg-white border-0 "
+      className="pb-10 md:py-16 lg:py-20 bg-white border-0 pt-10"
     >
-      <div className="container mx-auto px-4 mt-0 md:mt-20 ">
+      <div className="container mx-auto px-4 mt-0 md:mt-20">
         {/* Título da seção */}
         {/* <AnimatedSection animation="fadeUp"> */}
         {/* <SectionTitle title='Nossa' subtitle='Aqui o servidor público tem voz' center dark>Área De Atuação</SectionTitle> */}
@@ -129,26 +129,33 @@ export function SobreNos() {
         {/* Primeira linha - Principal público */}
         <div
           ref={card1Ref}
-          className=" grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-4 lg:gap-10 mb-8 lg:mb-12 px-3 sm:px-6 lg:px-5 py-4 lg:py-5 rounded-lg "
+          className="border border-gray-300 shadow-lg md:shadow-none md:border-0 rounded-4xl grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-4 lg:gap-10 mb-8 lg:mb-12 p-6 lg:px-5 lg:py-5"
           style={{
-            clipPath: "polygon(40px 0%, 100% 0%, 100% 100%, 0% 100%, 0% 40px)",
           }}
         >
-          <div ref={essenceImageRef} className="relative hidden md:block md:col-span-1 lg:col-span-1 xl:col-span-1">
-            <div className="relative w-full h-125 min-w-20 min-h-36 max-w-96 max-h-125 rounded-2xl overflow-hidden shadow-lg">
+          <div className="md:hidden">
+            <div className="border border-gray-500 text-xs rounded-full px-4 py-2 w-fit text-[#4A4A4B] my-4">
+              Quem Somos
+            </div>
+          </div>
+          <div className="text-[#4A4A4B] text-3xl font-light mb-4 md:hidden">
+            Construindo história, com execelencia e experiência
+          </div>
+          <div ref={essenceImageRef} className="relative md:block md:col-span-1 lg:col-span-1 xl:col-span-1">
+            <div className="relative w-full h-70 md:h-125 min-w-20 min-h-36 max-h-125 rounded-4xl overflow-hidden shadow-lg">
               <Image
-                src="/smilily-woman.png"
+                src="/smilily-woman.svg"
                 alt="Conheça nossa história"
                 fill
-                className="object-cover"
+                className="object-cover "
               />
 
               <div
                 className="absolute bottom-0 left-0 w-full 
                     bg-[#E86000] 
                     flex items-center justify-between 
-                    px-6 py-5 
-                    rounded-b-2xl"
+                    p-4 md:px-6 md:py-5 
+                    rounded-4xl"
               >
                 <p className="text-white font-semibold">
                   Conheça nossa história
@@ -171,7 +178,7 @@ export function SobreNos() {
           </div>
 
           {/* Conteúdo Principal público */}
-          <div className="md:col-span-2 space-y-4 sm:space-y-6 text-ligth-gray order-1 md:order-2  md:text-left ">
+          <div className="md:col-span-2 space-y-4 sm:space-y-6 text-ligth-gray order-1 md:order-2 ml-0 md:ml-6 md:text-left ">
             <div className="items-center justify-center my-5">
               <h3
                 ref={essenceTitleRef}
@@ -181,7 +188,7 @@ export function SobreNos() {
               </h3>
               <p
                 ref={essenceDescriptionRef}
-                className="text-sm sm:text-base lg:text-[0.9rem]  md:text-sm leading-relaxed pr-5 text-justify font-normal text-[#2D3134] mt-6"
+                className="text-sm sm:text-base lg:text-[0.9rem]  md:text-sm leading-relaxed text-justify font-normal text-[#2D3134] mt-6"
               >
                 Somos um escritório em evolução, com atuação estratégica e foco
                 em soluções jurídicas eficazes. Trabalhamos de forma integrada
@@ -199,14 +206,14 @@ export function SobreNos() {
                 <div className="bg-[#FFFCF9] p-2 rounded-lg justify-center items-center ">
                   <Icon
                     icon="streamline:target-solid"
-                    className="w-7 h-7 ml-2.5 text-[#E86000] inline-block mr-2"
+                    className="w-7 h-7 text-[#E86000] inline-block"
                   />
                 </div>
                 <div>
-                  <span className=" text-sm sm:text-base lg:text-md  md:text-sm leading-relaxed pr-5 text-justify font-semibold text-[#2D3134]">
+                  <span className=" text-sm sm:text-base lg:text-md  md:text-sm leading-relaxed text-justify font-semibold text-[#2D3134]">
                     Valores que nos Guiam
                   </span>
-                  <p className=" w-full md:w-4/5 text-sm sm:text-base lg:text-md  md:text-sm leading-relaxed pr-5 text-justify font-normal text-[#676A6C]">
+                  <p className=" w-full md:w-4/5 text-sm sm:text-base lg:text-md  md:text-sm leading-relaxed text-justify font-normal text-[#676A6C]">
                     Ética, transparência e compromisso orientam cada decisão,
                     garantindo segurança e confiança em todas as etapas do
                     atendimento.
@@ -218,14 +225,14 @@ export function SobreNos() {
                 <div className="bg-[#FFFCF9] p-2 rounded-lg justify-center items-center ">
                   <Icon
                     icon="vaadin:handshake"
-                    className="w-7 h-7 ml-2.5 text-[#E86000] inline-block mr-2"
+                    className="w-7 h-7 text-[#E86000] inline-block"
                   />
                 </div>
                 <div>
-                  <span className=" text-sm sm:text-base lg:text-md  md:text-sm leading-relaxed pr-5 text-justify font-semibold text-[#2D3134]">
+                  <span className=" text-sm sm:text-base lg:text-md  md:text-sm leading-relaxed text-justify font-semibold text-[#2D3134]">
                     Essência Colaborativa
                   </span>
-                  <p className=" w-full md:w-4/5text-sm sm:text-base lg:text-md  md:text-sm leading-relaxed pr-5 text-justify font-normal text-[#676A6C]">
+                  <p className=" w-full md:w-4/5text-sm sm:text-base lg:text-md  md:text-sm leading-relaxed text-justify font-normal text-[#676A6C]">
                     Adotamos uma abordagem estratégica, buscando soluções
                     jurídicas eficazes e personalizadas para cada cliente, com
                     foco em resultados concretos.

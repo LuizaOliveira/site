@@ -24,6 +24,7 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-red-hat-text: var(--font-red-hat-text);
+  --font-arimo: var(--font-arimo);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -99,6 +100,11 @@ body {
 /* Custom Font Classes */
 .font-cabinet {
   font-family: 'CabinetGrotesk', sans-serif;
+}
+
+/* Logo color switching */
+.logo-dark-mode img {
+  filter: invert(0.15) saturate(1.5) hue-rotate(200deg) brightness(0.9);
 }
 
 /* ===== RESET react-pdf ===== */

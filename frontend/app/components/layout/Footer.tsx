@@ -1,17 +1,18 @@
 import { Icon } from '@iconify/react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export function Footer() {
   return (
     <footer className="bg-[#0F2747] text-white pt-16 pb-10 font-sans">
       <div className="max-w-7xl mx-auto px-6">
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="grid  grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-12">
 
           {/* COLUNA 1 - LOGO + CONTATO */}
-          <div className="space-y-6">
+          <div className="space-y-6 col-span-1 lg:col-span-1">
             <Image
-              src="/logo-test.svg"
+              src="/logo.svg"
               alt="Clodonil Monteiro Advocacia"
               width={200}
               height={60}
@@ -31,13 +32,13 @@ export function Footer() {
             </div>
 
             <div className="flex items-center gap-3 pt-2">
-              <button className="bg-orange-500 hover:bg-orange-600 transition-colors px-5 py-2 rounded-full text-sm font-semibold">
+              <Link href="/#contato" className="bg-orange-500 hover:bg-orange-600 transition-colors px-5 py-2 rounded-full text-sm font-semibold">
                 Fale conosco
-              </button>
+              </Link>
 
-              <div className="bg-orange-500 hover:bg-orange-600 transition-colors w-10 h-10 rounded-full flex items-center justify-center cursor-pointer">
+              <Link href="/#contato" aria-label="Ir para contato" className="bg-orange-500 hover:bg-orange-600 transition-colors w-10 h-10 rounded-full flex items-center justify-center cursor-pointer">
                 <Icon icon="mdi:arrow-top-right" className="text-lg" />
-              </div>
+              </Link>
             </div>
           </div>
 
@@ -48,17 +49,25 @@ export function Footer() {
             </h3>
 
             <ul className="space-y-4 text-sm text-slate-300">
-              <li className="flex items-center gap-2 hover:text-orange-400 transition-colors cursor-pointer">
+              <li className="flex items-center gap-2 hover:text-orange-400 transition-colors">
+                <Link href="/#hero" className="flex items-center gap-2">
                 <span>▶</span> Início
+                </Link>
               </li>
-              <li className="flex items-center gap-2 hover:text-orange-400 transition-colors cursor-pointer">
+              <li className="flex items-center gap-2 hover:text-orange-400 transition-colors">
+                <Link href="/#sobre-nos" className="flex items-center gap-2">
                 <span>▶</span> Institucional
+                </Link>
               </li>
-              <li className="flex items-center gap-2 hover:text-orange-400 transition-colors cursor-pointer">
+              <li className="flex items-center gap-2 hover:text-orange-400 transition-colors">
+                <Link href="/#noticias" className="flex items-center gap-2">
                 <span>▶</span> Conteúdo
+                </Link>
               </li>
-              <li className="flex items-center gap-2 hover:text-orange-400 transition-colors cursor-pointer">
+              <li className="flex items-center gap-2 hover:text-orange-400 transition-colors">
+                <Link href="/#contato" className="flex items-center gap-2">
                 <span>▶</span> Contato
+                </Link>
               </li>
             </ul>
           </div>
@@ -70,20 +79,55 @@ export function Footer() {
             </h3>
 
             <ul className="space-y-4 text-sm text-slate-300">
-              <li className="flex items-center gap-2 hover:text-orange-400 transition-colors cursor-pointer">
-                <Icon icon="mdi:facebook" /> Facebook
+              <li className="flex items-center gap-2 hover:text-orange-400 transition-colors">
+                <a
+                  href="https://www.facebook.com/clodonilmonteiroadvocacia/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2"
+                >
+                  <Icon icon="mdi:facebook" /> Facebook
+                </a>
               </li>
-              <li className="flex items-center gap-2 hover:text-orange-400 transition-colors cursor-pointer">
-                <Icon icon="mdi:linkedin" /> LinkedIn
+              <li className="flex items-center gap-2 hover:text-orange-400 transition-colors">
+                <a
+                  href="https://br.linkedin.com/in/clodonil-monteiro-pereira-10ba9b158"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2"
+                >
+                  <Icon icon="mdi:linkedin" /> LinkedIn
+                </a>
               </li>
-              <li className="flex items-center gap-2 hover:text-orange-400 transition-colors cursor-pointer">
-                <Icon icon="mdi:youtube" /> Youtube
+              <li className="flex items-center gap-2 hover:text-orange-400 transition-colors">
+                <a
+                  href="https://www.youtube.com/@clodonilmonteiroadvocacia"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2"
+                >
+                  <Icon icon="mdi:youtube" /> Youtube
+                </a>
               </li>
-              <li className="flex items-center gap-2 hover:text-orange-400 transition-colors cursor-pointer">
-                <Icon icon="mdi:instagram" /> Instagram
+              <li className="flex items-center gap-2 hover:text-orange-400 transition-colors">
+                <a
+                  href="https://www.instagram.com/clodonilmonteiro/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2"
+                >
+                  <Icon icon="mdi:instagram" /> Instagram
+                </a>
               </li>
-              <li className="flex items-center gap-2 hover:text-orange-400 transition-colors cursor-pointer">
-                <Icon icon="ic:baseline-tiktok" /> TikTok
+              <li className="flex items-center gap-2 hover:text-orange-400 transition-colors">
+                <a
+                  href="https://www.tiktok.com/@clodonilmonteiro"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2"
+                >
+                  <Icon icon="ic:baseline-tiktok" /> TikTok
+                </a>
               </li>
             </ul>
           </div>
