@@ -5,11 +5,20 @@ import { Icon } from '@iconify/react'
 
 export function FreeAnalysisSection() {
   return (
-    <section className="w-full   px-4">
-      <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-0 items-stretch">
-        
+    <section className="w-full px-4">
+      <div className="bg-[#fefeff] lg:bg-transparent max-w-7xl mx-auto grid lg:grid-cols-2 gap-0 items-stretch border border-gray-200 lg:border-0 rounded-3xl">
         {/* CARD ESQUERDA */}
-        <div className="bg-[#fefeff] rounded-3xl p-10 shadow-2xl border border-gray-200 z-10">
+        <div className="lg:hidden relative rounded-3xl overflow-hidden shadow-lg">
+          <img
+            src="/group.svg" // coloque sua imagem aqui
+            alt="Consultoria"
+            className="object-cover w-full h-60 md:h-90 shadow-lg"
+          />
+          <div className="absolute border border-white/10 bottom-4 right-4 bg-white/0 backdrop-blur-xs text-white px-4 py-2 rounded-lg text-sm font-medium">
+            Texto Ilustrativo
+          </div>
+        </div>
+        <div className="lg:bg-[#fefeff] md:rounded-3xl p-10 shadow-2xl lg:border lg:border-gray-200 z-10">
           
           {/* Badge */}
           <span className="inline-block text-xs px-4 py-1 rounded-full border border-orange-400 text-orange-500 mb-6">
