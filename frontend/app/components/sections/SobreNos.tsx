@@ -178,7 +178,7 @@ export function SobreNos() {
           </div>
 
           {/* Conteúdo Principal público */}
-          <div className="md:col-span-2 space-y-4 sm:space-y-6 text-ligth-gray order-1 md:order-2  md:text-left ">
+          <div className="md:col-span-2 space-y-4 sm:space-y-6 text-ligth-gray order-1 md:order-2 ml-0 md:ml-6 md:text-left ">
             <div className="items-center justify-center my-5">
               <h3
                 ref={essenceTitleRef}
