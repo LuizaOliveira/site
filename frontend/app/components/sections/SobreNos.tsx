@@ -129,7 +129,7 @@ export function SobreNos() {
         {/* Primeira linha - Principal público */}
         <div
           ref={card1Ref}
-          className="border border-gray-300 shadow-lg md:border-0 rounded-4xl grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-4 lg:gap-10 mb-8 lg:mb-12 p-6 lg:px-5 lg:py-5"
+          className="border border-gray-300 shadow-lg md:shadow-none md:border-0 rounded-4xl grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-4 lg:gap-10 mb-8 lg:mb-12 p-6 lg:px-5 lg:py-5"
           style={{
           }}
         >
