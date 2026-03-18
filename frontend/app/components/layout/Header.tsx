@@ -3,8 +3,11 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Icon } from '@iconify/react';
+import { usePathname, useRouter } from 'next/navigation';
 
 export function Header() {
+  const pathname = usePathname();
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOnConsultingHero, setIsOnConsultingHero] = useState(true);
@@ -20,8 +23,17 @@ export function Header() {
 
   // Detectar se está na seção ConsultingHero
   useEffect(() => {
-    const consultingSection = document.getElementById('consulting-hero');
-    if (!consultingSection) return;
+    if (pathname !== '/') {
+      setIsOnConsultingHero(false);
+      return;
+    }
+
+    const consultingSection =
+      document.getElementById('consulting-hero') || document.getElementById('hero');
+    if (!consultingSection) {
+      setIsOnConsultingHero(false);
+      return;
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -32,7 +44,37 @@ export function Header() {
 
     observer.observe(consultingSection);
     return () => observer.disconnect();
-  }, []);
+  }, [pathname]);
+
+  // Quando a rota muda para home com hash, faz scroll suave para a seção
+  useEffect(() => {
+    if (pathname !== '/') return;
+
+    const hash = window.location.hash.replace('#', '');
+    if (!hash) return;
+
+    const runScroll = () => {
+      if (hash === 'hero') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+
+      const element = document.getElementById(hash);
+      if (!element) return;
+
+      const headerOffset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    };
+
+    const timer = window.setTimeout(runScroll, 120);
+    return () => window.clearTimeout(timer);
+  }, [pathname]);
 
   const menuItems = [
     { id: 'hero', label: 'Início' },
@@ -43,20 +85,31 @@ export function Header() {
     { id: 'noticias', label: 'Notícias' },
   ];
 
-  // Função de scroll suave
+  // Navegação por seção: rola na home ou redireciona para home + hash
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      const headerOffset = 80; // Altura do header fixo
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    }
     setIsMenuOpen(false);
+
+    if (pathname !== '/') {
+      router.push(sectionId === 'hero' ? '/' : `/#${sectionId}`);
+      return;
+    }
+
+    if (sectionId === 'hero') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    const element = document.getElementById(sectionId);
+    if (!element) return;
+
+    const headerOffset = 80;
+    const elementPosition = element.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    });
   };
 
   return (
@@ -65,7 +118,7 @@ export function Header() {
         isOnConsultingHero 
           ? 'bg-white lg:bg-transparent backdrop-blur-0 border-b border-gray-100 lg:border-none' 
           : 'bg-white/95 backdrop-blur-lg shadow-sm border-b border-gray-100'
-      }`}
+      } ${isOnConsultingHero && isScrolled ? '-translate-y-full opacity-0 pointer-events-none' : 'translate-y-0 opacity-100'}`}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 md:h-16 lg:h-20">

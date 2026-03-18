@@ -23,6 +23,8 @@ export function NewsFilter() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isFullscreenViewerOpen, setIsFullscreenViewerOpen] = useState(false);
+  const [selectedPdfUrl, setSelectedPdfUrl] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
@@ -36,6 +38,7 @@ export function NewsFilter() {
   // const snapTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   
   const scrollRef = useRef<HTMLDivElement>(null);
+  const fullscreenViewerRef = useRef<HTMLDivElement>(null);
 
   // Buscar posts do banco de dados
   useEffect(() => {
@@ -219,6 +222,60 @@ export function NewsFilter() {
     });
   };
 
+  const openFullscreenViewer = async (pdfUrl: string) => {
+    setSelectedPdfUrl(pdfUrl);
+    setIsFullscreenViewerOpen(true);
+
+    if (document.fullscreenElement || !fullscreenViewerRef.current) return;
+
+    try {
+      await fullscreenViewerRef.current.requestFullscreen();
+    } catch (fullscreenError) {
+      console.error('Erro ao entrar em fullscreen:', fullscreenError);
+    }
+  };
+
+  const closeFullscreenViewer = useCallback(async () => {
+    if (document.fullscreenElement) {
+      try {
+        await document.exitFullscreen();
+      } catch (fullscreenError) {
+        console.error('Erro ao sair do fullscreen:', fullscreenError);
+      }
+    }
+
+    setIsFullscreenViewerOpen(false);
+    setSelectedPdfUrl(null);
+  }, []);
+
+  useEffect(() => {
+    if (!isFullscreenViewerOpen) return;
+
+    const handleEsc = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        closeFullscreenViewer();
+      }
+    };
+
+    const handleFullscreenChange = () => {
+      if (!document.fullscreenElement) {
+        setIsFullscreenViewerOpen(false);
+        setSelectedPdfUrl(null);
+      }
+    };
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleEsc);
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleEsc);
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+    };
+  }, [isFullscreenViewerOpen, closeFullscreenViewer]);
+
   if (loading) {
     return (
       <div className="bg-white py-12 px-4 sm:px-6 lg:px-8">
@@ -315,9 +372,14 @@ export function NewsFilter() {
                 <p className='text-[#8494B8] text-md mt-3'>{post.description}</p>
               </div>
 
-              <div className="absolute  bottom-8 right-3 bg-[#E86000] w-10 h-10 rounded-full flex justify-center items-center rotate-45 translate-y-2">
-                <Icon icon="fluent:arrow-up-28-filled" className="w-5 h-5 text-primary " />
-              </div>
+              <button
+                type="button"
+                onClick={() => openFullscreenViewer(post.file)}
+                className="absolute bottom-8 right-3 bg-[#E86000] w-10 h-10 rounded-full flex justify-center items-center rotate-45 translate-y-2 hover:bg-[#d95700] transition-colors"
+                aria-label={`Abrir PDF ${post.title} em tela cheia`}
+              >
+                <Icon icon="fluent:arrow-up-28-filled" className="w-5 h-5 text-primary" />
+              </button>
             </div>
           ))}
           </div>
@@ -359,6 +421,28 @@ export function NewsFilter() {
               </div> */}
             </>
           )}        </div>
+
+        <div
+          ref={fullscreenViewerRef}
+          className={`fixed inset-0 z-100 bg-white ${isFullscreenViewerOpen && selectedPdfUrl ? 'block' : 'hidden'}`}
+        >
+          {isFullscreenViewerOpen && selectedPdfUrl && (
+            <div className="relative h-full w-full">
+              <button
+                type="button"
+                onClick={closeFullscreenViewer}
+                className="absolute top-2 right-2 z-101 bg-white/90 hover:bg-white rounded-full p-2 shadow-md transition-colors"
+                aria-label="Fechar visualizador"
+              >
+                <Icon icon="mdi:close" className="w-5 h-5 text-primary" />
+              </button>
+
+              <div className="h-full">
+                <SimplePDFViewer pdfUrl={selectedPdfUrl} />
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

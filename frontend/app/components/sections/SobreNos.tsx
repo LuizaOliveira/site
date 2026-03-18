@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Icon } from "@iconify/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -154,18 +155,20 @@ export function SobreNos() {
                   Conheça nossa história
                 </p>
 
-                <button
-                  className="bg-[#0B1B3B] 
+                <Link href="/nossa-historia">
+                  <button
+                    className="bg-[#0B1B3B] 
                          rounded-full 
                          p-3 
                          hover:scale-105 
                          transition"
-                >
-                  <Icon
-                    icon="mdi:arrow-right"
-                    className="w-5 h-5 text-[#E86000]"
-                  />
-                </button>
+                  >
+                    <Icon
+                      icon="mdi:arrow-right"
+                      className="w-5 h-5 text-[#E86000]"
+                    />
+                  </button>
+                </Link>
               </div>
             </div>
           </div>

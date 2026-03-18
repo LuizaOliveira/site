@@ -33,6 +33,7 @@ export default function TeamDetail() {
   return (
     <>
       <Header />
+      
       <section className="min-h-screen bg-white py-12 ">
         <div className="container mx-auto px-4 md:px-8 mt-20">
           {/* Header com Badge */}
@@ -46,7 +47,7 @@ export default function TeamDetail() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             {/* Coluna esquerda - Informações */}
-            <div>
+            <div className="order-2 lg:order-1">
               {/* Nome */}
               <h1 className="text-4xl md:text-5xl font-bold text-primary mb-3">
                 {advogado.nome}
@@ -135,8 +136,8 @@ export default function TeamDetail() {
             </div>
 
             {/* Coluna direita - Imagem */}
-            <div className="flex items-center justify-center lg:justify-end">
-              <div className="relative w-64 h-80 md:w-80 md:h-96">
+            <div className="flex items-center justify-center order-1 lg:order-2 w-full">
+              <div className="w-full max-w-sm">
                 {/* <Image
                 src={`/${advogado.imagem}`}
                 alt={advogado.nome}

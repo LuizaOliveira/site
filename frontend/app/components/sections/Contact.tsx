@@ -6,7 +6,7 @@ import { FreeAnalysisSection } from "../ui/FreeAnalysisSection";
 
 export function Contact() {
   return (
-    <section className="relative overflow-hidden">
+    <section className="relative overflow-hidden" id="contato">
 
       {/* Divider */}
       <div className="relative w-full flex items-center justify-center py-2">
@@ -23,7 +23,7 @@ export function Contact() {
       <div className="absolute inset-0 bg-linear-to-b from-white from-50% to-[#0F2747] to-50% -z-20"></div>
 
       {/* CONTAINER */}
-      <div className="container mx-auto px-4 py-12 md:py-24 relative z-10">
+      <div className="container mx-auto px-4 py-10 md:py-24 relative z-10">
 
         <FreeAnalysisSection />
 

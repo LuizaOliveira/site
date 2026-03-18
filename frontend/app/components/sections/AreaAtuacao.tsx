@@ -47,7 +47,7 @@ export function AreaAtuacao() {
           cardElements.forEach((card: Element) => {
             const cardElement = card as HTMLElement;
             cardElement.addEventListener('mouseenter', () => {
-              gsap.to(cardElement, { y: -8, boxShadow: '0 15px 35px rgba(232, 96, 0, 0.15)', duration: 0.3, ease: 'power2.out' });
+              gsap.to(cardElement, { y: -8, boxShadow: '0 15px 35px rgba(0, 0, 0, 0.25)', duration: 0.3, ease: 'power2.out' });
             });
             cardElement.addEventListener('mouseleave', () => {
               gsap.to(cardElement, { y: 0, boxShadow: '0 5px 15px rgba(0, 0, 0, 0.05)', duration: 0.3, ease: 'power2.out' });
@@ -83,17 +83,17 @@ export function AreaAtuacao() {
 
             <div>
               <div ref={titleRef} className="lg:hidden block">
-               <div className="inline-block border border-[#C0C8D9
+                <div className="inline-block border border-[#C0C8D9
                
                
                
                ] px-2 lg:px-4 py-0.5 lg:py-1 rounded-lg mb-6">
-                <span className="text-[#C0C8D9] text-xs lg:text-sm">Área de Atuação</span>
-             </div>
+                  <span className="text-[#C0C8D9] text-xs lg:text-sm">Área de Atuação</span>
+                </div>
                 <h2 className="text-white text-2xl lg:text-3xl md:text-3xl sm:font-light lg:font-bold mb-4">
                   Soluções Jurídicas
                   <span className="text-secondary">
-                    <br/>Especializadas
+                    <br />Especializadas
                   </span>
                 </h2>
 
@@ -103,11 +103,18 @@ export function AreaAtuacao() {
 
 
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-14 mt-10 mb-14' ref={cardsGridRef}>
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="p-5 bg-linear-to-br from-[#0F234A] via-[#0F234A] to-[#0b214d] shadow-xl animatable-card transition-all duration-300 rounded-xl">
+            {[
+              { id: 3, title: 'Professores ativos', content: 'standard dummy text ever since the 1500sstandard dummy text ever since the 1500s' }, 
+              { id: 1, title: 'Servidores Ativos', content: 'standard dummy text ever since the 1500sstandard dummy text ever since the 1500s' }, 
+              { id: 2, title: 'Professores aposentados', content: 'standard dummy text ever since the 1500sstandard dummy text ever since the 1500s' }, 
+              { id: 4, title: 'Servidores aposentados', content: 'standard dummy text ever since the 1500sstandard dummy text ever since the 1500s' }].map((i) => (
+              <div key={i.id} className="p-5 bg-linear-to-br from-[#0F234A] via-[#0F234A] to-[#0b214d] shadow-xl animatable-card transition-all duration-300 rounded-xl">
                 <Icon icon="hugeicons:teacher" className="w-8 h-8 text-[#E86000] mb-6 md:mb-10" />
-                <p className="text-white mb-6 md:mb-12 text-sm md:text-base">
-                  standard dummy text ever since the 1500sstandard dummy text ever since the 1500s
+                <p className="text-white text-sm md:text-xl font-medium mb-2">
+                  {i.title}
+                </p>
+                <p className="text-white mb-6 md:mb-12 text-sm md:text-base font-extralight lg:font-light">
+                  {i.content}
                 </p>
               </div>
             ))}
@@ -123,12 +130,13 @@ export function AreaAtuacao() {
 
 
       <div className="mx-4 md:mx-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mt-12 md:mt-20 gap-8 md:gap-0">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 mt-12 md:mt-20 gap-8 md:gap-0">
 
 
           <div className="flex flex-col items-center gap-3 px-4 md:px-8 border-b md:border-b-0 md:border-r border-[#F0F0F0] pb-6 md:pb-0 last:border-0">
-            <div className="bg-[#F5F5F5] w-full max-w-50 py-3 px-5 shadow-md rounded-lg">
-              <p className="text-center text-[#E86000] font-bold text-2xl md:text-3xl">+29 mil</p>
+            <div className="w-full max-w-50 py-3 px-5 shadow-md rounded-lg flex items-center justify-between bg-white border-2 border-[#F0F0F0]">
+              <Image src="/rn.svg" alt="RN" width={80} height={50} className="object-contain" />
+              <p className="text-[#E86000] font-bold text-2xl md:text-3xl">RN</p>
             </div>
             <div className="text-center text-darkgray font-medium text-sm md:text-base">
               Processos Protocolados

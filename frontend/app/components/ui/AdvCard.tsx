@@ -30,7 +30,7 @@ export function AdvCard({ imgSrc, nome, titulo, texto, social }: AdvCardProps) {
     router.push(`/equipe/${nomeFormatado}`);
   };
   return (
-    <div className='group bg-white w-sm rounded-xl border border-gray-200 shadow-lg hover:bg-[#F3F5FD] transition-colors duration-300'>
+    <div onClick={handleNavigate} className='group bg-white w-xs lg:w-sm rounded-xl border border-gray-200 shadow-lg hover:bg-[#F3F5FD] transition-colors duration-300'>
     <div className='flex items-center justify-center p-5'>
       <AvatarCircle imgSrc={imgSrc} nome={nome}  />
       </div> 
@@ -43,7 +43,7 @@ export function AdvCard({ imgSrc, nome, titulo, texto, social }: AdvCardProps) {
           <p className='text-[#061A58] font-light text-xs group-hover:text-primary transition-colors duration-300'>{titulo || "Advogado Fundodor"}</p>
         </div>
 
-        <button onClick={handleNavigate} className='flex items-center gap-2 mt-3 rounded-full hover:scale-110 transition-transform duration-300'>
+        <button className='flex items-center gap-2 mt-3 rounded-full hover:scale-110 transition-transform duration-300'>
           <div className='bg-secondary w-8 h-8 rounded-full flex items-center justify-center text-white text-xs rotate-45 transform'>
             <Icon icon="bitcoin-icons:arrow-up-filled" className="w-5 h-5 transform text-primary" />
           </div>

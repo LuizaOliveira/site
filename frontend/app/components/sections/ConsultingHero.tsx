@@ -9,15 +9,15 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 export function ConsultingHero() {
-  const titleRef = useRef(null);
-  const subtitleRef = useRef(null);
-  const buttonRef = useRef(null);
-  const backgroundRef = useRef(null);
-  const bottomLabelsRef = useRef(null);
-  const cardsRef = useRef([]);
-  const leftArrowRef = useRef(null);
-  const rightArrowRef = useRef(null);
-  const decorativeLineRef = useRef(null);
+  const titleRef = useRef<HTMLDivElement | null>(null);
+  const subtitleRef = useRef<HTMLHeadingElement | null>(null);
+  const buttonRef = useRef<HTMLDivElement | null>(null);
+  const backgroundRef = useRef<HTMLDivElement | null>(null);
+  const bottomLabelsRef = useRef<HTMLDivElement | null>(null);
+  const cardsRef = useRef<HTMLDivElement[]>([]);
+  const leftArrowRef = useRef<HTMLButtonElement | null>(null);
+  const rightArrowRef = useRef<HTMLButtonElement | null>(null);
+  const decorativeLineRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const tl = gsap.timeline();
@@ -157,14 +157,14 @@ export function ConsultingHero() {
 
   return (
     <section
-      id="consulting-hero"
+      id="hero"
       className="relative w-full bg-white overflow-hidden pt-14 lg:pt-20 lg:h-screen lg:min-h-175"
     >
       {/* IMAGE CARD */}
       <div
         ref={backgroundRef}
         className="
-        relative mx-3 mt-6 h-72 md:h-96 rounded-4xl overflow-hidden
+        relative mx-3 mt-6 h-72 md:h-96 lg:rounded-none rounded-4xl overflow-hidden
         lg:absolute lg:inset-0 lg:h-full lg:mx-0 lg:mt-0
       "
       >
@@ -172,11 +172,11 @@ export function ConsultingHero() {
           src={"/tes.svg"}
           alt="Consulting Background"
           fill
-          className="object-cover sm:object-top-right rounded-4xl lg:rounded-b-[2.5rem]"
+          className="object-cover sm:object-top-right rounded-4xl lg:rounded-none"
           priority
         />
 
-        <div className="absolute inset-0 bg-black/10 rounded-4xl lg:rounded-b-[2.5rem]" />
+        <div className="absolute inset-0 bg-black/10 rounded-4xl lg:rounded-none" />
 
         {/* CONTENT SOBRE A IMAGEM */}
         <div className="absolute inset-0 z-10 flex flex-col justify-center p-4 lg:relative lg:h-full lg:items-center lg:justify-center lg:p-0">
@@ -184,7 +184,7 @@ export function ConsultingHero() {
             <div className="text-white mb-6 lg:mb-12">
               <div className="mb-2" ref={titleRef}>
                 <div className="flex items-center gap-4">
-                  <h1 className="text-3xl md:text-4xl lg:text-7xl font-medium">
+                  <h1 className="text-3xl md:text-4xl lg:text-7xl font-normal">
                     Advocacia para
                   </h1>
 
@@ -196,16 +196,16 @@ export function ConsultingHero() {
               </div>
 
               <h1
-                className="text-3xl md:text-4xl  lg:text-7xl font-medium leading-tight mb-6"
+                className="text-3xl md:text-4xl  lg:text-7xl font-normal leading-tight mb-6"
                 ref={subtitleRef}
               >
                 Servidores Públicos
               </h1>
 
               <div ref={buttonRef}>
-                <button className="lg:max-w-none  bg-[#E86100] hover:bg-secondary text-white font-bold pl-3 lg:pl-6 pr-2 lg:pr-3 py-1 rounded-full flex items-center gap-3 lg:gap-6 transition-all duration-300">
+                <button className="lg:max-w-none  bg-[#E86100] hover:bg-secondary text-white font-bold pl-3 lg:pl-6 pr-2 lg:pr-3 lg:py-2 py-1 rounded-full flex items-center gap-3 lg:gap-6 transition-all duration-300">
                   <div className="flex items-center gap-3">
-                    <Icon icon="ic:twotone-whatsapp" className="w-5 h-5" />
+                    <Icon icon="ic:twotone-whatsapp" className="w-5 h-5 lg:w-8 lg:h-8" />
                     <p className=" text-xs lg:text-lg text-left">
                       Tenha uma análise
                     </p>
