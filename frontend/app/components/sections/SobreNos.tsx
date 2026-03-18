@@ -129,12 +129,12 @@ export function SobreNos() {
         {/* Primeira linha - Principal público */}
         <div
           ref={card1Ref}
-          className="border border-gray-300 md:border-0 rounded-4xl grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-4 lg:gap-10 mb-8 lg:mb-12 p-6 lg:px-5 lg:py-5"
+          className="border border-gray-300 shadow-lg md:border-0 rounded-4xl grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-4 lg:gap-10 mb-8 lg:mb-12 p-6 lg:px-5 lg:py-5"
           style={{
           }}
         >
           <div className="md:hidden">
-            <div className="border border-gray-500 rounded-full px-4 py-2 w-fit text-[#4A4A4B] my-4">
+            <div className="border border-gray-500 text-xs rounded-full px-4 py-2 w-fit text-[#4A4A4B] my-4">
               Quem Somos
             </div>
           </div>
