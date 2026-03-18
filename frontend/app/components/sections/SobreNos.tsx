@@ -147,7 +147,7 @@ export function SobreNos() {
                 src="/smilily-woman.svg"
                 alt="Conheça nossa história"
                 fill
-                className="object-cover"
+                className="object-cover "
               />
 
               <div

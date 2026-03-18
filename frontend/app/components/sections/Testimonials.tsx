@@ -209,10 +209,10 @@ export function Testimonials() {
         </div>
 
         {/* SLIDER */}
-        <div className="relative pt-12">
+        <div className="relative">
           <div 
             ref={scrollRef} 
-            className="flex overflow-x-auto overflow-y-visible scroll-smooth snap-x snap-mandatory cursor-grab active:cursor-grabbing select-none hide-scrollbar py-"
+            className="flex overflow-x-auto overflow-y-visible scroll-smooth snap-x snap-mandatory cursor-grab active:cursor-grabbing select-none hide-scrollbar pt-12 pb-2"
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
@@ -234,7 +234,7 @@ export function Testimonials() {
                 .map((item, index) => (
                   <div
                     key={index}
-                    className={`testimonial-card relative bg-white my-2 rounded-3xl pt-16 pb-10 px-6 lg:px-8 shadow-lg shrink-0 ${
+                    className={`testimonial-card relative bg-white my-2 rounded-3xl pt-24 pb-10 px-6 lg:px-8 shadow-lg shrink-0 overflow-visible ${
                       cardsPerPage === 1 
                         ? 'w-full max-w-md mx-auto' 
                         : cardsPerPage === 2 
@@ -243,13 +243,13 @@ export function Testimonials() {
                     }`}
                   >
                     {/* AVATAR */}
-                    <div className="absolute -top-10 left-1/2 -translate-x-1/2 py-10">
-                      <div className="w-20 h-20 rounded-full border-4 border-white overflow-hidden shadow-md">
+                    <div className="absolute -top-12 left-1/2 -translate-x-1/2">
+                      <div className="w-24 h-24 rounded-full border-4 border-white overflow-hidden shadow-lg">
                         <Image
                           src={item.image}
                           alt={item.name}
-                          width={80}
-                          height={80}
+                          width={96}
+                          height={96}
                           className="object-cover w-full h-full"
                         />
                       </div>
