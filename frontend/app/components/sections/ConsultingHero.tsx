@@ -20,10 +20,10 @@ export function ConsultingHero() {
   const decorativeLineRef = useRef(null);
 
   useEffect(() => {
-    // Timeline elegante e sofisticada com stagger
+    
     const tl = gsap.timeline();
 
-    // Definir estados iniciais
+    
     gsap.set([titleRef.current, subtitleRef.current, buttonRef.current], {
       opacity: 0,
       y: 30
@@ -50,9 +50,9 @@ export function ConsultingHero() {
       x: (i) => i === 0 ? -30 : 30
     });
 
-    // Timeline de animação elegante com stagger
+ 
     tl
-      // Background com zoom sutil (parallax-like effect)
+      
       .to(backgroundRef.current, {
         opacity: 1,
         scale: 1,
