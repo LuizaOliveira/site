@@ -12,6 +12,13 @@ import { DURATIONS, EASINGS } from '../../lib/animations/constants';
 gsap.registerPlugin(ScrollTrigger);
 
 export function AreaAtuacao() {
+  const statsImages = [
+    { src: '/Camada_x0020_1.svg', alt: 'Estado RN', sigla: 'RN', estado: 'Rio Grande do Norte' },
+    { src: '/Camada_x0020_1 (1).svg', alt: 'Estado SP', sigla: 'SP', estado: 'Sao Paulo' },
+    { src: '/Camada_x0020_1 (2).svg', alt: 'Estado RJ', sigla: 'RJ', estado: 'Rio de Janeiro' },
+    { src: '/_36936856.svg', alt: 'Estado MA', sigla: 'MA', estado: 'Maranhao' },
+  ];
+
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const cardsGridRef = useRef<HTMLDivElement>(null);
@@ -63,18 +70,18 @@ export function AreaAtuacao() {
         onEnter: animateAll
       });
     }, sectionRef);
-
+ 
     return () => ctx.revert();
   }, [prefersReducedMotion]);
 
   return (
     <section id="area-atuacao" ref={sectionRef} className="bg-white px-4 md:px-12 py-10">
-
+      
       <div className="bg-[#071B42] rounded-3xl p-6 md:p-10 shadow-xl mx-0 md:mx-12 relative">
         <div className="container mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 mt-4 md:mt-8 gap-8">
-            <div className="lg:col-span-8 lg:block hidden">
-              <div ref={titleRef} >
+            <div className="lg:col-span-8">
+              <div ref={titleRef}>
                 <SectionTitle subtitle='Aqui o servidor público tem voz' title='Nossa' dark centerOnMobile>
                   área de Atuação
                 </SectionTitle>
@@ -101,7 +108,7 @@ export function AreaAtuacao() {
             </div>
           </div>
 
-
+          
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-14 mt-10 mb-14' ref={cardsGridRef}>
             {[
               { id: 3, title: 'Professores ativos', content: 'standard dummy text ever since the 1500sstandard dummy text ever since the 1500s' }, 
@@ -121,57 +128,37 @@ export function AreaAtuacao() {
           </div>
         </div>
 
-
+        
         <div
           className="hidden md:block absolute -bottom-10 left-35 w-16 h-10 bg-[#071B42]"
           style={{ clipPath: "path('M0 0 Q8 0 12 6 L28 24 Q32 28 36 24 L52 6 Q56 0 64 0 Z')" }}
         />
       </div>
 
-
+      
       <div className="mx-4 md:mx-10">
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 mt-12 md:mt-20 gap-8 md:gap-0">
-
-
-          <div className="flex flex-col items-center gap-3 px-4 md:px-8 border-b md:border-b-0 md:border-r border-[#F0F0F0] pb-6 md:pb-0 last:border-0">
-            <div className="w-full max-w-50 py-3 px-5 shadow-md rounded-lg flex items-center justify-between bg-white border-2 border-[#F0F0F0]">
-              <Image src="/rn.svg" alt="RN" width={80} height={50} className="object-contain" />
-              <p className="text-[#E86000] font-bold text-2xl md:text-3xl">RN</p>
+        <div className="grid grid-cols-2 lg:grid-cols-4 mt-12 md:mt-20 gap-6 md:gap-8 lg:gap-x-6 lg:gap-y-0">
+          {statsImages.map((item, index) => (
+            <div
+              key={item.src}
+              className="flex flex-col items-center justify-center gap-2 px-2 md:px-4 lg:px-8 pb-4 border-b border-[#F0F0F0] lg:border-b-0 lg:border-r lg:last:border-r-0"
+            >
+              <Image
+                src={item.src}
+                alt={item.alt}
+                width={170}
+                height={170}
+                className="w-full max-w-[120px] md:max-w-[135px] lg:max-w-[100px]"
+                priority={index === 0}
+              />
+              <p
+                className="text-center text-base md:text-lg font-normal text-[#8E939E]"
+                style={{ fontFamily: 'Poppins, sans-serif' }}
+              >
+                {item.estado}
+              </p>
             </div>
-            <div className="text-center text-darkgray font-medium text-sm md:text-base">
-              Processos Protocolados
-            </div>
-          </div>
-
-
-          <div className="flex flex-col items-center gap-3 px-4 md:px-8 border-b md:border-b-0 md:border-r border-[#F0F0F0] pb-6 md:pb-0 last:border-0">
-            <div className="bg-[#F5F5F5] w-full max-w-50 py-3 px-5 shadow-md rounded-lg">
-              <p className="text-center text-[#E86000] font-bold text-2xl md:text-3xl">+8 mil</p>
-            </div>
-            <div className="text-center text-darkgray font-medium text-sm md:text-base">
-              Clientes Satisfeitos
-            </div>
-          </div>
-
-
-          <div className="flex flex-col items-center gap-3 px-4 md:px-8 border-b md:border-b-0 md:border-r border-[#F0F0F0] pb-6 md:pb-0 last:border-0">
-            <div className="bg-[#F5F5F5] w-full max-w-50 py-3 px-5 shadow-md rounded-lg">
-              <p className="text-center text-[#E86000] font-bold text-2xl md:text-3xl">99%</p>
-            </div>
-            <div className="text-center text-darkgray font-medium text-sm md:text-base">
-              de procedência
-            </div>
-          </div>
-
-
-          <div className="flex flex-col items-center gap-3 px-4 md:px-8">
-            <div className="bg-[#F5F5F5] w-full max-w-50 py-3 px-5 shadow-md rounded-lg">
-              <p className="text-center text-[#E86000] font-bold text-2xl md:text-3xl">+8 anos</p>
-            </div>
-            <div className="text-center text-darkgray font-medium text-sm md:text-base">
-              Experiência com servidores
-            </div>
-          </div>
+          ))}
 
         </div>
       </div>
