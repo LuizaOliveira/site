@@ -48,13 +48,16 @@ export function NewsFilter() {
         const result = await getPosts();
 
         if (result.success && result.data) {
-            // Filtrar apenas posts publicados e pegar os 4 primeiros
+            // Filtrar apenas posts publicados e ordenar do mais recente para o mais antigo
             const postsArray = Array.isArray(result.data)
               ? result.data
               : (result.data as any).data;
             const publishedPosts = (postsArray || [])
               .filter((post: Post) => post.published)
-              .slice(0, 4);
+              .sort(
+                (a: Post, b: Post) =>
+                  new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+              );
             setPosts(publishedPosts);
         } else {
           setError(result.error || 'Erro ao carregar posts');
@@ -80,31 +83,6 @@ export function NewsFilter() {
     };
   }, []);
 
-  // DESATIVADO TEMPORARIAMENTE - Função para snap suave ao card mais próximo
-  // const snapToNearestCard = useCallback((force = false) => {
-  //   console.log('snapToNearestCard chamado - DESATIVADO');
-  //   return; // Desativado para teste
-  // }, []);
-
-  // DESATIVADO TEMPORARIAMENTE - Função para detectar se deve aplicar snap após inatividade  
-  // const scheduleOptionalSnap = useCallback(() => {
-  //   console.log('scheduleOptionalSnap chamado - DESATIVADO');
-  //   return; // Desativado para teste
-  // }, []);
-
-  // DESATIVADO TEMPORARIAMENTE - Navegação por botões
-  // const scrollToIndex = useCallback((index: number) => {
-  //   console.log('scrollToIndex chamado para index:', index, '- DESATIVADO');
-  //   return; // Desativado para teste
-  // }, []);
-
-  // DESATIVADO TEMPORARIAMENTE - Navegação direcional
-  // const navigate = useCallback((direction: 'prev' | 'next') => {
-  //   console.log('navigate chamado com direção:', direction, '- DESATIVADO');
-  //   return; // Desativado para teste
-  // }, []);
-
-  // Touch handlers para mobile (versão simplificada para teste)
   const handleTouchStart = (e: React.TouchEvent) => {
     if (!scrollRef.current) return;
     
@@ -210,7 +188,7 @@ export function NewsFilter() {
     return post;
   }, [posts]);
 
-  const newsCards = posts;
+  const newsCards = posts.slice(1);
 
   // Formatar data
   const formatDate = (dateString: string) => {
@@ -295,19 +273,19 @@ export function NewsFilter() {
         <div className="flex items-center justify-between mb-0">
           <div className='x '>
             <div className={` mb-12 lg:mb-16 mt-8`}>
-              <div className={`flex items-center gap-2 mb-4 `}>
+              <div className={`lg:flex hidden items-center gap-2 mb-4 `}>
                 <span className="w-4 h-1 bg-[#E86000] rounded-full"></span>
                 <span className={`font-normal text-sm text-darkgray`}>Aqui o servidor público tem voz</span>
               </div>
-              <h2 className={`lg:text-4xl font-bold font-red-hat-text `}>
-                <span className={`  text-primary`}>Últimas </span>
+              <h2 className={`text-2xl font-light lg:text-4xl lg:font-bold lg:font-red-hat-text `}>
+                <span className={` text-primary`}>Últimas </span>
                 <span className="text-[#E86000]"> notícias & <br />conteúdos</span>
               </h2>
             </div>
 
 
           </div>
-          <div className="flex gap-4 items-center">
+          <div className="flex gap-4 items-start lg:items-center">
             {/* Toggle para alternar entre versões */}
             {/* <button 
               onClick={() => setShowNavigationButtons(!showNavigationButtons)}
@@ -317,7 +295,7 @@ export function NewsFilter() {
               <Icon icon={showNavigationButtons ? "mdi:eye-off" : "mdi:eye"} className="w-4 h-4" />
               {showNavigationButtons ? "Sem botões" : "Com botões"}
             </button> */}
-            <button className="bg-[#11213F] px-4 py-2 text-white rounded-xl hover:bg-secondary transition-colors flex items-center gap-2 self-start">
+            <button className="bg-[#11213F] px-4 py-3 text-xs lg:text-sm text-white rounded-xl hover:bg-secondary transition-colors flex items-center gap-2 self-start">
               Ver todas
             </button>
           </div>
@@ -383,44 +361,7 @@ export function NewsFilter() {
             </div>
           ))}
           </div>
-          {/* Botões de navegação (opcional) */}
-          {showNavigationButtons && posts.length > 0 && (
-            <>
-              {/* <button
-                onClick={() => navigate('prev')}
-                disabled={currentIndex === 0}
-                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white rounded-full p-3 shadow-lg hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed transition-all z-10 border border-gray-200"
-                aria-label="Anterior"
-              >
-                <Icon icon="mdi:chevron-left" className="w-6 h-6 text-[#11213F]" />
-              </button>
-              
-              <button
-                onClick={() => navigate('next')}
-                disabled={currentIndex >= posts.length}
-                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white rounded-full p-3 shadow-lg hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed transition-all z-10 border border-gray-200"
-                aria-label="Próximo"
-              >
-                <Icon icon="mdi:chevron-right" className="w-6 h-6 text-[#11213F]" />
-              </button> */}
-
-              {/* Indicadores de página - DESATIVADOS PARA TESTE */}
-              {/* <div className="flex justify-center gap-2 mt-6">
-                {Array.from({ length: posts.length + 1/2 }).map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => scrollToIndex(index)}
-                    className={`h-2 rounded-full transition-all ${
-                      index === currentIndex 
-                        ? 'w-8 bg-[#E86000]' 
-                        : 'w-2 bg-gray-300 hover:bg-gray-400'
-                    }`}
-                    aria-label={`Ir para card ${index + 1}`}
-                  />
-                ))}
-              </div> */}
-            </>
-          )}        </div>
+       </div>
 
         <div
           ref={fullscreenViewerRef}

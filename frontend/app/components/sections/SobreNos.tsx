@@ -139,40 +139,33 @@ export function SobreNos() {
               Quem Somos
             </div>
           </div>
-          <div className="text-[#4A4A4B] text-3xl font-light mb-4 md:hidden">
+          <div className="text-[#4A4A4B] text-2xl font-light mb-4 md:hidden">
             Construindo história, com execelencia e experiência
           </div>
           <div ref={essenceImageRef} className="relative md:block md:col-span-1 lg:col-span-1 xl:col-span-1">
-            <div className="relative w-full h-70 md:h-125 min-w-20 min-h-36 max-h-125 rounded-4xl overflow-hidden shadow-lg">
-              <Image
-                src="/smilily-woman.svg"
-                alt="Conheça nossa história"
-                fill
-                className="object-cover "
-              />
+            <div className="relative w-full rounded-4xl bg-[#E86000] overflow-hidden shadow-lg">
+              <div className="relative h-56 md:h-80 lg:h-92 rounded-b-[2.3rem] overflow-hidden">
+                <Image
+                  src="/smilily-woman.svg"
+                  alt="Conheça nossa história"
+                  fill
+                  className="object-cover"
+                />
+              </div>
 
-              <div
-                className="absolute bottom-0 left-0 w-full 
-                    bg-[#E86000] 
-                    flex items-center justify-between 
-                    p-4 md:px-6 md:py-5 
-                    rounded-4xl"
-              >
-                <p className="text-white font-semibold">
+              <div className="px-5 py-3 md:px-6 md:py-5 flex items-center justify-between gap-3">
+                <p className="text-white font-light lg:font-semibold text-md md:text-xl leading-tight">
                   Conheça nossa história
                 </p>
 
                 <Link href="/nossa-historia">
                   <button
-                    className="bg-[#0B1B3B] 
-                         rounded-full 
-                         p-3 
-                         hover:scale-105 
-                         transition"
+                    className="bg-[#0B1B3B] rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-105 transition"
+                    aria-label="Conhecer nossa história"
                   >
                     <Icon
                       icon="mdi:arrow-right"
-                      className="w-5 h-5 text-[#E86000]"
+                      className="w-4 h-4 md:w-5 md:h-5 text-[#E86000]"
                     />
                   </button>
                 </Link>
@@ -185,9 +178,9 @@ export function SobreNos() {
             <div className="items-center justify-center my-5">
               <h3
                 ref={essenceTitleRef}
-                className="text-3xl md:text-3xl lg:text-4xl font-extrabold"
+                className="text-2xl md:text-3xl lg:text-4xl font-light lg:font-extrabold"
               >
-                <span className="text-[#E86000]">Nossa</span> <span className="text-[#0B1B3B]">Essência</span>
+                <span className=" text-[#E86000]">Nossa</span> <span className="text-[#0B1B3B]">Essência</span>
               </h3>
               <p
                 ref={essenceDescriptionRef}
@@ -216,7 +209,7 @@ export function SobreNos() {
                   <span className=" text-sm sm:text-base lg:text-md  md:text-sm leading-relaxed text-justify font-semibold text-[#2D3134]">
                     Valores que nos Guiam
                   </span>
-                  <p className=" w-full md:w-4/5 text-sm sm:text-base lg:text-md  md:text-sm leading-relaxed text-justify font-normal text-[#676A6C]">
+                  <p className=" w-full md:w-4/5 text-xs sm:text-base lg:text-md  md:text-sm leading-relaxed text-justify font-normal text-[#676A6C]">
                     Ética, transparência e compromisso orientam cada decisão,
                     garantindo segurança e confiança em todas as etapas do
                     atendimento.
@@ -235,7 +228,7 @@ export function SobreNos() {
                   <span className=" text-sm sm:text-base lg:text-md  md:text-sm leading-relaxed text-justify font-semibold text-[#2D3134]">
                     Essência Colaborativa
                   </span>
-                  <p className=" w-full md:w-4/5text-sm sm:text-base lg:text-md  md:text-sm leading-relaxed text-justify font-normal text-[#676A6C]">
+                  <p className=" w-full md:w-4/5 text-xs sm:text-base lg:text-md  md:text-sm leading-relaxed text-justify font-normal text-[#676A6C]">
                     Adotamos uma abordagem estratégica, buscando soluções
                     jurídicas eficazes e personalizadas para cada cliente, com
                     foco em resultados concretos.

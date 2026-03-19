@@ -302,7 +302,7 @@ export function Testimonials() {
             <Icon icon="mdi:chevron-left" className="text-xl text-gray-700" />
           </button>
 
-          {/* Indicadores de página */}
+          {/* Indicadores de página
           <div className="flex gap-2">
             {Array.from({ length: totalPages }).map((_, index) => (
               <button
@@ -311,20 +311,20 @@ export function Testimonials() {
                 className={`h-2 rounded-full transition-all duration-300 ${
                   activeIndex === index
                     ? 'w-8 bg-[#F97316]'
-                    : 'w-2 bg-gray-300 hover:bg-gray-400'
+                    : 'w-2 bg-primary hover:bg-gray-400'
                 }`}
                 aria-label={`Ir para página ${index + 1}`}
               />
             ))}
-          </div>
+          </div> */}
 
           <button
             onClick={() => navigate('next')}
             disabled={activeIndex === totalPages - 1}
             className={`w-12 h-12 rounded-full shadow-md flex items-center justify-center transition-all duration-300 ${
               activeIndex === totalPages - 1
-                ? 'bg-gray-300 opacity-50 cursor-not-allowed text-gray-500'
-                : 'bg-[#F97316] hover:opacity-90 hover:scale-110 cursor-pointer text-white'
+                ? 'bg-primary opacity-50 cursor-not-allowed text-gray-500'
+                : 'bg-[#F97316] hover:opacity-90 hover:scale-110 cursor-pointer text-primary'
             }`}
             aria-label="Próximo"
           >

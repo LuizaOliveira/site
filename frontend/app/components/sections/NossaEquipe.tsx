@@ -208,7 +208,7 @@ export function NossaEquipe() {
               <br /> e Sócios
             </span>
           </h2>
-          {/* <div className="flex gap-3 ">
+          <div className="flex gap-3 ">
             <Link
               href="/equipe"
               className="rounded-full bg-secondary px-4 py-2 md:py-0 flex items-center justify-center font-bold text-sm md:text-base text-white hover:bg-orange-600 transition-colors duration-300"
@@ -224,7 +224,7 @@ export function NossaEquipe() {
                 className="text-white w-5 h-5"
               />
             </Link>
-          </div> */}
+          </div>
         </div>
 
         <div className="">

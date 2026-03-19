@@ -18,7 +18,7 @@ export const advogados: Advogado[] = [
     nome: "Clodonil Monteiro",
     titulo: "Advogado Fundador",
     imagem: "Clodonil.svg",
-    descricao: "\"Com sólida trajetória no exercício da advocacia, lidera a implementação de processos estruturados, a gestão de equipes multidisciplinares e o aprimoramento contínuo dos serviços prestados, assegurando rigor jurídico, confidencialidade e resultados consistentes na defesa dos interesses confiados ao escritório.\"",
+    descricao: "\Com ampla experiência na prática jurídica, formado em Direito pela Universidade tal e especialista em Direito Administrativo, lidera a implementação de processos estruturados, a gestão de equipes multidisciplinares e o aprimoramento contínuo dos serviços prestados, assegurando rigor jurídico, confidencialidade e resultados consistentes na defesa dos interesses confiados ao escritório.\"",
     email: "clodonil@cmajus.com.br",
     sociais: {
       linkedin: "https://linkedin.com",

@@ -171,7 +171,10 @@ export function Header() {
             </button>
 
             {/* Button */}
-            <button className="bg-[#E86100] hover:bg-secondary text-white text-sm font-bold px-6 py-2.5 rounded-full flex items-center gap-2 transition-all duration-300 hover:shadow-lg">
+            <button
+              onClick={() => scrollToSection('noticias')}
+              className="bg-[#E86100] hover:bg-secondary text-white text-sm font-bold px-6 py-2.5 rounded-full flex items-center gap-2 transition-all duration-300 hover:shadow-lg"
+            >
               Acessar Clodonews
             </button>
           </div>
@@ -235,7 +238,10 @@ export function Header() {
             ))}
             
             {/* Mobile Button */}
-            <button className="mt-4 mx-4 bg-[#E86100] hover:bg-secondary text-white text-sm font-bold px-6 py-3 rounded-full w-auto transition-all duration-300 hover:shadow-lg">
+            <button
+              onClick={() => scrollToSection('noticias')}
+              className="mt-4 mx-4 bg-[#E86100] hover:bg-secondary text-white text-sm font-bold px-6 py-3 rounded-full w-auto transition-all duration-300 hover:shadow-lg"
+            >
               Acessar Clodonews
             </button>
           </nav>

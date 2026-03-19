@@ -80,7 +80,7 @@ export function AreaAtuacao() {
       <div className="bg-[#071B42] rounded-3xl p-6 md:p-10 shadow-xl mx-0 md:mx-12 relative">
         <div className="container mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 mt-4 md:mt-8 gap-8">
-            <div className="lg:col-span-8">
+            <div className="lg:col-span-8 hidden lg:block">
               <div ref={titleRef}>
                 <SectionTitle subtitle='Aqui o servidor público tem voz' title='Nossa' dark centerOnMobile>
                   área de Atuação
@@ -137,7 +137,8 @@ export function AreaAtuacao() {
 
       
       <div className="mx-4 md:mx-10">
-        <div className="grid grid-cols-2 lg:grid-cols-4 mt-12 md:mt-20 gap-6 md:gap-8 lg:gap-x-6 lg:gap-y-0">
+        <p className='lg:text-2xl  text-xl text-[#3F3F46] font-extralight mt-6 lg:ml-20 lg:mt-14'>Estados de atuação</p>
+        <div className="grid grid-cols-2 lg:grid-cols-4 mt-8 md:mt-10 gap-6 md:gap-8 lg:gap-x-6 lg:gap-y-0">
           {statsImages.map((item, index) => (
             <div
               key={item.src}
@@ -148,7 +149,7 @@ export function AreaAtuacao() {
                 alt={item.alt}
                 width={170}
                 height={170}
-                className="w-full max-w-[120px] md:max-w-[135px] lg:max-w-[100px]"
+                className="w-full max-w-30 md:max-w-33.75 lg:max-w-40"
                 priority={index === 0}
               />
               <p
