@@ -23,7 +23,7 @@ export function Hero() {
     const [tableUrl, setTableUrl] = useState("https://res.cloudinary.com/dlykmt2r4/image/upload/v1770372564/Group_131_tnsyxg.png");
     const prefersReducedMotion = useReducedMotion();
 
-    // Buscar o post mais recente para usar a thumbnail
+    
     useEffect(() => {
         const fetchLatestPost = async () => {
             const result = await getLatestPost();
@@ -39,49 +39,49 @@ export function Hero() {
         if (!heroRef.current || !contentRef.current) return;
 
         const ctx = gsap.context(() => {
-            // Se o usuário prefere movimento reduzido, apenas fade
+            
             const animationDuration = prefersReducedMotion ? DURATIONS.instant : DURATIONS.slower;
             const shouldAnimate = !prefersReducedMotion;
 
-            // Função que executa a animação de entrada
+           
             const playEnterAnimation = () => {
                 const tl = gsap.timeline({ defaults: { ease: EASINGS.easeOut } });
 
-                // Badge aparece deslizando da esquerda
+                
                 tl.fromTo(badgeRef.current,
                     { x: shouldAnimate ? -50 : 0, opacity: 0 },
                     { x: 0, opacity: 1, duration: animationDuration }
                 );
 
-                // Título aparece com fade in e slide up
+                 
                 tl.fromTo(titleRef.current,
                     { y: shouldAnimate ? 30 : 0, opacity: 0 },
                     { y: 0, opacity: 1, duration: animationDuration },
                     shouldAnimate ? '-=0.5' : '-=0.05'
                 );
 
-                // Tablet aparece com scale e fade
+                
                 tl.fromTo(tabletRef.current,
                     { scale: shouldAnimate ? 0.9 : 1, opacity: 0 },
                     { scale: 1, opacity: 1, duration: prefersReducedMotion ? DURATIONS.instant : DURATIONS.slowest },
                     shouldAnimate ? '-=0.6' : '-=0.05'
                 );
 
-                // Redes sociais aparecem da direita
+                
                 tl.fromTo(socialRef.current,
                     { x: shouldAnimate ? 50 : 0, opacity: 0 },
                     { x: 0, opacity: 1, duration: animationDuration },
                     shouldAnimate ? '-=0.7' : '-=0.05'
                 );
 
-                // Texto descritivo fade in
+                
                 tl.fromTo(textRef.current,
                     { y: shouldAnimate ? 20 : 0, opacity: 0 },
                     { y: 0, opacity: 1, duration: animationDuration },
                     shouldAnimate ? '-=0.6' : '-=0.05'
                 );
 
-                // Botões aparecem com fade in simples
+                
                 tl.fromTo(buttonsRef.current,
                     { opacity: 0 },
                     { opacity: 1, duration: animationDuration },
@@ -89,7 +89,7 @@ export function Hero() {
                 );
             };
 
-            // Função que executa a animação de saída (reversa)
+            
             const playExitAnimation = () => {
                 if (prefersReducedMotion) {
                     gsap.to([badgeRef.current, titleRef.current, tabletRef.current,
@@ -110,10 +110,10 @@ export function Hero() {
                 tl.to(badgeRef.current, { x: -50, opacity: 0, duration: DURATIONS.slow }, '-=0.5');
             };
 
-            // Executa a animação inicial
+            
             playEnterAnimation();
 
-            // ScrollTrigger que detecta quando volta para a seção
+           
             ScrollTrigger.create({
                 trigger: heroRef.current,
                 start: 'top 80%',
@@ -124,7 +124,7 @@ export function Hero() {
                 onLeaveBack: () => playExitAnimation(),
             });
 
-            // Fade out suave apenas no conteúdo quando está saindo da tela
+           
             if (!prefersReducedMotion) {
                 gsap.to(contentRef.current, {
                     opacity: 0,
@@ -143,11 +143,11 @@ export function Hero() {
         return () => ctx.revert();
     }, [prefersReducedMotion]);
 
-    // Scroll suave até a seção de notícias
+    
     const scrollToNews = () => {
         const el = document.getElementById('noticias');
         if (!el) return;
-        const headerOffset = 80; // combinar com Header
+        const headerOffset = 80; 
         const elementPosition = el.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
         window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
@@ -155,7 +155,7 @@ export function Hero() {
 
     return (
         <section id="hero" ref={heroRef} className="relative min-h-screen bg-linear-to-br from-slate-50 via-blue-50 to-orange-50 pt-16">
-            {/* Conteúdo principal */}
+            
             <div ref={contentRef} className="container mx-auto px-4 lg:px-6 relative z-10">
                 <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-center min-h-[60vh] py-4 lg:py-0">
                     {/* Área da imagem do tablet - À ESQUERDA */}
@@ -182,9 +182,9 @@ export function Hero() {
 
                             </div>
                         </div>
-                        {/* Container do tablet */}
+                        
                         <div className="py-10 pos mx-auto lg:mx-0 w-[min(85vw,20rem)] sm:w-[min(70vw,25rem)] lg:w-[min(90vw,35rem)] lg:max-w-130">
-                            {/* Tablet Animado com conteúdo dinâmico */}
+                            
                             <div
                                 ref={tabletRef}
                                 className="relative animate-float cursor-pointer"
@@ -202,7 +202,7 @@ export function Hero() {
                                 <AnimatedTablet imageUrl={tableUrl} />
                             </div>
 
-                            {/* Elementos decorativos */}
+                            
                             <div
                                 className="absolute -bottom-4 lg:-bottom-8 -left-4 lg:-left-8 w-12 h-12 sm:w-16 lg:w-32 lg:h-32 opacity-40 rounded-full animate-pulse-slow"
                                 style={{ backgroundColor: '#01165A20' }}
@@ -256,16 +256,16 @@ export function Hero() {
 
                     </div>
 
-                    {/* Conteúdo à direita */}
+                    
                     <div className="hidden lg:flex space-y-6 lg:space-y-8 lg:pl-8 order-1 lg:order-2 flex-col justify-center px-4 lg:px-0">
 
-                        {/* Redes Sociais no topo */}
+                        
                         <div ref={socialRef} className="flex flex-col sm:flex-row sm:items-center sm:justify-end gap-4 lg:gap-6 relative sm:-translate-y-4 lg:-translate-y-8">
                             <div className='border border-secondary p-2 sm:p-3 rounded-full'>
                                 <span className="text-xs sm:text-sm font-medium text-secondary">Nossas Redes Sociais</span>
                             </div>
                             <div className="flex items-center">
-                                {/* Instagram */}
+                                
                                 <a
                                     href="https://www.instagram.com/clodonilmonteiro/"
                                     aria-label="Instagram"
@@ -274,7 +274,7 @@ export function Hero() {
                                     <Icon icon="mdi:instagram" className="w-5 h-5 sm:w-8 sm:h-8" />
                                 </a>
 
-                                {/* WhatsApp */}
+                                
                                 <a
                                     href="https://www.facebook.com/clodonilmonteiroadvocacia/"
                                     aria-label="WhatsApp"
@@ -294,7 +294,7 @@ export function Hero() {
                                 </p>
                             </div>
 
-                            {/* Botões */}
+                            
                             <div ref={buttonsRef} className="flex flex-col gap-3 sm:gap-4 items-end sm:ml-auto sm:max-w-sm lg:max-w-lg">
                                 <Button
                                     variant="primary"
@@ -315,15 +315,15 @@ export function Hero() {
                             </div>
 
                         </div>
-                        {/* Texto descritivo */}
+                        
 
                     </div>
                 </div>
             </div>
 
-            {/* Faixa azul inferior que ocupa metade da tela */}
+            
             <div className="absolute bottom-0 left-0 w-full h-1/4 bg-primary overflow-hidden">
-                {/* Container com padrão CSS responsivo posicionado no final */}
+                
                 <div className="w-full h-full flex items-end justify-center px-2 pb-4">
                     <div
                         className="w-full h-6"
