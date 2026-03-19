@@ -111,16 +111,16 @@ export function AreaAtuacao() {
           
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-14 mt-10 mb-14' ref={cardsGridRef}>
             {[
-              { id: 3, title: 'Professores ativos', content: 'standard dummy text ever since the 1500sstandard dummy text ever since the 1500s' }, 
-              { id: 1, title: 'Servidores Ativos', content: 'standard dummy text ever since the 1500sstandard dummy text ever since the 1500s' }, 
-              { id: 2, title: 'Professores aposentados', content: 'standard dummy text ever since the 1500sstandard dummy text ever since the 1500s' }, 
-              { id: 4, title: 'Servidores aposentados', content: 'standard dummy text ever since the 1500sstandard dummy text ever since the 1500s' }].map((i) => (
+              { id: 3, title: 'Professores ativos', content: 'Atuação completa na defesa dos direitos funcionais, com acompanhamento estratégico do plano de cargos e carreira.' }, 
+              { id: 1, title: 'Servidores Ativos', content: 'Atuação completa na defesa dos direitos dos servidores ativos, com acompanhamento estratégico.' }, 
+              { id: 2, title: 'Professores aposentados', content: 'Defesa dos direitos dos professores aposentados, garantindo a preservação das vantagens adquiridas' }, 
+              { id: 4, title: 'Servidores aposentados', content: 'Defesa dos direitos dos servidores públicos aposentados, garantindo a manutenção das vantagens adquiridas.' }].map((i) => (
               <div key={i.id} className="p-5 bg-linear-to-br from-[#0F234A] via-[#0F234A] to-[#0b214d] shadow-xl animatable-card transition-all duration-300 rounded-xl">
                 <Icon icon="hugeicons:teacher" className="w-8 h-8 text-[#E86000] mb-6 md:mb-10" />
                 <p className="text-white text-sm md:text-xl font-medium mb-2">
                   {i.title}
                 </p>
-                <p className="text-white mb-6 md:mb-12 text-sm md:text-base font-extralight lg:font-light">
+                <p className="text-white mb-6 md:mb-12 text-sm md:text-base font-extralight">
                   {i.content}
                 </p>
               </div>
