@@ -127,7 +127,7 @@ export function AreaAtuacao() {
             ))}
           </div>
         </div>
-
+  
         
         <div
           className="hidden md:block absolute -bottom-10 left-35 w-16 h-10 bg-[#071B42]"

@@ -116,7 +116,7 @@ export function Contact() {
         </div>
       </div>
 
-      {/* Background dividido */}
+      
       <div className="absolute inset-0 bg-linear-to-b from-white from-50% to-[#0F2747] to-50% -z-20"></div>
 
       {/* CONTAINER */}
@@ -126,13 +126,13 @@ export function Contact() {
 
       </div>
 
-      {/* NEWSLETTER */}
+      
       <div className="relative z-10 pb-16">
         <div className="container mx-auto px-4 flex justify-center">
 
           <div className="w-full max-w-5xl flex flex-col md:flex-row items-center justify-between gap-8 text-white">
 
-            {/* TEXTO */}
+            
             <p className="text-sm md:text-base max-w-md">
               Se inscreva no Clodonews e receba semanalmente notícias e conteúdos
               acerca de seus direitos como servidor
