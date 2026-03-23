@@ -6,7 +6,7 @@ import { AdvCard } from "../ui/AdvCard";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 import { advogados } from "../../data/advogados";
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -21,6 +21,12 @@ export function NossaEquipe() {
 
   const fundadoresESocios = advogados.slice(0, 4);
   const [activeIndex, setActiveIndex] = useState(0);
+
+  const whatsappUrl = useMemo(() => {
+    const whatsappNumber = (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "5584997007924").replace(/\D/g, "");
+    const message = "Olá! Gostaria de conversar com um memba equipe.";
+    return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+  }, []);
 
   const scrollToIndex = useCallback((index: number) => {
     if (!scrollRef.current) return;
@@ -39,56 +45,62 @@ export function NossaEquipe() {
     if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
+      if (titleRef.current) {
+        gsap.fromTo(
+          titleRef.current,
+          { opacity: 0, y: 60 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 75%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      }
+
       // Animar elementos principais
-      gsap.fromTo(
-        titleRef.current,
-        { opacity: 0, y: 60 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 75%',
-            toggleActions: 'play none none reverse'
+      if (imageRef.current) {
+        gsap.fromTo(
+          imageRef.current,
+          { opacity: 0, x: -50, scale: 0.95 },
+          {
+            opacity: 1,
+            x: 0,
+            scale: 1,
+            duration: 0.8,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 75%',
+              toggleActions: 'play none none reverse'
+            }
           }
-        }
-      );
+        );
+      }
 
-      gsap.fromTo(
-        imageRef.current,
-        { opacity: 0, x: -50, scale: 0.95 },
-        {
-          opacity: 1,
-          x: 0,
-          scale: 1,
-          duration: 0.8,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 75%',
-            toggleActions: 'play none none reverse'
+      if (cardInfoRef.current) {
+        gsap.fromTo(
+          cardInfoRef.current,
+          { opacity: 0, x: 50, scale: 0.95 },
+          {
+            opacity: 1,
+            x: 0,
+            scale: 1,
+            duration: 0.8,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 75%',
+              toggleActions: 'play none none reverse'
+            }
           }
-        }
-      );
-
-      gsap.fromTo(
-        cardInfoRef.current,
-        { opacity: 0, x: 50, scale: 0.95 },
-        {
-          opacity: 1,
-          x: 0,
-          scale: 1,
-          duration: 0.8,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 75%',
-            toggleActions: 'play none none reverse'
-          }
-        }
-      );
+        );
+      }
 
       // Animar cards dos advogados
       const advCards = document.querySelectorAll('.adv-card-item');
@@ -133,7 +145,7 @@ export function NossaEquipe() {
       
       <section id="equipe" ref={sectionRef} className="py-8 md:py-16 bg-white">
       <div className="container mx-auto px-4">
-      <h2 className="text-primary text-2xl lg:text-3xl md:text-3xl sm:font-light lg:font-bold mb-4">
+      <h2 ref={titleRef} className="text-primary text-2xl lg:text-3xl md:text-3xl sm:font-light lg:font-bold mb-4">
         Nosso Corpo 
         <span className="text-secondary">
            {" "}jurídico
@@ -192,9 +204,14 @@ export function NossaEquipe() {
 
             {/* Botão */}
             <div>
-              <button className="bg-orange-500 hover:bg-orange-600 transition text-xs lg:text-sm text-white px-3 lg:px-6 py-3 rounded-full font-medium">
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex bg-orange-500 hover:bg-orange-600 transition text-xs lg:text-sm text-white px-3 lg:px-6 py-3 rounded-full font-medium"
+              >
                 Marque uma consulta
-              </button>
+              </a>
             </div>
           </div>
         </div>

@@ -9,6 +9,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 export function ConsultingHero() {
+  const sectionRef = useRef<HTMLElement | null>(null);
   const titleRef = useRef<HTMLDivElement | null>(null);
   const subtitleRef = useRef<HTMLHeadingElement | null>(null);
   const buttonRef = useRef<HTMLDivElement | null>(null);
@@ -42,7 +43,10 @@ export function ConsultingHero() {
   };
 
   useEffect(() => {
+    if (!sectionRef.current || !backgroundRef.current) return;
+
     const tl = gsap.timeline();
+    const heroTrigger = sectionRef.current;
 
     gsap.set([titleRef.current, subtitleRef.current, buttonRef.current], {
       opacity: 0,
@@ -161,9 +165,9 @@ export function ConsultingHero() {
       });
     }
 
-    gsap.to(backgroundRef.current, {
+    const parallaxTween = gsap.to(backgroundRef.current, {
       scrollTrigger: {
-        trigger: "#consulting-hero",
+        trigger: heroTrigger,
         start: "top top",
         end: "bottom top",
         scrub: 1,
@@ -173,12 +177,14 @@ export function ConsultingHero() {
     });
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      parallaxTween.scrollTrigger?.kill();
+      tl.kill();
     };
   }, []);
 
   return (
     <section
+      ref={sectionRef}
       id="hero"
       className="relative w-full bg-white overflow-hidden pt-14 lg:pt-20 lg:h-screen lg:min-h-175"
     >

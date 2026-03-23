@@ -21,7 +21,29 @@ export interface CreatePostData {
   published: boolean;
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
+function getApiBaseUrl() {
+  const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || '/api';
+
+  if (typeof window === 'undefined') return rawBaseUrl;
+
+  try {
+    const url = new URL(rawBaseUrl);
+    const isLocalhostTarget = url.hostname === 'localhost' || url.hostname === '127.0.0.1';
+    const isLocalhostOrigin =
+      window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+
+    // Quando o frontend roda via IP da rede, "localhost" aponta para o dispositivo cliente.
+    if (isLocalhostTarget && !isLocalhostOrigin) {
+      url.hostname = window.location.hostname;
+    }
+
+    return url.toString().replace(/\/$/, '');
+  } catch {
+    return rawBaseUrl;
+  }
+}
+
+const API_BASE_URL = getApiBaseUrl();
 
 // Função para criar um novo post
 export async function createPost(data: CreatePostData): Promise<{ success: boolean; data?: Post; error?: string }> {

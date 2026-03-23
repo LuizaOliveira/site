@@ -71,18 +71,16 @@ export const advogados: Advogado[] = [
     nome: "Diego Medeiros",
     titulo: "Advogado Sócio",
     imagem: "diegoBG.png",
-    descricao: "\"Especializado em direito administrativo e representação de servidores públicos em processos administrativos e judiciais. Dedicado à busca de soluções criativas e efetivas.\"",
+    descricao: "\Advogado inscrito na OAB/RN nº 22.969 e Sócio de Serviço do Clodonil Monteiro Advocacia. Bacharel em Direito pela Universidade Federal do Rio Grande do Norte - UFRN, é especialista em Direito Público e possui formação em Gestão Pública pela Fundação Getúlio Vargas - FGV, além de graduação em andamento em Administração pela UFRN. Integra o Grupo de Pesquisa Direito Administrativo Brasileiro (UFRN/CNPq) e é membro do Grupo de Estudos e Pesquisas em Finanças Públicas e Privadas (GEPEFIP), com atuação acadêmica nas áreas de Direito Administrativo, Finanças Públicas e Antropologia, incluindo produção científica publicada. No escritório, atua na supervisão estratégica dos setores Jurídico, Financeiro, Comercial, Controladoria e Administrativo, além de exercer a função de Diretor Financeiro (CFO) interino, com foco em governança, indicadores e sustentabilidade financeira. É Supervisor do Setor Jurídico, coordenando equipe multidisciplinar e gestão do volume processual, com foco em padronização técnica, controle de prazos e eficiência na condução das demandas.\"",
     email: "diego@cmajus.com.br",
     sociais: {
       linkedin: "https://linkedin.com",
       twitter: "https://twitter.com",
     },
     especializacoes: [
-      "Processo Administrativo",
+      "Direito Público",
       "Defesa de Servidores",
-      "Ações Administrativas",
-      "Recursos Jurídicos",
-    ],
+      "Direito Administrativo"   ],
   },
   {
     id: "camila-cardoso",

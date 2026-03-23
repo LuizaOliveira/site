@@ -11,6 +11,7 @@ export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOnConsultingHero, setIsOnConsultingHero] = useState(true);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   // Detectar scroll para adicionar sombra
   useEffect(() => {
@@ -19,6 +20,27 @@ export function Header() {
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Evita glitches de animação do header no iOS mobile ao navegar por botões.
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 1024px)');
+    const updateViewport = () => setIsDesktop(mediaQuery.matches);
+
+    updateViewport();
+    if (typeof mediaQuery.addEventListener === 'function') {
+      mediaQuery.addEventListener('change', updateViewport);
+    } else {
+      mediaQuery.addListener(updateViewport);
+    }
+
+    return () => {
+      if (typeof mediaQuery.removeEventListener === 'function') {
+        mediaQuery.removeEventListener('change', updateViewport);
+      } else {
+        mediaQuery.removeListener(updateViewport);
+      }
+    };
   }, []);
 
   // Detectar se está na seção ConsultingHero
@@ -85,6 +107,8 @@ export function Header() {
     { id: 'noticias', label: 'Notícias' },
   ];
 
+  const shouldHideHeader = isDesktop && isOnConsultingHero && isScrolled;
+
   // Navegação por seção: rola na home ou redireciona para home + hash
   const scrollToSection = (sectionId: string) => {
     setIsMenuOpen(false);
@@ -118,7 +142,7 @@ export function Header() {
         isOnConsultingHero 
           ? 'bg-white lg:bg-transparent backdrop-blur-0 border-b border-gray-100 lg:border-none' 
           : 'bg-white/95 backdrop-blur-lg shadow-sm border-b border-gray-100'
-      } ${isOnConsultingHero && isScrolled ? '-translate-y-full opacity-0 pointer-events-none' : 'translate-y-0 opacity-100'}`}
+      } ${shouldHideHeader ? '-translate-y-full opacity-0 pointer-events-none' : 'translate-y-0 opacity-100'}`}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 md:h-16 lg:h-20">

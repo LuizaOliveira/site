@@ -5,46 +5,9 @@ import { Icon } from '@iconify/react'
 import { useState, useRef, useEffect, useCallback } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
+import { testimonials } from '../../data/testimonials'
 gsap.registerPlugin(ScrollTrigger)
 
-const testimonials = [
-  {
-    name: "Fernanda Lima",
-    content:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the!",
-    stars: 5,
-    image: "https://www.loremfaces.net/96/id/5.jpg"
-  },
-  {
-    name: "Roberto Souza",
-    content:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the!",
-    stars: 5,
-    image: "https://www.loremfaces.net/96/id/4.jpg"
-  },
-  {
-    name: "Ana Clara Santos",
-    content:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the!",
-    stars: 5,
-    image: "https://www.loremfaces.net/96/id/1.jpg"
-  },
-  {
-    name: "Carlos Eduardo",
-    content:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-    stars: 5,
-    image: "https://www.loremfaces.net/96/id/2.jpg"
-  },
-  {
-    name: "Juliana Mendes",
-    content:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-    stars: 5,
-    image: "https://www.loremfaces.net/96/id/3.jpg"
-  }
-]
 
 export function Testimonials() {
   const [activeIndex, setActiveIndex] = useState(0)
@@ -52,7 +15,6 @@ export function Testimonials() {
   const [isDragging, setIsDragging] = useState(false)
   const [startX, setStartX] = useState(0)
   const [scrollLeft, setScrollLeft] = useState(0)
-
   const scrollRef = useRef<HTMLDivElement>(null)
   const sectionRef = useRef<HTMLElement>(null)
 
@@ -238,14 +200,14 @@ export function Testimonials() {
                       cardsPerPage === 1 
                         ? 'w-full max-w-md mx-auto' 
                         : cardsPerPage === 2 
-                        ? 'w-[calc(50%-12px)] max-w-md' 
-                        : 'w-[calc(33.333%-22px)] max-w-sm'
+                        ? 'w-[calc(50%-8px)] max-w-lg' 
+                        : 'w-[calc(33.333%-14px)] max-w-md'
                     }`}
                   >
                     {/* AVATAR */}
                     <div className="absolute -top-12 left-1/2 -translate-x-1/2">
                       <div className="w-24 h-24 rounded-full border-4 border-white overflow-hidden shadow-lg">
-                        <Image
+                        <img
                           src={item.image}
                           alt={item.name}
                           width={96}

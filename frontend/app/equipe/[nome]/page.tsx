@@ -80,7 +80,7 @@ export default function TeamDetail() {
               {/* Especialização */}
               <div className="mb-12">
                 <h3 className="text-sm font-bold text-primary uppercase tracking-wider mb-6">
-                  Especialização
+                  Atuação e Especializações
                 </h3>
                 <div className="border-t border-gray-200 pt-6">
                   <div className="flex flex-wrap gap-3">
@@ -137,7 +137,7 @@ export default function TeamDetail() {
 
             {/* Coluna direita - Imagem */}
             <div className="flex items-center justify-center order-1 lg:order-2 w-full">
-              <div className="w-full max-w-sm">
+              <div className="w-full max-w-sm lg:ml-0 ml-5">
                 {/* <Image
                 src={`/${advogado.imagem}`}
                 alt={advogado.nome}

@@ -31,18 +31,31 @@ export function SobreNos() {
   const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
+    let essenceTrigger: ScrollTrigger | null = null;
+
     // Animação elegante e institucional para a seção "Nossa Essência"
     const animateEssenceSection = () => {
       if (prefersReducedMotion) return;
 
+      const triggerEl = card1Ref.current;
+      const imageEl = essenceImageRef.current;
+      const titleEl = essenceTitleRef.current;
+      const descriptionEl = essenceDescriptionRef.current;
+      const item1El = essenceItem1Ref.current;
+      const item2El = essenceItem2Ref.current;
+
+      if (!triggerEl || !imageEl || !titleEl || !descriptionEl || !item1El || !item2El) {
+        return;
+      }
+
       // Função para resetar elementos ao estado inicial
       const resetElements = () => {
-        gsap.set(essenceImageRef.current, {
+        gsap.set(imageEl, {
           opacity: 0,
           x: -40
         });
 
-        gsap.set([essenceTitleRef.current, essenceDescriptionRef.current, essenceItem1Ref.current, essenceItem2Ref.current], {
+        gsap.set([titleEl, descriptionEl, item1El, item2El], {
           opacity: 0,
           y: 30
         });
@@ -54,7 +67,7 @@ export function SobreNos() {
         const tl = gsap.timeline();
 
         // 1. Imagem à esquerda - fade + movimento horizontal suave
-        tl.to(essenceImageRef.current, {
+        tl.to(imageEl, {
           opacity: 1,
           x: 0,
           duration: 0.8,
@@ -62,7 +75,7 @@ export function SobreNos() {
         })
 
           // 2. Título "Nossa Essência" - fade + movimento vertical
-          .to(essenceTitleRef.current, {
+          .to(titleEl, {
             opacity: 1,
             y: 0,
             duration: 0.6,
@@ -70,7 +83,7 @@ export function SobreNos() {
           }, "-=0.5") // Inicia 0.3s após a imagem começar
 
           // 3. Parágrafo descritivo
-          .to(essenceDescriptionRef.current, {
+          .to(descriptionEl, {
             opacity: 1,
             y: 0,
             duration: 0.6,
@@ -78,7 +91,7 @@ export function SobreNos() {
           }, "-=0.4") // Intervalo de 0.2s
 
           // 4. Primeiro bloco "Valores que nos Guiam"
-          .to(essenceItem1Ref.current, {
+          .to(item1El, {
             opacity: 1,
             y: 0,
             duration: 0.5,
@@ -86,7 +99,7 @@ export function SobreNos() {
           }, "-=0.35") // Intervalo de 0.25s
 
           // 5. Segundo bloco "Essência Colaborativa"
-          .to(essenceItem2Ref.current, {
+          .to(item2El, {
             opacity: 1,
             y: 0,
             duration: 0.5,
@@ -98,8 +111,8 @@ export function SobreNos() {
       resetElements();
 
       // Criar ScrollTrigger que executa sempre que entra na tela
-      ScrollTrigger.create({
-        trigger: card1Ref.current,
+      essenceTrigger = ScrollTrigger.create({
+        trigger: triggerEl,
         start: "top 75%",
         end: "bottom 25%",
         onEnter: animateElements,     // Quando entra descendo
@@ -112,7 +125,7 @@ export function SobreNos() {
     animateEssenceSection();
 
     return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      essenceTrigger?.kill();
     };
   }, [prefersReducedMotion]);
 
@@ -135,7 +148,7 @@ export function SobreNos() {
           }}
         >
           <div className="md:hidden">
-            <div className="border border-gray-500 text-xs rounded-full px-4 py-2 w-fit text-[#4A4A4B] my-4">
+            <div className="border border-gray-300 text-xs rounded-full px-4 py-2 w-fit text-[#4A4A4B] my-4">
               Quem Somos
             </div>
           </div>
