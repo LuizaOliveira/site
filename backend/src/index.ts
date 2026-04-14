@@ -67,14 +67,3 @@ main().catch((e) => {
   console.error(e);
   process.exit(1);
 });
-
-// // Graceful shutdown
-// process.on('SIGINT', async () => {
-//   await prisma.$disconnect();
-//   process.exit(0);
-// });
-
-// process.on('SIGTERM', async () => {
-//   await prisma.$disconnect();
-//   process.exit(0);
-// });
