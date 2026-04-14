@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import { SplitText } from 'gsap-trial/SplitText';:
+// import { SplitText } from 'gsap-trial/SplitText';
 
 interface AnimatedTextProps {
   children: string;

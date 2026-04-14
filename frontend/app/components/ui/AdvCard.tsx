@@ -38,7 +38,6 @@ export function AdvCard({ imgSrc, nome, titulo, texto, social }: AdvCardProps) {
       {!social ? (
       <div className='px-5 py-4  my-2 flex items-center justify-between'>
         <div>
-          
           <p className='text-[#061A58] font-semibold group-hover:text-primary transition-colors duration-300'>{nome}</p>
           <p className='text-[#061A58] font-light text-xs group-hover:text-primary transition-colors duration-300'>{titulo || "Advogado Fundodor"}</p>
         </div>

@@ -1,17 +1,20 @@
 "use client";
 
-import Image from "next/image";
 import { Icon } from "@iconify/react";
 import { advogados } from "../../data/advogados";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { Header } from "../../components/layout/Header";
-import AvatarCircle from "@/app/components/ui/AvatarCircle";
 import { AdvCard } from "@/app/components/ui/AdvCard";
+import { ArticleCard } from "@/app/components/ui/articleCard";
+import { useEffect, useState } from "react";
+import { Article, getArticlesByAuthor } from "@/app/lib/api";
 
 export default function TeamDetail() {
   const params = useParams();
   const nomeParam = params.nome as string;
+
+  const [artigos, setArtigos] = useState<Article[]>([]);
 
   const advogado = advogados.find(
     (a) =>
@@ -21,6 +24,26 @@ export default function TeamDetail() {
         .replace(/[\u0300-\u036f]/g, "")
         .replace(/\s+/g, "-") === nomeParam
   );
+
+  useEffect(() => {
+    async function loadArticles() {
+      if (!advogado?.nome) {
+        setArtigos([]);
+        return;
+      }
+
+      const response = await getArticlesByAuthor(advogado.nome);
+
+      if (!response.success || !response.data) {
+        setArtigos([]);
+        return;
+      }
+
+      setArtigos(response.data.filter((article) => article.published));
+    }
+
+    loadArticles();
+  }, [advogado?.nome]);
 
   if (!advogado) {
     return (
@@ -77,6 +100,24 @@ export default function TeamDetail() {
                 </div>
               </div>
 
+              {/* Artigos */}
+              {artigos.length > 0 && (
+              <div className="mb-12">
+                <h3 className="text-sm font-bold text-primary uppercase tracking-wider mb-6">
+                  Artigos
+                </h3>
+                <div className="border-t border-gray-200 pt-6 flex overflow-x-auto overflow-y-hidden pb-2">
+                  {artigos.map((article) => (
+                    <ArticleCard
+                      key={article.id}
+                      articleId={article.id}
+                      articleImg={article.articleImage || article.thumbnail}
+                      articleTitle={article.title}
+                    />
+                  ))}
+                </div>
+              </div>)}
+              
               {/* Especialização */}
               <div className="mb-12">
                 <h3 className="text-sm font-bold text-primary uppercase tracking-wider mb-6">
@@ -95,15 +136,6 @@ export default function TeamDetail() {
                         <div className='bg-primary w-6 h-6 rounded-full flex items-center justify-center text-white text-xs rotate-45 transform'>
                           <Icon icon="bitcoin-icons:arrow-up-filled" className="w-4 h-4 text-secondary transform" />
                         </div>
-                        {/* <span>{esp}</span>
-                        <div className="bg-secondary w-8 h-8 rounded-full flex items-center justify-center text-white text-xs rotate-45 transform">
-                          <Icon
-                            icon="mdi:arrow-right"
-                            className="w-4 h-4 text-secondary opacity-0 group-hover:opacity-100 transition-opacity"
-                          />
-
-                        </div> */}
-
                       </div>
                     ))}
                   </div>
@@ -138,20 +170,12 @@ export default function TeamDetail() {
             {/* Coluna direita - Imagem */}
             <div className="flex items-center justify-center order-1 lg:order-2 w-full">
               <div className="w-full max-w-sm lg:ml-0 ml-5">
-                {/* <Image
-                src={`/${advogado.imagem}`}
-                alt={advogado.nome}
-                fill
-                className="object-cover rounded-3xl"
-              /> */}
-                {/* <AvatarCircle imgSrc={advogado.imagem} nome={advogado.nome} big rounded/> */}
                 <AdvCard
                   imgSrc={advogado.imagem}
                   nome={advogado.nome}
                   titulo={advogado.titulo}
                   social={advogado.sociais}
-
-                />
+                  />
               </div>
             </div>
           </div>
