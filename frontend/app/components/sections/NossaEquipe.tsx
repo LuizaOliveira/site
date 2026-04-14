@@ -220,9 +220,9 @@ export function NossaEquipe() {
       <div className="mt-12 md:mt-16 container mx-auto px-4 md:px-0">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 md:mb-12 gap-4">
           <h2 className="text-primary text-2xl lg:text-3xl md:text-3xl sm:font-light lg:font-bold">
-            Advogados, Fundadores 
+             Fundadores, Sócios 
             <span className="text-secondary">
-              <br /> e Sócios
+              <br /> e Advogados
             </span>
           </h2>
           <div className="flex gap-3 ">

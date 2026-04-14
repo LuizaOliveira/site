@@ -20,10 +20,10 @@ export function Footer() {
             />
 
             <div className="text-sm text-slate-300 leading-relaxed space-y-4">
-              <p>
+              {/* <p>
                 Rua Silvino Adonias Bezerra, 02 – <br />
                 Acari-RN
-              </p>
+              </p> */}
 
               <div>
                 <p>Clodonilmonteiro@gmail.com</p>
@@ -160,8 +160,8 @@ export function Footer() {
         {/* LINHA INFERIOR */}
         <div className="mt-16 border-t border-slate-600/40 pt-6 text-xs text-slate-400 text-left">
           © 2025 Clodonil Monteiro Advocacia – CNPJ 37.694.573/0001-72 – 
-          Rua Silvino Adonias Bezerra, 02 – Acari-RN – 
-          Fone: (84) 3433-2179 – Todos os direitos reservados.
+          {/* Rua Silvino Adonias Bezerra, 02 – Acari-RN –  */}
+          {/* Fone: (84) 3433-2179 – */} Todos os direitos reservados.
         </div>
 
       </div>

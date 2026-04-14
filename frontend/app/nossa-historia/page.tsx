@@ -11,7 +11,7 @@ import { useReducedMotion } from "../hooks/useReducedMotion";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const TypingText = ({ text }: { text: string }) => {
+export const TypingText = ({ text, size = "text-lg lg:text-2xl" }: { text: string; size?: string }) => {
     const [displayedText, setDisplayedText] = useState("");
     const [hasStarted, setHasStarted] = useState(false);
 
@@ -41,7 +41,7 @@ const TypingText = ({ text }: { text: string }) => {
     }, [text, hasStarted]);
 
     return (
-        <span className="inline-block mt-4 bg-[#f26a00] text-[#0d2340] text-md lg:text-3xl px-3 lg:pl-1 lg:pr-5 py-2 rounded-xl font-medium whitespace-nowrap">
+        <span className={`inline-block mt-4 bg-[#f26a00] text-[#0d2340] ${size} px-3 lg:pl-1 lg:pr-5 py-2 rounded-xl font-medium whitespace-nowrap`}>
             {displayedText}
         </span>
     );
@@ -126,7 +126,7 @@ export default function NossaHistoria() {
                                             Onde Começamos Define
                                         </h2>
 
-                                        <TypingText text="Quem Nos Tornamos" />
+                                        <TypingText text="Quem Nos Tornamos" size="text-lg lg:text-3xl" />
                                     </div>
 
                                     {/* Rodapé */}
@@ -134,8 +134,6 @@ export default function NossaHistoria() {
                                         <p className="text-gray-700 text-xs lg:text-base">
                                             Todo Nosso Empenho Visa Sempre O Cliente
                                         </p>
-
-
                                     </div>
                                 </div>
                             </div>

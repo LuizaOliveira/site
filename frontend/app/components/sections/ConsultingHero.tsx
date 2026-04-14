@@ -69,10 +69,10 @@ export function ConsultingHero() {
       transformOrigin: "left",
     });
 
-    gsap.set([leftArrowRef.current, rightArrowRef.current], {
-      opacity: 0,
-      x: (i) => (i === 0 ? -30 : 30),
-    });
+    // gsap.set([leftArrowRef.current, rightArrowRef.current], {
+    //   opacity: 0,
+    //   x: (i) => (i === 0 ? -30 : 30),
+    // });
 
     tl
       .to(
@@ -125,17 +125,17 @@ export function ConsultingHero() {
         },
         "<0.1"
       )
-      .to(
-        [leftArrowRef.current, rightArrowRef.current],
-        {
-          opacity: 1,
-          x: 0,
-          duration: 0.4,
-          ease: "power2.out",
-          stagger: 0.05,
-        },
-        "<0.05"
-      )
+      // .to(
+      //   [leftArrowRef.current, rightArrowRef.current],
+      //   {
+      //     opacity: 1,
+      //     x: 0,
+      //     duration: 0.4,
+      //     ease: "power2.out",
+      //     stagger: 0.05,
+      //   },
+      //   "<0.05"
+      // )
       .to(
         bottomLabelsRef.current,
         {
@@ -305,7 +305,7 @@ export function ConsultingHero() {
       </div>
 
       {/* ARROWS */}
-      <button
+      {/* <button
         ref={leftArrowRef}
         className="absolute left-8 top-1/2 -translate-y-1/2 z-20 text-white hidden lg:block"
       >
@@ -317,7 +317,7 @@ export function ConsultingHero() {
         className="absolute right-8 top-1/2 -translate-y-1/2 z-20 text-white hidden lg:block"
       >
         <Icon icon="humbleicons:chevron-right" className="w-8 h-8" />
-      </button>
+      </button> */}
     </section>
   );
 }

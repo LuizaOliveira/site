@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 import { Icon } from '@iconify/react';
 import { SectionTitle } from '../ui/SectionTitle';
@@ -13,15 +14,18 @@ gsap.registerPlugin(ScrollTrigger);
 
 export function AreaAtuacao() {
   const statsImages = [
-    { src: '/Camada_x0020_1.svg', alt: 'Estado RN', sigla: 'RN', estado: 'Rio Grande do Norte' },
-    { src: '/Camada_x0020_1 (1).svg', alt: 'Estado SP', sigla: 'SP', estado: 'Sao Paulo' },
-    { src: '/Camada_x0020_1 (2).svg', alt: 'Estado RJ', sigla: 'RJ', estado: 'Rio de Janeiro' },
-    { src: '/_36936856.svg', alt: 'Estado MA', sigla: 'MA', estado: 'Maranhao' },
+    { src: '/rn.svg', alt: 'Estado RN', sigla: 'RN', estado: 'Rio Grande do Norte' },
+    { src: '/MA.svg', alt: 'Estado MA', sigla: 'MA', estado: 'Maranhao' },
+    { src: '/SP.svg', alt: 'Estado SP', sigla: 'SP', estado: 'Sao Paulo' },
+    { src: '/RJ.svg', alt: 'Estado RJ', sigla: 'RJ', estado: 'Rio de Janeiro' },
+    { src: 'PI.svg', alt: 'Estado PI', sigla: 'PI', estado: 'Piaui' },
+    { src: 'PB.svg', alt: 'Estado PB', sigla: 'PB', estado: 'Paraiba' },
   ];
 
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const cardsGridRef = useRef<HTMLDivElement>(null);
+  const statesGridRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
@@ -69,6 +73,20 @@ export function AreaAtuacao() {
         once: true,
         onEnter: animateAll
       });
+
+      // Adicionar animação de zoom nas imagens dos estados
+      const stateImages = statesGridRef.current?.querySelectorAll('img');
+      if (stateImages && stateImages.length > 0) {
+        stateImages.forEach((img: Element) => {
+          const imgElement = img as HTMLElement;
+          imgElement.addEventListener('mouseenter', () => {
+            gsap.to(imgElement, { scale: 1.15, duration: 0.3, ease: 'power2.out' });
+          });
+          imgElement.addEventListener('mouseleave', () => {
+            gsap.to(imgElement, { scale: 1, duration: 0.3, ease: 'power2.out' });
+          });
+        });
+      }
     }, sectionRef);
  
     return () => ctx.revert();
@@ -138,11 +156,12 @@ export function AreaAtuacao() {
       
       <div className="mx-4 md:mx-10">
         <p className='lg:text-2xl  text-xl text-[#3F3F46] font-extralight mt-6 lg:ml-20 lg:mt-14'>Estados de atuação</p>
-        <div className="grid grid-cols-2 lg:grid-cols-4 mt-8 md:mt-10 gap-6 md:gap-8 lg:gap-x-6 lg:gap-y-0">
+        <div ref={statesGridRef} className="grid grid-cols-2 lg:grid-cols-6 mt-8 md:mt-10 gap-6 md:gap-8 lg:gap-x-6 lg:gap-y-0">
           {statsImages.map((item, index) => (
-            <div
+            <Link
               key={item.src}
-              className="flex flex-col items-center justify-center gap-2 px-2 md:px-4 lg:px-8 pb-4 border-b border-[#F0F0F0] lg:border-b-0 lg:border-r lg:last:border-r-0"
+              href={`/estados/${item.sigla.toLowerCase()}`}
+              className="flex flex-col items-center justify-center gap-2 px-2 md:px-4 lg:px-8 pb-4 border-b border-[#F0F0F0] lg:border-b-0 lg:border-r lg:last:border-r-0 cursor-pointer transition-opacity hover:opacity-80 overflow-hidden"
             >
               <Image
                 src={item.src}
@@ -158,7 +177,7 @@ export function AreaAtuacao() {
               >
                 {item.estado}
               </p>
-            </div>
+            </Link>
           ))}
 
         </div>
