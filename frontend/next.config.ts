@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'www.loremfaces.net',
       },
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos'
+      }
     ],
   },
 };

@@ -21,6 +21,31 @@ export interface CreatePostData {
   published: boolean;
 }
 
+export interface Article {
+  id: number;
+  published: boolean;
+  thumbnail: string;
+  title: string;
+  author: string;
+  articleImage: string;
+  articleFile: string;
+  description: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateArticleData {
+  title: string;
+  thumbnail: string;
+  author: string;
+  articleImage: string;
+  articleFile: string;
+  description: string;
+  content: string;
+  published: boolean;
+}
+
 function getApiBaseUrl() {
   const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || '/api';
 
@@ -166,6 +191,100 @@ export async function getLatestPost(): Promise<{ success: boolean; data?: Post; 
     }
 
     return { success: true, data: latestPost };
+  } catch (error) {
+    return { success: false, error: 'Erro de rede' };
+  }
+}
+
+// Função para criar um novo artigo
+export async function createArticle(
+  data: CreateArticleData
+): Promise<{ success: boolean; data?: Article; error?: string }> {
+  try {
+    const token = localStorage.getItem('authToken');
+    const headers: HeadersInit = {
+      'Content-Type': 'application/json',
+    };
+
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    const response = await fetch(`${API_BASE_URL}/articles`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(data),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      return { success: false, error: result.error || 'Erro ao criar artigo' };
+    }
+
+    const normalizedArticle: Article | undefined = result.data?.data || result.data;
+    return { success: true, data: normalizedArticle };
+  } catch (error) {
+    return { success: false, error: 'Erro de rede' };
+  }
+}
+
+// Função para buscar todos os artigos
+export async function getArticles(): Promise<{ success: boolean; data?: Article[]; error?: string }> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/articles`);
+    const result = await response.json();
+
+    if (!response.ok) {
+      return { success: false, error: result.error || 'Erro ao buscar artigos' };
+    }
+
+    const normalizedArticles: Article[] = result.data?.data || result.data || [];
+    return { success: true, data: normalizedArticles };
+  } catch (error) {
+    return { success: false, error: 'Erro de rede' };
+  }
+}
+
+// Função para buscar artigos por autor
+export async function getArticlesByAuthor(
+  author: string
+): Promise<{ success: boolean; data?: Article[]; error?: string }> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/articles/author`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ author }),
+    });
+    const result = await response.json();
+
+    if (!response.ok) {
+      return { success: false, error: result.error || 'Erro ao buscar artigos por autor' };
+    }
+
+    const normalizedArticles: Article[] = result.data?.data || result.data || [];
+    return { success: true, data: normalizedArticles };
+  } catch (error) {
+    return { success: false, error: 'Erro de rede' };
+  }
+}
+
+// Função para buscar artigo por ID
+export async function getArticleById(
+  id: number
+): Promise<{ success: boolean; data?: Article; error?: string }> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/articles/${id}`);
+    const result = await response.json();
+
+    if (!response.ok) {
+      return { success: false, error: result.error || 'Erro ao buscar artigo' };
+    }
+
+    const normalizedArticle: Article | undefined = result.data?.data || result.data;
+    return { success: true, data: normalizedArticle };
   } catch (error) {
     return { success: false, error: 'Erro de rede' };
   }
