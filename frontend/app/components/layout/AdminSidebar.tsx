@@ -23,6 +23,11 @@ export default function AdminSidebar() {
       label: 'Nova Notícia',
     },
     {
+      href: '/admin/artigos',
+      icon: 'solar:notebook-bookmark-bold-duotone',
+      label: 'Novo Artigo',
+    },
+    {
       href: '/admin/arquivo',
       icon: 'solar:archive-minimalistic-bold-duotone',
       label: 'Postagens Antigas',
@@ -50,7 +55,7 @@ export default function AdminSidebar() {
               href={item.href}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all group ${
                 isActive
-                  ? 'bg-gradient-to-r from-[#F97D0E]/20 to-transparent text-[#F97D0E] border-l-4 border-[#F97D0E]'
+                  ? 'bg-linear-to-r from-[#F97D0E]/20 to-transparent text-[#F97D0E] border-l-4 border-[#F97D0E]'
                   : 'text-slate-400 hover:text-white hover:bg-white/5'
               }`}
             >
