@@ -6,6 +6,7 @@ const router = Router();
 
 router.get('/', (req, res) => articleController.findAll(req, res));
 router.post('/author', (req, res) => articleController.findByAuthor(req, res));
+router.get('/tag/:tag', (req, res) => articleController.findByTag(req, res));
 router.get('/:id', (req, res) => articleController.findById(req, res));
 
 router.post('/', authMiddleware, (req, res) => articleController.create(req, res));

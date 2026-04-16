@@ -7,9 +7,9 @@ export class ArticleController {
 	async findAll(req: Request, res: Response): Promise<void> {
 		try {
 			const articles = await articleService.findAll();
-			res.json({ data: articles });
+			res.json({ success: true, data: articles });
 		} catch (error) {
-			res.status(500).json({ error: 'Erro ao buscar artigos' });
+			res.status(500).json({ success: false, error: 'Erro ao buscar artigos' });
 		}
 	}
 
@@ -19,13 +19,13 @@ export class ArticleController {
 			const article = await articleService.findById(Number(id));
 
 			if (!article) {
-				res.status(404).json({ error: 'Artigo não encontrado' });
+				res.status(404).json({ success: false, error: 'Artigo não encontrado' });
 				return;
 			}
 
-			res.json({ data: article });
+			res.json({ success: true, data: article });
 		} catch (error) {
-			res.status(500).json({ error: 'Erro ao buscar artigo' });
+			res.status(500).json({ success: false, error: 'Erro ao buscar artigo' });
 		}
 	}
 
@@ -35,25 +35,58 @@ export class ArticleController {
 			const normalizedAuthor = Array.isArray(author) ? author[0] : author;
 
 			if (!normalizedAuthor) {
-				res.status(400).json({ error: 'Parâmetro author é obrigatório' });
+				res.status(400).json({ success: false, error: 'Parâmetro author é obrigatório' });
 				return;
 			}
 
 			const articles = await articleService.findByAuthor(normalizedAuthor);
-			res.json({ data: articles });
+			res.json({ success: true, data: articles });
 		} catch (error) {
-			res.status(500).json({ error: 'Erro ao buscar artigos por autor' });
+			res.status(500).json({ success: false, error: 'Erro ao buscar artigos por autor' });
+		}
+	}
+
+	async findByTag(req: Request, res: Response): Promise<void> {
+		try {
+			const { tag } = req.params;
+
+			if (!tag) {
+				res.status(400).json({ success: false, error: 'Parâmetro tag é obrigatório' });
+				return;
+			}
+
+			const articles = await articleService.findByTag(tag);
+			res.json({ success: true, data: articles });
+		} catch (error) {
+			res.status(500).json({ success: false, error: 'Erro ao buscar artigos por tag' });
 		}
 	}
 
 	async create(req: Request, res: Response): Promise<void> {
 		try {
-			const { title, thumbnail, author, articleImage, description, content, published } = req.body;
+			const { title, thumbnail, author, articleImage, description, content, published, tags } = req.body;
 
 			if (!title || !thumbnail || !author || !articleImage || !description || !content) {
 				res.status(400).json({
-					error:
-						'Campos obrigatórios: title, thumbnail, author, articleImage, description e content',
+					success: false,
+					error: 'Campos obrigatórios: title, thumbnail, author, articleImage, description e content',
+				});
+				return;
+			}
+
+			// Validar tags (máximo 3)
+			if (tags && !Array.isArray(tags)) {
+				res.status(400).json({
+					success: false,
+					error: 'Tags deve ser um array',
+				});
+				return;
+			}
+
+			if (tags && tags.length > 3) {
+				res.status(400).json({
+					success: false,
+					error: 'Um artigo pode ter no máximo 3 tags',
 				});
 				return;
 			}
@@ -67,19 +100,20 @@ export class ArticleController {
 				description,
 				content,
 				published: published === 'true' || published === true,
+				tags: tags || [],
 			});
 
-			res.status(201).json({ data: article });
-		} catch (error) {
+			res.status(201).json({ success: true, data: article });
+		} catch (error: any) {
 			console.error('Erro ao criar artigo:', error);
-			res.status(500).json({ error: 'Erro ao criar artigo' });
+			res.status(500).json({ success: false, error: error.message || 'Erro ao criar artigo' });
 		}
 	}
 
 	async update(req: Request, res: Response): Promise<void> {
 		try {
 			const { id } = req.params;
-			const { title, thumbnail, author, articleImage, description, content, published } = req.body;
+			const { title, thumbnail, author, articleImage, description, content, published, tags } = req.body;
 
 			const updateData: {
 				title?: string;
@@ -89,6 +123,7 @@ export class ArticleController {
 				description?: string;
 				content?: string;
 				published?: boolean;
+				tags?: string[];
 			} = {};
 
 			if (title) updateData.title = title;
@@ -101,11 +136,32 @@ export class ArticleController {
 				updateData.published = published === 'true' || published === true;
 			}
 
+			// Validar tags (máximo 3)
+			if (tags !== undefined) {
+				if (!Array.isArray(tags)) {
+					res.status(400).json({
+						success: false,
+						error: 'Tags deve ser um array',
+					});
+					return;
+				}
+
+				if (tags.length > 3) {
+					res.status(400).json({
+						success: false,
+						error: 'Um artigo pode ter no máximo 3 tags',
+					});
+					return;
+				}
+
+				updateData.tags = tags;
+			}
+
 			const article = await articleService.update(Number(id), updateData);
-			res.json({ data: article });
-		} catch (error) {
+			res.json({ success: true, data: article });
+		} catch (error: any) {
 			console.error('Erro ao atualizar artigo:', error);
-			res.status(500).json({ error: 'Erro ao atualizar artigo' });
+			res.status(500).json({ success: false, error: error.message || 'Erro ao atualizar artigo' });
 		}
 	}
 
@@ -115,7 +171,7 @@ export class ArticleController {
 			await articleService.delete(Number(id));
 			res.status(204).send();
 		} catch (error) {
-			res.status(500).json({ error: 'Erro ao deletar artigo' });
+			res.status(500).json({ success: false, error: 'Erro ao deletar artigo' });
 		}
 	}
 
@@ -123,9 +179,9 @@ export class ArticleController {
 		try {
 			const { id } = req.params;
 			const article = await articleService.publish(Number(id));
-			res.json(article);
+			res.json({ success: true, data: article });
 		} catch (error) {
-			res.status(500).json({ error: 'Erro ao publicar artigo' });
+			res.status(500).json({ success: false, error: 'Erro ao publicar artigo' });
 		}
 	}
 
@@ -133,9 +189,9 @@ export class ArticleController {
 		try {
 			const { id } = req.params;
 			const article = await articleService.unpublish(Number(id));
-			res.json(article);
+			res.json({ success: true, data: article });
 		} catch (error) {
-			res.status(500).json({ error: 'Erro ao despublicar artigo' });
+			res.status(500).json({ success: false, error: 'Erro ao despublicar artigo' });
 		}
 	}
 }

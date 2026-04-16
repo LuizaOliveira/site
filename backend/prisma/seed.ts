@@ -26,6 +26,17 @@ const ARTICLE_THEMES = [
   'Progressao Funcional',
 ];
 
+const ARTICLE_TAGS = [
+  'Servidor Público',
+  'Benefícios',
+  'Aposentadoria',
+  'Direitos',
+  'Administração',
+  'Legislação',
+  'Tributação',
+  'Processual',
+];
+
 const MAX_VARCHAR_LEN = 30000;
 
 function fitVarchar(value: string, maxLength: number = MAX_VARCHAR_LEN): string {
@@ -68,6 +79,7 @@ function buildArticleSeeds(authors: string[]) {
     articleFile: string;
     description: string;
     content: string;
+    tags: string[];
   }> = [];
 
   authors.forEach((autor, authorIndex) => {
@@ -90,11 +102,28 @@ function buildArticleSeeds(authors: string[]) {
         articleFile: `https://example.com/artigos/${globalIndex}.pdf`,
         description: fitVarchar(description),
         content: fitVarchar(content),
+        tags: generateRandomTags(),
       });
     }
   });
 
   return articles;
+}
+
+function generateRandomTags(): string[] {
+  const tagCount = 2 + Math.floor(Math.random() * 2); // 2 ou 3 tags
+  const selectedTags = [];
+  const tagIndices = new Set<number>();
+  
+  while (selectedTags.length < tagCount) {
+    const randomIndex = Math.floor(Math.random() * ARTICLE_TAGS.length);
+    if (!tagIndices.has(randomIndex)) {
+      tagIndices.add(randomIndex);
+      selectedTags.push(ARTICLE_TAGS[randomIndex]);
+    }
+  }
+
+  return selectedTags;
 }
 
 async function main() {
@@ -171,10 +200,26 @@ async function main() {
   const advogadoNames = getAdvogadoNamesFromFrontendFile();
   const articleSeeds = buildArticleSeeds(advogadoNames);
 
+  // Remover artigos e tags antigas
   await prisma.article.deleteMany();
-  await prisma.article.createMany({
-    data: articleSeeds,
-  });
+  
+  // Criar artigos com tags (conectando ou criando tags conforme necessário)
+  for (const articleData of articleSeeds) {
+    const { tags, ...articleFields } = articleData;
+    
+    await prisma.article.create({
+      data: {
+        ...articleFields,
+        tags: {
+          connectOrCreate: tags.map(tagName => ({
+            where: { name: tagName },
+            create: { name: tagName }
+          }))
+        }
+      },
+      include: { tags: true }
+    });
+  }
 
   console.log('✅ Artigos de advogados criados:');
   console.log('   Total:', articleSeeds.length);
