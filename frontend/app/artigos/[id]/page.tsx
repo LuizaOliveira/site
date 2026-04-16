@@ -7,6 +7,7 @@ import { useParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { Article, getArticleById, getArticles } from '@/app/lib/api';
 import { Icon } from '@iconify/react';
+import { ArticleCard } from '@/app/components/ui/articleCard';
 
 function getAdvogadoByName(name: string) {
   const normalizedName = name
@@ -47,6 +48,7 @@ export default function ArticlePage() {
   const [article, setArticle] = useState<Article | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [relatedArticles, setRelatedArticles] = useState<Article[]>([]);
+  const [authorArticles, setAuthorArticles] = useState<Article[]>([]);
 
   useEffect(() => {
     async function loadArticleById() {
@@ -74,14 +76,25 @@ export default function ArticlePage() {
 
       setArticle(response.data);
 
-      // Carregar artigos relacionados
+      // Carregar artigos relacionados por tags e por autor
       const articlesResponse = await getArticles();
       if (articlesResponse.success && articlesResponse.data) {
-        const filtered = articlesResponse.data
-          .filter((a) => a.id !== parsedId && a.published)
+        const allArticles = articlesResponse.data.filter((a) => a.id !== parsedId && a.published);
+        
+        // Artigos com tags em comum (Veja também)
+        const articleTags = response.data.tags?.map(tag => tag.id) || [];
+        const relatedByTags = allArticles
+          .filter((a) => a.tags && a.tags.some(tag => articleTags.includes(tag.id)))
+          .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+          .slice(0, 2);
+        setRelatedArticles(relatedByTags);
+        
+        // Artigos do mesmo autor (Outras publicações)
+        const sameAuthorArticles = allArticles
+          .filter((a) => a.author === response.data.author)
           .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
           .slice(0, 3);
-        setRelatedArticles(filtered);
+        setAuthorArticles(sameAuthorArticles);
       }
 
       setIsLoading(false);
@@ -225,45 +238,75 @@ export default function ArticlePage() {
           </div>
         </section>
 
-        {/* ÚLTIMAS NOTÍCIAS */}
-        <section className="py-12 px-4 md:px-8 mt-12">
+        {/* VEJA TAMBÉM */}
+        <section className="pt-12 px-4 md:px-8 mt-12 ">
           <div className="container mx-auto max-w-6xl">
-            <h2 className="text-2xl font-bold text-gray-800 mb-8 uppercase tracking-widest">Últimas Notícias</h2>
+            <h2 className="text-sm font-bold text-gray-800 mb-8 uppercase tracking-widest">Veja também</h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="space-y-8">
               {relatedArticles.length > 0 ? (
                 relatedArticles.map((relatedArticle) => (
-                  <div key={relatedArticle.id} className="bg-white">
-                    <h3 className="text-xl font-bold text-primary mb-6 leading-snug hover:text-primary transition cursor-pointer">
+                  <div key={relatedArticle.id} className="pb-8 border-b border-gray-200 last:border-b-0">
+                    <h3 className="text-base font-light text-gray-900 mb-3 leading-snug hover:text-primary transition cursor-pointer">
                       {relatedArticle.title}
                     </h3>
-                    <div>
-                      {relatedArticle.tags && relatedArticle.tags.length > 0 ? (
-                        <>
-                          <p className="text-xs text-gray-600 font-medium mb-3">Assuntos:</p>
-                          <div className="flex flex-col gap-2">
-                            {relatedArticle.tags.map((tag) => (
-                              <span
-                                key={tag.id}
-                                className="inline-block text-sm text-gray-700 font-medium bg-gray-100 px-3 py-2 rounded-full w-fit hover:bg-primary hover:text-white transition-colors"
-                              >
-                                {tag.name}
-                              </span>
-                            ))}
-                          </div>
-                        </>
-                      ) : (
-                        <p className="text-sm text-gray-400 italic">Sem tags</p>
-                      )}
-                    </div>
+                    {/* <p className="text-sm text-gray-600 leading-relaxed">
+                      {relatedArticle.description || 'Sem descrição disponível.'}
+                    </p> */}
                   </div>
                 ))
               ) : (
-                <p className="text-gray-500 col-span-3">Nenhum artigo relacionado encontrado.</p>
+                <p className="text-gray-500">Nenhum artigo relacionado encontrado.</p>
               )}
             </div>
           </div>
         </section>
+
+        {/* OUTRAS PUBLICAÇÕES DO AUTOR */}
+        {authorArticles.length > 0 && (
+          <section className="py-12 px-4 md:px-8 mt-12">
+            <div className="container mx-auto max-w-6xl">
+            <h2 className="text-sm font-bold text-gray-800 mb-8 uppercase tracking-widest">Outras Publicações:</h2>
+
+              {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-8"> */}
+
+                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        {authorArticles.map((article, index) => (
+                          <div
+                            key={article.id}
+                            className="animate-fadeInUp"
+                            style={{ animationDelay: `${index * 0.1}s` }}
+                          >
+                            <ArticleCard
+                              articleId={article.id}
+                              articleImg={article.articleImage || article.thumbnail}
+                              articleTitle={article.title}
+                              tags={article.tags}
+                            />
+                          </div>
+                        ))}
+                      </div>
+              {/* </div> */}
+            </div>
+          </section>
+        )}
+{/* 
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        {authorArticles.map((article, index) => (
+                          <div
+                            key={article.id}
+                            className="animate-fadeInUp"
+                            style={{ animationDelay: `${index * 0.1}s` }}
+                          >
+                            <ArticleCard
+                              articleId={article.id}
+                              articleImg={article.articleImage || article.thumbnail}
+                              articleTitle={article.title}
+                              tags={article.tags}
+                            />
+                          </div>
+                        ))}
+                      </div> */}
       </main>
       <Footer />
     </>

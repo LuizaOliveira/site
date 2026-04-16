@@ -16,7 +16,7 @@ export function ArticleCard({ articleId, articleImg, articleTitle, tags = [] }: 
       className="bg-white hover:opacity-80 transition-opacity duration-300 block h-full"
     >
       <div className="p-0 max-w-72">
-        <h4 className="text-xl font-bold text-primary mb-6 leading-snug hover:text-primary transition ">
+        <h4 className="text-xl font-medium text-primary mb-6 leading-snug hover:text-primary transition ">
           {articleTitle}
         </h4>
 

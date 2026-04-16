@@ -4,6 +4,10 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
 import { FreeAnalysisSection } from "../ui/FreeAnalysisSection";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 type ToastType = "success" | "error";
 
@@ -19,12 +23,83 @@ export function Contact() {
   const [toast, setToast] = useState<ToastState | null>(null);
   const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const removeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  
+  // Refs para animação
+  const sectionRef = useRef<HTMLElement>(null);
+  const dividerRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLParagraphElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     return () => {
       if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
       if (removeTimerRef.current) clearTimeout(removeTimerRef.current);
     };
+  }, []);
+
+  // Animações com GSAP ScrollTrigger - similar ao NossaEquipe
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      if (dividerRef.current) {
+        gsap.fromTo(
+          dividerRef.current,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 50%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      }
+
+      if (textRef.current) {
+        gsap.fromTo(
+          textRef.current,
+          { opacity: 0, x: -50, scale: 0.95 },
+          {
+            opacity: 1,
+            x: 0,
+            scale: 1,
+            duration: 0.8,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 75%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      }
+
+      if (formRef.current) {
+        gsap.fromTo(
+          formRef.current,
+          { opacity: 0, x: 50, scale: 0.95 },
+          {
+            opacity: 1,
+            x: 0,
+            scale: 1,
+            duration: 0.8,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 75%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
   }, []);
 
   const showToast = (message: string, type: ToastType) => {
@@ -82,7 +157,7 @@ export function Contact() {
   };
 
   return (
-    <section className="relative overflow-hidden" id="contato">
+    <section className="relative overflow-hidden" id="contato" ref={sectionRef}>
       {toast && (
         <div
           className={`fixed top-5 z-50 transition-transform duration-500 ease-out ${
@@ -106,7 +181,7 @@ export function Contact() {
       )}
 
       {/* Divider */}
-      <div className="relative w-full flex items-center justify-center py-2">
+      <div className="relative w-full flex items-center justify-center py-2" ref={dividerRef}>
         <div className="absolute top-1/2 left-0 w-full h-px bg-[#D9D9D9] -translate-y-1/2"></div>
 
         <div className="relative z-10 px-8 py-1 lg:py-3 rounded-full border border-[#D9D9D9] bg-white">
@@ -133,13 +208,13 @@ export function Contact() {
           <div className="w-full max-w-5xl flex flex-col md:flex-row items-center justify-between gap-8 text-white">
 
             
-            <p className="text-sm md:text-base max-w-md">
+            <p className="text-sm md:text-base max-w-md" ref={textRef}>
               Se inscreva no Clodonews e receba semanalmente notícias e conteúdos
               acerca de seus direitos como servidor
             </p>
 
             {/* INPUT + BOTÃO */}
-            <form className="flex items-center gap-4 w-full md:w-auto" onSubmit={handleNewsletterSubmit}>
+            <form className="flex items-center gap-4 w-full md:w-auto" onSubmit={handleNewsletterSubmit} ref={formRef}>
               <input
                 type="email"
                 value={newsletterEmail}

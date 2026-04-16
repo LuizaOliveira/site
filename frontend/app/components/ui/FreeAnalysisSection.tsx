@@ -1,8 +1,12 @@
 'use client'
 
-import { FormEvent, useMemo, useState } from 'react'
+import { FormEvent, useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import { Icon } from '@iconify/react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const ISSUE_OPTIONS = [
   'Progressão de Letras',
@@ -34,10 +38,73 @@ export function FreeAnalysisSection() {
   const [issues, setIssues] = useState<string[]>([])
   const [errors, setErrors] = useState<{ name?: string; email?: string; phone?: string; professionalType?: string }>({})
 
+  const sectionRef = useRef<HTMLElement>(null)
+  const mobileCardRef = useRef<HTMLDivElement>(null)
+  const desktopContentRef = useRef<HTMLDivElement>(null)
+  const desktopImageRef = useRef<HTMLDivElement>(null)
+
   const whatsappNumber = useMemo(
     () => (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '5584997007924').replace(/\D/g, ''),
     []
   )
+
+  useEffect(() => {
+    if (!sectionRef.current) return
+
+    const ctx = gsap.context(() => {
+      const resetElements = () => {
+        if (mobileCardRef.current) gsap.set(mobileCardRef.current, { opacity: 0, y: 60 })
+        if (desktopContentRef.current) gsap.set(desktopContentRef.current, { opacity: 0, x: -90, scale: 0.94 })
+        if (desktopImageRef.current) gsap.set(desktopImageRef.current, { opacity: 0, x: 90, scale: 0.94 })
+      }
+
+      const animateElements = () => {
+        if (mobileCardRef.current) {
+          gsap.to(mobileCardRef.current, {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: 'power2.out'
+          })
+        }
+
+        if (desktopContentRef.current) {
+          gsap.to(desktopContentRef.current, {
+            opacity: 1,
+            x: 0,
+            scale: 1,
+            duration: 1.1,
+            ease: 'power3.out'
+          })
+        }
+
+        if (desktopImageRef.current) {
+          gsap.to(desktopImageRef.current, {
+            opacity: 1,
+            x: 0,
+            scale: 1,
+            duration: 1.1,
+            ease: 'power3.out'
+          })
+        }
+      }
+
+      resetElements()
+
+      const trigger = ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: 'top 50%',
+        end: 'bottom 5%',
+        onEnter: animateElements,
+        onEnterBack: animateElements,
+        onLeaveBack: resetElements
+      })
+
+      return () => trigger.kill()
+    }, sectionRef)
+
+    return () => ctx.revert()
+  }, [])
 
   function toggleIssue(issue: string) {
     setIssues((prev) =>
@@ -98,7 +165,7 @@ export function FreeAnalysisSection() {
     'w-full rounded-lg border border-gray-200 text-black placeholder:text-black/50 focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent transition-colors duration-200'
 
   return (
-    <section className="w-full px-0 lg:px-4">
+    <section className="w-full px-0 lg:px-4" ref={sectionRef}>
       {/* MOBILE LAYOUT */}
       <div className="lg:hidden px-0">
         {/* Container com espaço para sobreposição */}
@@ -113,7 +180,10 @@ export function FreeAnalysisSection() {
           </div>
 
           {/* CARD BRANCO SOBREPOSTO */}
-          <div className="relative -mt-16 bg-white rounded-3xl p-6 shadow-lg border border-gray-200 z-10 overflow-hidden">
+          <div
+            ref={mobileCardRef}
+            className="relative -mt-16 bg-white rounded-3xl p-6 shadow-lg border border-gray-200 z-10 overflow-hidden"
+          >
             
             {/* Badge */}
             <span className="inline-block text-xs px-4 py-1 rounded-full border border-orange-400 text-orange-500 mb-4">
@@ -242,7 +312,7 @@ export function FreeAnalysisSection() {
       <div className="hidden lg:block max-w-7xl mx-auto bg-white rounded-3xl border border-gray-200 overflow-hidden shadow-lg">
         <div className="grid grid-cols-2 items-stretch">
           {/* CONTEÚDO ESQUERDA */}
-          <div className="p-12">
+          <div className="p-12" ref={desktopContentRef}>
             {/* Badge */}
             <span className="inline-block text-xs px-4 py-1 rounded-full border border-orange-400 text-orange-500 mb-6">
               Fale conosco
@@ -370,7 +440,7 @@ export function FreeAnalysisSection() {
           </div>
 
           {/* IMAGEM DIREITA */}
-          <div className="relative h-full min-h-96">
+          <div className="relative h-full min-h-96" ref={desktopImageRef}>
             <Image
               src="/group.svg"
               alt="Consultoria"

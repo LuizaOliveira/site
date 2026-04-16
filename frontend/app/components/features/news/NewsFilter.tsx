@@ -29,13 +29,7 @@ export function NewsFilter() {
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [showNavigationButtons, setShowNavigationButtons] = useState(true);
-  // Removendo estados relacionados ao snap para teste
-  // const [currentIndex, setCurrentIndex] = useState(0);
-  // const [dragDistance, setDragDistance] = useState(0);
-  // const [shouldSnap, setShouldSnap] = useState(false);
-  
-  // Removendo ref de snap timeout para teste
-  // const snapTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   
   const scrollRef = useRef<HTMLDivElement>(null);
   const fullscreenViewerRef = useRef<HTMLDivElement>(null);
