@@ -126,9 +126,11 @@ export function Testimonials() {
     const ctx = gsap.context(() => {
       gsap.from('.testimonial-card', {
         opacity: 0,
-        y: 40,
-        duration: 0.8,
-        stagger: 0.15,
+        y: 80,
+        scale: 0.92,
+        duration: 1,
+        ease: 'power3.out',
+        stagger: 0.2,
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top 75%'

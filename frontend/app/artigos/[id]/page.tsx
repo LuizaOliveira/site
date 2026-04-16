@@ -4,10 +4,14 @@ import { Footer } from '@/app/components/layout/Footer';
 import Image from 'next/image';
 import { advogados } from '@/app/data/advogados';
 import { useParams } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Article, getArticleById, getArticles } from '@/app/lib/api';
 import { Icon } from '@iconify/react';
 import { ArticleCard } from '@/app/components/ui/articleCard';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 function getAdvogadoByName(name: string) {
   const normalizedName = name
@@ -49,6 +53,10 @@ export default function ArticlePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [relatedArticles, setRelatedArticles] = useState<Article[]>([]);
   const [authorArticles, setAuthorArticles] = useState<Article[]>([]);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const mainRef = useRef<HTMLDivElement>(null);
+  const vejaRef = useRef<HTMLElement>(null);
+  const authorRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     async function loadArticleById() {
@@ -74,7 +82,9 @@ export default function ArticlePage() {
         return;
       }
 
-      setArticle(response.data);
+      const articleData = response.data;
+      setArticle(articleData);
+      setImageLoaded(false);
 
       // Carregar artigos relacionados por tags e por autor
       const articlesResponse = await getArticles();
@@ -82,7 +92,7 @@ export default function ArticlePage() {
         const allArticles = articlesResponse.data.filter((a) => a.id !== parsedId && a.published);
         
         // Artigos com tags em comum (Veja também)
-        const articleTags = response.data.tags?.map(tag => tag.id) || [];
+        const articleTags = articleData.tags?.map(tag => tag.id) || [];
         const relatedByTags = allArticles
           .filter((a) => a.tags && a.tags.some(tag => articleTags.includes(tag.id)))
           .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
@@ -90,8 +100,9 @@ export default function ArticlePage() {
         setRelatedArticles(relatedByTags);
         
         // Artigos do mesmo autor (Outras publicações)
+        
         const sameAuthorArticles = allArticles
-          .filter((a) => a.author === response.data.author)
+          .filter((a) => a.author === articleData.author)
           .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
           .slice(0, 3);
         setAuthorArticles(sameAuthorArticles);
@@ -103,6 +114,69 @@ export default function ArticlePage() {
     setIsLoading(true);
     loadArticleById();
   }, [idParam]);
+
+  useEffect(() => {
+    if (!mainRef.current) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        mainRef.current,
+        { opacity: 0, y: 70, scale: 0.97 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.6,
+          ease: 'power4.out',
+          scrollTrigger: {
+            trigger: mainRef.current,
+            start: 'top 75%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+
+      if (vejaRef.current) {
+        gsap.fromTo(
+          vejaRef.current,
+          { opacity: 0, y: 70, scale: 0.98 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.6,
+            ease: 'power4.out',
+            scrollTrigger: {
+              trigger: vejaRef.current,
+              start: 'top 75%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      }
+
+      if (authorRef.current) {
+        gsap.fromTo(
+          authorRef.current,
+          { opacity: 0, y: 70, scale: 0.98 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.6,
+            ease: 'power4.out',
+            scrollTrigger: {
+              trigger: authorRef.current,
+              start: 'top 75%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      }
+    });
+
+    return () => ctx.revert();
+  }, [article, relatedArticles.length, authorArticles.length]);
 
   const advogado = useMemo(() => {
     if (!article?.author) {
@@ -151,7 +225,10 @@ export default function ArticlePage() {
       <main className="min-h-screen bg-white pb-16">
         {/* MAIN CONTENT */}
         <section className="pt-24 px-4 md:px-8">
-          <div className="container mx-auto max-w-6xl">
+          <div
+            className={`container mx-auto max-w-6xl transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+            ref={mainRef}
+          >
             {/* Breadcrumb */}
             <p className="text-xs text-gray-500 uppercase tracking-widest mb-6">Artigos | Publicações</p>
 
@@ -170,6 +247,8 @@ export default function ArticlePage() {
               src={articleMainImage}
               alt={article.title}
               className="w-full max-h-96 rounded-xl object-cover mb-8"
+              onLoad={() => setImageLoaded(true)}
+              onError={() => setImageLoaded(true)}
             />
 
             {/* Assuntos */}
@@ -239,7 +318,7 @@ export default function ArticlePage() {
         </section>
 
         {/* VEJA TAMBÉM */}
-        <section className="pt-12 px-4 md:px-8 mt-12 ">
+        <section className="pt-12 px-4 md:px-8 mt-12" ref={vejaRef}>
           <div className="container mx-auto max-w-6xl">
             <h2 className="text-sm font-bold text-gray-800 mb-8 uppercase tracking-widest">Veja também</h2>
 
@@ -264,7 +343,7 @@ export default function ArticlePage() {
 
         {/* OUTRAS PUBLICAÇÕES DO AUTOR */}
         {authorArticles.length > 0 && (
-          <section className="py-12 px-4 md:px-8 mt-12">
+          <section className="py-12 px-4 md:px-8 mt-12" ref={authorRef}>
             <div className="container mx-auto max-w-6xl">
             <h2 className="text-sm font-bold text-gray-800 mb-8 uppercase tracking-widest">Outras Publicações:</h2>
 

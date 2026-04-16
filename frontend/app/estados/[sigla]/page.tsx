@@ -3,15 +3,88 @@
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { Icon } from '@iconify/react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { TypingText } from '@/app/nossa-historia/page';
 import { Header } from '@/app/components/layout/Header';
 import { InteractiveMap } from '@/app/components/InteractiveMap';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function EstadoPage() {
     const params = useParams();
     const sigla = (params.sigla as string)?.toUpperCase() || '';
     const [openAccordion, setOpenAccordion] = useState<number | null>(null);
+    const sectionRef = useRef<HTMLDivElement>(null);
+    const titleRef = useRef<HTMLDivElement>(null);
+    const mapCardRef = useRef<HTMLDivElement>(null);
+    const contentRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (!sectionRef.current) return;
+        if (typeof window !== 'undefined' && window.innerWidth < 640) return;
+
+        const ctx = gsap.context(() => {
+            if (titleRef.current) {
+                gsap.fromTo(
+                    titleRef.current,
+                    { opacity: 0, y: 40 },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.8,
+                        ease: 'power2.out',
+                        scrollTrigger: {
+                            trigger: sectionRef.current,
+                            start: 'top 75%',
+                            toggleActions: 'play none none reverse'
+                        }
+                    }
+                );
+            }
+
+            if (contentRef.current) {
+                gsap.fromTo(
+                    contentRef.current,
+                    { opacity: 0, x: -50, scale: 0.98 },
+                    {
+                        opacity: 1,
+                        x: 0,
+                        scale: 1,
+                        duration: 0.8,
+                        ease: 'power2.out',
+                        scrollTrigger: {
+                            trigger: sectionRef.current,
+                            start: 'top 75%',
+                            toggleActions: 'play none none reverse'
+                        }
+                    }
+                );
+            }
+
+            if (mapCardRef.current) {
+                gsap.fromTo(
+                    mapCardRef.current,
+                    { opacity: 0, x: 50, scale: 0.98 },
+                    {
+                        opacity: 1,
+                        x: 0,
+                        scale: 1,
+                        duration: 0.8,
+                        ease: 'power2.out',
+                        scrollTrigger: {
+                            trigger: sectionRef.current,
+                            start: 'top 75%',
+                            toggleActions: 'play none none reverse'
+                        }
+                    }
+                );
+            }
+        }, sectionRef);
+
+        return () => ctx.revert();
+    }, []);
 
     const estadosInfo = {
         RN: {
@@ -130,10 +203,10 @@ export default function EstadoPage() {
             </div>
 
             {/* Header Section */}
-            <section className="px-4 md:px-12 py-10 md:py-16">
+            <section className="px-4 md:px-12 py-10 md:py-16" ref={sectionRef}>
                 <div className="container mx-auto">
                     {/* Title and Subtitle - Always at top */}
-                    <div>
+                    <div ref={titleRef}>
                         <h3 className="text-xl md:text-3xl  mb-2 font-cabinet">
                             <span className="text-gray-800">{info.nomeFormatado}</span>
                             {info.nomeFormatado2 && (
@@ -145,7 +218,7 @@ export default function EstadoPage() {
                     {/* Grid - Map Card appears after title on mobile, beside content on desktop */}
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 mt-8">
                         {/* Right - Map Card - order-1 on mobile, order-2 on desktop */}
-                        <div className="flex items-center justify-center lg:order-2 order-1">
+                        <div className="flex items-center justify-center lg:order-2 order-1" ref={mapCardRef}>
                             <div className="w-full max-w-lg bg-[#efefef] rounded-xl p-6 lg:p-8">
 
                                 {/* Header */}
@@ -196,7 +269,7 @@ export default function EstadoPage() {
                         </div>
 
                         {/* Left Content - Description - order-2 on mobile, order-1 on desktop */}
-                        <div className="lg:order-1 order-2">
+                        <div className="lg:order-1 order-2" ref={contentRef}>
                             <p className="text-gray-700 text-sm md:text-base leading-relaxed mb-8 text-justify">
                                 {info.descricao}
                             </p>
