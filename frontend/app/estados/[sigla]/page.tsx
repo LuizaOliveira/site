@@ -23,9 +23,9 @@ export default function EstadoPage() {
             municipios: 167,
             telefone: '(84) 3333-2378',
             duvidas: [
-                { titulo: 'Direito do professor', conteudo: 'Informações sobre direitos dos professores e proteção legal...' },
-                { titulo: 'Direito do professor', conteudo: 'Informações sobre direitos dos professores e proteção legal...' },
-                { titulo: 'Direito do professor', conteudo: 'Informações sobre direitos dos professores e proteção legal...' },
+                { titulo: 'Progressão funcional', conteudo: 'Informações sobre direitos dos professores e proteção legal...' },
+                { titulo: 'Direitos pré e pós aposentadoria', conteudo: 'No Rio Grande do Norte, é possível requerer a conversão em pecúnia (indenização) de direitos adquiridos antes ou após a aposentadoria, quando não usufruídos. Esse direito pode ser reconhecido tanto para servidores estaduais quanto municipais, desde que haja respaldo na legislação e no entendimento dos tribunais' },
+                { titulo: 'Dedicação exclusiva', conteudo: 'Informações sobre direitos dos professores e proteção legal...' },
             ]
         },
         SP: {
@@ -65,9 +65,9 @@ export default function EstadoPage() {
             municipios: 217,
             telefone: '(98) 9999-9999',
             duvidas: [
-                { titulo: 'Direito do professor', conteudo: 'Informações sobre direitos dos professores...' },
-                { titulo: 'Direito do professor', conteudo: 'Informações sobre direitos dos professores...' },
-                { titulo: 'Direito do professor', conteudo: 'Informações sobre direitos dos professores...' },
+                { titulo: 'Revisão de Gratificações', conteudo: 'Informações sobre direitos dos professores...' },
+                { titulo: 'Terço de férias', conteudo: 'Informações sobre direitos dos professores...' },
+                { titulo: 'Direitos pré e pós aposentadoria', conteudo: 'Informações sobre direitos dos professores...' },
             ]
         },
         PI: {
@@ -86,10 +86,10 @@ export default function EstadoPage() {
         },
         PB: {
             nome: 'Paraíba',
-            nomeFormatado: 'Para',
-            nomeFormatado2: 'iba',
+            nomeFormatado: 'Paraiba',
+            nomeFormatado2: '',
             subtitulo: 'Público e atuação no estado',
-            descricao: 'Atuação jurídica especializada na Paraíba...',
+            descricao: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum ',
             municipios: 223,
             telefone: '(83) 9999-9999',
             duvidas: [
@@ -132,28 +132,20 @@ export default function EstadoPage() {
             {/* Header Section */}
             <section className="px-4 md:px-12 py-10 md:py-16">
                 <div className="container mx-auto">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
-                        {/* Left Content */}
-                        <div>
-                            <h3 className="text-xl md:text-3xl  mb-2 font-cabinet">
-                                <span className="text-gray-800">{info.nomeFormatado}</span>
-                                {info.nomeFormatado2 && (
-                                <span className="text-[#E86000] ml-2">{info?.nomeFormatado2}</span>)}
-                            </h3>
-                            <p className="text-gray-600 text-sm md:text-base mb-6">{info.subtitulo}</p>
+                    {/* Title and Subtitle - Always at top */}
+                    <div>
+                        <h3 className="text-xl md:text-3xl  mb-2 font-cabinet">
+                            <span className="text-gray-800">{info.nomeFormatado}</span>
+                            {info.nomeFormatado2 && (
+                            <span className="text-[#E86000] ml-2">{info?.nomeFormatado2}</span>)}
+                        </h3>
+                        <p className="text-gray-600 text-sm md:text-base mb-6">{info.subtitulo}</p>
+                    </div>
 
-                            <p className="text-gray-700 text-sm md:text-base leading-relaxed mb-8 text-justify">
-                                {info.descricao}
-                            </p>
-
-                            <button className="inline-flex items-center gap-2 bg-[#E86000] text-white px-6 py-3 rounded-full font-medium hover:bg-[#d35000] transition-colors">
-                                Falar conosco
-                                <Icon icon="mdi:arrow-right" className="w-4 h-4" />
-                            </button>
-                        </div>
-
-                        {/* Right - Map Card */}
-                        <div className="flex items-center justify-center">
+                    {/* Grid - Map Card appears after title on mobile, beside content on desktop */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 mt-8">
+                        {/* Right - Map Card - order-1 on mobile, order-2 on desktop */}
+                        <div className="flex items-center justify-center lg:order-2 order-1">
                             <div className="w-full max-w-lg bg-[#efefef] rounded-xl p-6 lg:p-8">
 
                                 {/* Header */}
@@ -202,16 +194,28 @@ export default function EstadoPage() {
                                 </div>
                             </div>
                         </div>
+
+                        {/* Left Content - Description - order-2 on mobile, order-1 on desktop */}
+                        <div className="lg:order-1 order-2">
+                            <p className="text-gray-700 text-sm md:text-base leading-relaxed mb-8 text-justify">
+                                {info.descricao}
+                            </p>
+
+                            <button className="inline-flex items-center gap-2 bg-[#E86000] text-white px-6 py-3 rounded-full font-medium hover:bg-[#d35000] transition-colors">
+                                Falar conosco
+                                <Icon icon="mdi:arrow-right" className="w-4 h-4" />
+                            </button>
+                        </div>
                     </div>
                 </div>
             </section>
 
             {/* FAQ Section */}
-            <section className="px-4 md:px-12 py-16 bg-gray-50">
+            {/* <section className="px-4 md:px-12 py-10 ">
                 <div className="container mx-auto">
-                    <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-10">Principais Dúvidas acerca de direitos nesse estado</h2>
+                    <h4 className="text-xl md:text-2xl font-bold text-gray-800 mb-10 font-cabinet">Principais direitos nesse estado</h4>
 
-                    <div className="space-y-3 max-w-3xl">
+                    <div className="space-y-3 ">
                         {info.duvidas.map((duvida, index) => (
                             <div key={index} className="border border-gray-200 rounded-lg overflow-hidden bg-white">
                                 <button
@@ -234,14 +238,14 @@ export default function EstadoPage() {
                         ))}
                     </div>
                 </div>
-            </section>
+            </section> */}
 
             {/* Footer Link */}
             <div className="px-4 md:px-12 py-10">
                 <div className="container mx-auto">
                     <Link href="/#nossa-equipe" className="inline-flex items-center gap-2 text-gray-700 hover:text-[#E86000] transition-colors font-medium">
                         <Icon icon="mdi:arrow-left" className="w-4 h-4" />
-                        Voltar para a equipe
+                        Voltar para área de atuação
                     </Link>
                 </div>
             </div>

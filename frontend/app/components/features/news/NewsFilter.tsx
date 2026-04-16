@@ -213,6 +213,17 @@ export function NewsFilter() {
     }
   };
 
+  // Handler para abrir PDF - fullscreen em desktop, link em mobile
+  const handlePdfOpen = (pdfUrl: string) => {
+    if (window.innerWidth < 768) {
+      // Mobile - redirecionar para o arquivo
+      window.open(pdfUrl, '_blank');
+    } else {
+      // Desktop - abrir fullscreen viewer
+      openFullscreenViewer(pdfUrl);
+    }
+  };
+
   const closeFullscreenViewer = useCallback(async () => {
     if (document.fullscreenElement) {
       try {
@@ -352,7 +363,7 @@ export function NewsFilter() {
 
               <button
                 type="button"
-                onClick={() => openFullscreenViewer(post.file)}
+                onClick={() => handlePdfOpen(post.file)}
                 className="absolute bottom-8 right-3 bg-[#E86000] w-10 h-10 rounded-full flex justify-center items-center rotate-45 translate-y-2 hover:bg-[#d95700] transition-colors"
                 aria-label={`Abrir PDF ${post.title} em tela cheia`}
               >

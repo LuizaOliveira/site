@@ -12,6 +12,12 @@ export interface Post {
   updatedAt: string;
 }
 
+export interface Tag {
+  id: number;
+  name: string;
+  createdAt: string;
+}
+
 export interface CreatePostData {
   title: string;
   thumbnail: string;
@@ -31,6 +37,7 @@ export interface Article {
   articleFile: string;
   description: string;
   content: string;
+  tags: Tag[];
   createdAt: string;
   updatedAt: string;
 }
@@ -191,6 +198,25 @@ export async function getLatestPost(): Promise<{ success: boolean; data?: Post; 
     }
 
     return { success: true, data: latestPost };
+  } catch (error) {
+    return { success: false, error: 'Erro de rede' };
+  }
+}
+
+// Função para buscar post por ID
+export async function getPostById(
+  id: number
+): Promise<{ success: boolean; data?: Post; error?: string }> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/posts/${id}`);
+    const result = await response.json();
+
+    if (!response.ok) {
+      return { success: false, error: result.error || 'Erro ao buscar post' };
+    }
+
+    const normalizedPost: Post | undefined = result.data?.data || result.data;
+    return { success: true, data: normalizedPost };
   } catch (error) {
     return { success: false, error: 'Erro de rede' };
   }

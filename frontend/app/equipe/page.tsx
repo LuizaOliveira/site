@@ -79,7 +79,7 @@ export default function EquipePage() {
 {/* Divisor */}
           <div className="h-px bg-linear-to-r from-transparent via-gray-300 to-transparent my-12 sm:my-16"/>
             <div className="text-lg sm:text-xl text-darkgray font-cabinet mb-6">Outros Advogados</div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
               {outrosAdvogados.map((advogado) => (
                 <div key={advogado.id} className="flex justify-center">
                   <AdvCard

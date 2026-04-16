@@ -181,6 +181,23 @@ export const advogados: Advogado[] = [
       "Processos Administrativos",
     ],
   },
+  {
+    id: "Amanda-cristina",
+    nome: "Amanda Cristina",
+    titulo: "Advogada",
+    imagem: "amanda.svg",
+    descricao: "\"Advogada inscrita na OAB/RN nº 23.186. Bacharel em Direito pela Universidade Federal do Rio Grande do Norte (UFRN) e especialista em Direito Processual Civil pela Legale Educacional. Atualmente, cursa duas especializações: Direito Público e Direito Civil, ambas pela Legale Educacional. No escritório, atua no Setor Jurídico, sendo responsável pela supervisão dos departamentos de Recursos e Emendas. Desempenha atividades voltadas à coordenação das equipes de ambos os departamentos, ao controle de prazos e à elaboração de estratégias para a condução processual, incluindo, de forma complementar, a análise de viabilidade de pagamento de custas processuais.\"",
+    email: "amanda@cmajus.com.br",
+    sociais: {
+      linkedin: "https://linkedin.com",
+      twitter: "https://twitter.com",
+    },
+    especializacoes: [
+      "Licença Prêmio",
+      "Direitos do Servidor",
+      "Processos Administrativos",
+    ],
+  }
 
 
 ];

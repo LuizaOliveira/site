@@ -95,7 +95,7 @@ export function AreaAtuacao() {
   return (
     <section id="area-atuacao" ref={sectionRef} className="bg-white px-4 md:px-12 py-10">
       
-      <div className="bg-[#071B42] rounded-3xl p-6 md:p-10 shadow-xl mx-0 md:mx-12 relative">
+      <div className="bg-[#071B42] rounded-3xl p-6 md:p-10 shadow-xl mx-0 md:mx-14 relative">
         <div className="container mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 mt-4 md:mt-8 gap-8">
             <div className="lg:col-span-8 hidden lg:block">

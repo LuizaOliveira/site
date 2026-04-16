@@ -306,7 +306,8 @@ export function InteractiveMap({ mapName }: { mapName: string }) {
       preserveAspectRatio="xMidYMid meet"
       className="w-full h-auto"
       style={{ 
-        maxWidth: mapName.includes('ma') ? '350px' : mapName.includes('sp') ? '550px' : '100%' 
+        maxWidth: mapName.includes('ma') ? '300px' : mapName.includes('pi') ? '300px' : mapName.includes('sp') ? '550px' : '100%',
+        maxHeight: mapName.includes('ma') || mapName.includes('pi') ? '400px' : 'none'
       }}
     >
       <defs>

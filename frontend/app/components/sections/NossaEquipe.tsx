@@ -24,7 +24,7 @@ export function NossaEquipe() {
 
   const whatsappUrl = useMemo(() => {
     const whatsappNumber = (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "5584997007924").replace(/\D/g, "");
-    const message = "Olá! Gostaria de conversar com um memba equipe.";
+    const message = "Olá! Gostaria de conversar com um membro da equipe.";
     return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
   }, []);
 

@@ -15,6 +15,14 @@ export default function TeamDetail() {
   const nomeParam = params.nome as string;
 
   const [artigos, setArtigos] = useState<Article[]>([]);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const itemsPerPage = 4;
+  const totalPages = Math.ceil(artigos.length / itemsPerPage);
+  const displayedArticles = artigos.slice(
+    currentPage * itemsPerPage,
+    (currentPage + 1) * itemsPerPage
+  );
 
   const advogado = advogados.find(
     (a) =>
@@ -45,6 +53,11 @@ export default function TeamDetail() {
     loadArticles();
   }, [advogado?.nome]);
 
+  const goToPage = (page: number) => {
+    const validPage = Math.max(0, Math.min(page, totalPages - 1));
+    setCurrentPage(validPage);
+  };
+
   if (!advogado) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -72,7 +85,7 @@ export default function TeamDetail() {
             {/* Coluna esquerda - Informações */}
             <div className="order-2 lg:order-1">
               {/* Nome */}
-              <h1 className="text-4xl md:text-5xl font-bold text-primary mb-3">
+              <h1 className="text-4xl md:text-5xl font-cabinet text-primary mb-3">
                 {advogado.nome}
               </h1>
 
@@ -100,23 +113,7 @@ export default function TeamDetail() {
                 </div>
               </div>
 
-              {/* Artigos */}
-              {artigos.length > 0 && (
-              <div className="mb-12">
-                <h3 className="text-sm font-bold text-primary uppercase tracking-wider mb-6">
-                  Artigos
-                </h3>
-                <div className="border-t border-gray-200 pt-6 flex overflow-x-auto overflow-y-hidden pb-2">
-                  {artigos.map((article) => (
-                    <ArticleCard
-                      key={article.id}
-                      articleId={article.id}
-                      articleImg={article.articleImage || article.thumbnail}
-                      articleTitle={article.title}
-                    />
-                  ))}
-                </div>
-              </div>)}
+
               
               {/* Especialização */}
               <div className="mb-12">
@@ -146,12 +143,12 @@ export default function TeamDetail() {
               <div className="flex gap-6">
                 {advogado.sociais.linkedin && (
                   <a
-                    href={advogado.sociais.linkedin}
+                    href={`https://www.instagram.com/clodonilmonteiro/`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-primary hover:text-secondary transition-colors"
                   >
-                    <Icon icon="mdi:linkedin" className="text-2xl" />
+                    <Icon icon="mdi:instagram" className="text-2xl" />
                   </a>
                 )}
                 {advogado.sociais.twitter && (
@@ -179,6 +176,51 @@ export default function TeamDetail() {
               </div>
             </div>
           </div>
+
+          {/* Artigos - Seção com Paginação */}
+          {artigos.length > 0 && (
+            <div className="mt-16 pt-8 border-t border-gray-200">
+              <h3 className="text-sm font-bold text-primary uppercase tracking-wider mb-6">
+                Artigos
+              </h3>
+
+              {/* Grid de Artigos - Paginado */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                {displayedArticles.map((article, index) => (
+                  <div
+                    key={article.id}
+                    className="animate-fadeInUp"
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    <ArticleCard
+                      articleId={article.id}
+                      articleImg={article.articleImage || article.thumbnail}
+                      articleTitle={article.title}
+                      tags={article.tags}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              {/* Indicadores de Paginação - Bolinhas */}
+              {totalPages > 1 && (
+                <div className="flex justify-center gap-3 mt-8">
+                  {Array.from({ length: totalPages }).map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => goToPage(index)}
+                      className={`transition-all duration-500 rounded-full hover:scale-125 transform ${
+                        currentPage === index
+                          ? 'bg-primary w-4 h-4 shadow-lg scroll-indicator-active'
+                          : 'bg-gray-300 w-2 h-2 hover:bg-primary/60'
+                      }`}
+                      aria-label={`Ir para página ${index + 1}`}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Voltar */}
           <div className="mt-16 pt-8 border-t border-gray-200">

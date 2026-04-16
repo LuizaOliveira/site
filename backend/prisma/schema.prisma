@@ -40,8 +40,8 @@ model Article {
   author       String
   articleImage String
   articleFile  String
-  description  String
-  content      String
+  description  String   @db.Text
+  content      String   @db.Text
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
