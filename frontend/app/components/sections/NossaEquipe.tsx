@@ -156,7 +156,7 @@ export function NossaEquipe() {
           {/* ===== IMAGEM (2/3) ===== */}
           <div ref={imageRef} className="relative lg:col-span-2 h-56 md:h-72 lg:h-120 rounded-3xl overflow-hidden shadow-lg">
             <Image
-              src="/office-work.svg" // troque pela sua imagem
+              src="/mesa.svg" // troque pela sua imagem
               alt="Equipe de advogados"
               fill
               priority

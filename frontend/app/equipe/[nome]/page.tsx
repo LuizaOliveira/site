@@ -153,12 +153,12 @@ export default function TeamDetail() {
                 )}
                 {advogado.sociais.twitter && (
                   <a
-                    href={advogado.sociais.twitter}
+                    href={"https://www.tiktok.com/@clodonilmonteiro"}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-primary hover:text-secondary transition-colors"
                   >
-                    <Icon icon="mdi:twitter" className="text-2xl" />
+                    <Icon icon="ic:twotone-tiktok" className="text-2xl" />
                   </a>
                 )}
               </div>

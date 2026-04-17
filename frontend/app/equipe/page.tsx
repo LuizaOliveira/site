@@ -34,7 +34,7 @@ export default function EquipePage() {
 
             <div className="relative w-full h-72 sm:h-96 md:h-96 lg:h-125 rounded-lg sm:rounded-xl overflow-hidden shadow-lg my-6 sm:my-8 md:my-8">
               <Image
-                src="/equipe-advogados.svg"
+                src="/equipe.svg"
                 alt="Equipe de advogados"
                 width={1200}
                 height={600}
@@ -48,9 +48,7 @@ export default function EquipePage() {
               </p>
               <div className="w-full lg:w-2/5">
                 <p className="text-gray-600 text-sm sm:text-base text-justify font-light">
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                  Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                  orem Ipsum has been the industry's standard dummy text ever since the"
+                  "Contamos com uma equipe altamente qualificada, com sólida experiência no direito aplicado aos servidores públicos. Aliamos conhecimento técnico e estratégia jurídica para oferecer soluções eficazes, garantindo segurança, confiança e a defesa consistente dos direitos ao longo da carreira."
                 </p>
               </div>
             </div>

@@ -51,11 +51,12 @@ export function AdvCard({ imgSrc, nome, titulo, texto, social }: AdvCardProps) {
       </div>
       ): (
         <div className='px-5 py-4  my-2 flex items-center justify-center gap-5'>
+          <p className="text-gray-700 font-medium">{nome}</p>
           {/* <div>
             <p className='text-[#061A58] font-semibold group-hover:text-white transition-colors duration-300'>{nome}</p>
             <p className='text-[#061A58] font-light text-xs group-hover:text-white transition-colors duration-300'>{titulo || "Advogado Fundodor"}</p>
           </div> */}
-          {social.linkedin && (
+          {/* {social.linkedin && (
             <Icon icon="akar-icons:linkedinv1-fill" className="w-6 h-6 text-[#061A58] hover:text-primary transition-colors duration-300 cursor-pointer" />
           )}
           {social.twitter && (
@@ -63,7 +64,7 @@ export function AdvCard({ imgSrc, nome, titulo, texto, social }: AdvCardProps) {
           )}
           {social.facebook && (
             <Icon icon="uil:instagram" className="w-6 h-6 text-[#061A58] hover:text-primary transition-colors duration-300 cursor-pointer" />
-          )}
+          )} */}
         </div>
       )}
     </div>

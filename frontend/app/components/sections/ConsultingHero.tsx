@@ -197,7 +197,7 @@ export function ConsultingHero() {
       "
       >
         <Image
-          src={"/tes.svg"}
+          src={"/hero-image.svg"}
           alt="Consulting Background"
           fill
           className="object-cover sm:object-top-right rounded-4xl lg:rounded-none"

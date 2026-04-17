@@ -11,10 +11,10 @@ gsap.registerPlugin(ScrollTrigger)
 const ISSUE_OPTIONS = [
   'Progressão de Letras',
   'Progressão de nível (Titulação)',
-  'Retificação de Titulação',
-  'Licença Prêmio',
+  'Piso Salarial',
   'Demora para concessão de aposentadoria',
-  'Retificação de Letra',
+  'Licença Prêmio',
+  'Terço constitucional de férias',
 ]
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -173,7 +173,7 @@ export function FreeAnalysisSection() {
           {/* IMAGEM */}
           <div className="relative rounded-3xl overflow-hidden">
             <img
-              src="/group.svg"
+              src="/teste-trio.svg"
               alt="Consultoria"
               className="object-cover w-full h-72 md:h-96 lg:h-64 shadow-lg"
             />
@@ -442,7 +442,7 @@ export function FreeAnalysisSection() {
           {/* IMAGEM DIREITA */}
           <div className="relative h-full min-h-96" ref={desktopImageRef}>
             <Image
-              src="/group.svg"
+              src="/teste-trio.svg"
               alt="Consultoria"
               fill
               className="object-cover rounded-r-3xl"
