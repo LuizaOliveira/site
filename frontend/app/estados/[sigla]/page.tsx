@@ -218,8 +218,8 @@ export default function EstadoPage() {
                     {/* Grid - Map Card appears after title on mobile, beside content on desktop */}
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 mt-8">
                         {/* Right - Map Card - order-1 on mobile, order-2 on desktop */}
-                        <div className="flex items-center justify-center lg:order-2 order-1" ref={mapCardRef}>
-                            <div className="w-full max-w-lg bg-[#efefef] rounded-xl p-6 lg:p-8">
+                        <div className="flex items-center justify-center lg:order-2 order-1 overflow-visible" ref={mapCardRef} style={{ zIndex: 20 }}>
+                            <div className="w-full max-w-lg bg-[#efefef] rounded-xl p-6 lg:p-8 overflow-visible" style={{ zIndex: 25 }}>
 
                                 {/* Header */}
                                 <div className="flex justify-between items-start mb-6">
@@ -244,11 +244,11 @@ export default function EstadoPage() {
                                 </div>
 
                                 {/* Map Container */}
-                                <div className="w-full bg-white rounded-lg mb-6 flex flex-col items-start justify-start border border-gray-200 p-3">
+                                <div className="w-full bg-white rounded-lg mb-6 flex flex-col items-start justify-start border border-gray-200 p-3 overflow-visible" style={{ zIndex: 20 }}>
                                     <div className="border border-[#E0E7FF] px-3 py-1 rounded-full mb-3">
                                         <span className="text-xs text-gray-600">{info.nome}</span>
                                     </div>
-                                    <div className="w-full h-auto flex items-center justify-center">
+                                    <div className="w-full h-auto flex items-center justify-center overflow-visible" style={{ zIndex: 30 }}>
                                         <InteractiveMap mapName={`mapa-${sigla.toLowerCase()}`} />
                                     </div>
                                 </div>

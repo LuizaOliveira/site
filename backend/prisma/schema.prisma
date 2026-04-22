@@ -35,11 +35,11 @@ model Post {
 model Article {
   id           Int      @id @default(autoincrement())
   published    Boolean  @default(false)
-  thumbnail    String
+  thumbnail    String   @db.VarChar(2000)
   title        String
   author       String
-  articleImage String
-  articleFile  String
+  articleImage String   @db.VarChar(2000)
+  articleFile  String   @db.VarChar(2000)
   description  String   @db.Text
   content      String   @db.Text
   tags         Tag[]

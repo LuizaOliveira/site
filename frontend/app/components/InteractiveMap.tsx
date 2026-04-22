@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 
 interface PathElement {
   attributes: {
@@ -298,6 +299,7 @@ export function InteractiveMap({ mapName }: { mapName: string }) {
   const isSP = mapName.includes('sp');
 
   return (
+    <>
     <div className="relative w-full h-full flex justify-center items-center">      
     <svg
       viewBox={svgContent.viewBox}
@@ -363,7 +365,7 @@ export function InteractiveMap({ mapName }: { mapName: string }) {
               <g
                 key={`region-${currentRegionIndex}`}
                 style={{
-                  transform: !isSP && isHovered ? 'scale(1.05)' : 'scale(1)',
+                  transform: isHovered ? 'scale(1.05)' : 'scale(1)',
                   transformOrigin: 'center',
                   transformBox: 'fill-box',
                   transition: 'transform 200ms ease-in-out',
@@ -373,40 +375,48 @@ export function InteractiveMap({ mapName }: { mapName: string }) {
                   fillRule={path.attributes['fill-rule'] as any}
                   clipRule={path.attributes['clip-rule'] as any}
                   d={d}
-                  fill={!isSP && isHovered ? '#05235D' : originalFill}
-                  fillOpacity={!isSP && isHovered ? '1' : path.attributes['fill-opacity'] || '0.99'}
+                  fill={isHovered ? '#05235D' : originalFill}
+                  fillOpacity={isHovered ? '1' : path.attributes['fill-opacity'] || '0.99'}
                   stroke={originalStroke}
                   strokeWidth={mapName.includes('ma') ? 0.3 : 0.5}
                   onMouseEnter={(e) => {
-                    if (isSP) return;
                     console.log(currentRegionIndex);
+                    
+                    setHoveredPath(currentRegionIndex);
+                    
                     const pathElement = e.target as SVGPathElement;
                     const svg = pathElement.closest('svg') as SVGSVGElement;
-                    if (svg) {
-                      // Pega o bounding box da região no espaço do SVG
-                      const bbox = pathElement.getBBox();
-                      const svgRect = svg.getBoundingClientRect();
-                      const pt = svg.createSVGPoint();
+                    
+                    if (svg && pathElement) {
+                      try {
+                        // Pega o bounding box da região no espaço do SVG
+                        const bbox = pathElement.getBBox();
+                        const svgRect = svg.getBoundingClientRect();
+                        const viewBox = svg.viewBox.baseVal;
 
-                      // Calcula a posição do centro da região
-                      pt.x = bbox.x + bbox.width / 2;
-                      pt.y = bbox.y + bbox.height / 2;
+                        // Centro da região no espaço SVG
+                        const centerXinSVG = bbox.x + bbox.width / 2;
+                        const centerYinSVG = bbox.y + bbox.height / 2;
+                        
+                        // Escala do SVG
+                        const scaleX = svgRect.width / viewBox.width;
+                        const scaleY = svgRect.height / viewBox.height;
 
-                      // Transforma para coordenadas de tela
-                      const ctm = pathElement.getScreenCTM();
-                      if (ctm) {
-                        const screenPt = pt.matrixTransform(ctm);
+                        // Posição do centro em pixels de tela
+                        const centerX = svgRect.left + centerXinSVG * scaleX;
+                        const centerY = svgRect.top + centerYinSVG * scaleY;
 
                         setMousePos({
-                          x: screenPt.x,
-                          y: screenPt.y,
+                          x: centerX,
+                          y: centerY,
                         });
+                      } catch (err) {
+                        console.error('Erro ao calcular posição:', err);
                       }
                     }
-                    setHoveredPath(currentRegionIndex);
                   }}
-                  onMouseLeave={() => isSP ? null : setHoveredPath(null)}
-                  className={`${isSP ? '' : 'cursor-pointer'} ${!isSP && isHovered ? 'filter drop-shadow-lg' : ''}`}
+                  onMouseLeave={() => setHoveredPath(null)}
+                  className={`cursor-pointer ${isHovered ? 'filter drop-shadow-lg' : ''}`}
                 />
 
                 {pinIndexes.map(({ pinIdx, pathIndex: pinPathIndex }) => {
@@ -415,17 +425,17 @@ export function InteractiveMap({ mapName }: { mapName: string }) {
                     <path
                       key={`pin-${currentRegionIndex}-${pinIdx}`}
                       d={pinPath.attributes.d}
-                      fill={!isSP && isHovered ? '#FF8C00' : (pinPath.attributes.fill || '#081C43')}
-                      stroke={!isSP && isHovered ? '#e68000' : (pinPath.attributes.stroke || '#e6800050')}
-                      strokeWidth={!isSP && isHovered ? 1 : 0.8}
+                      fill={isHovered ? '#FF8C00' : (pinPath.attributes.fill || '#081C43')}
+                      stroke={isHovered ? '#e68000' : (pinPath.attributes.stroke || '#e6800050')}
+                      strokeWidth={isHovered ? 1 : 0.8}
                       fillRule={pinPath.attributes['fill-rule'] as any}
                       clipRule={pinPath.attributes['clip-rule'] as any}
                       className="transition-all duration-300 ease-out"
                       style={{
-                        filter: !isSP && isHovered
+                        filter: isHovered
                           ? 'drop-shadow(0 2px 3px rgba(255,140,0,0.6))'
                           : 'drop-shadow(0 1px 2px rgba(0,0,0,0.2))',
-                        transform: !isSP && isHovered ? 'scale(1.12) translateY(-2px)' : 'scale(1)',
+                        transform: isHovered ? 'scale(1.12) translateY(-2px)' : 'scale(1)',
                         transformOrigin: 'center',
                         transformBox: 'fill-box',
                       }}
@@ -438,24 +448,40 @@ export function InteractiveMap({ mapName }: { mapName: string }) {
         })()}
       </g>
     </svg>
-
-      {/* Tooltip com nome da região */}
-      {!isSP && hoveredPath !== null && (
-        <div
-          className="fixed bg-blue-900 text-white px-1.5 py-0.5 rounded shadow-sm text-[10px] pointer-events-none"
-          style={{
-            left: `${mousePos.x}px`,
-            top: `${mousePos.y - 20}px`,
-            zIndex: 50,
-            transform: 'translate(-50%, -50%)',
-            backgroundColor: 'rgba(15, 23, 42, 0.9)',
-            whiteSpace: 'nowrap',
-          }}
-        >
-          {regionNames[hoveredPath] || `Região ${hoveredPath}`}
-        </div>
-      )}
     </div>
+
+      {/* Tooltip renderizado via Portal no body */}
+      {hoveredPath !== null && typeof document !== 'undefined' && createPortal(
+        (() => {
+          const x = mousePos.x;
+          const y = mousePos.y - 35;
+          
+          return (
+            <div
+              style={{
+                position: 'fixed',
+                left: `${x}px`,
+                top: `${y}px`,
+                transform: 'translate(-50%, -50%)',
+                zIndex: 99999,
+                pointerEvents: 'none',
+              }}
+            >
+              <div
+                className="bg-blue-900 text-white px-1.5 py-0.5 rounded text-[10px]"
+                style={{
+                  backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {regionNames[hoveredPath] || `Região ${hoveredPath}`}
+              </div>
+            </div>
+          );
+        })(),
+        document.body
+      )}
+    </>
   );
 }
 
